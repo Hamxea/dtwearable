@@ -1,0 +1,475 @@
+{
+	"info": {
+		"_postman_id": "1e39d0b8-ff7c-4b39-915b-78401d95ccf7",
+		"name": "Keymind",
+		"description": "This collection contains requests associated witht the Flask-JWT-Extended section of the REST API course.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "security",
+			"item": [
+				{
+					"name": "register a new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"jose\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{server_address}}/register",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server_address}}/islem/1",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"islem",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"jose\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{server_address}}/user/2",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c0c0ed6-c206-4c88-9349-429e024e312b",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"access_token not empty\", function () {",
+									"    pm.expect(jsonData.access_token).not.eql(undefined);",
+									"});",
+									"",
+									"pm.test(\"refresh token not empty\", function () {",
+									"    pm.expect(jsonData.refresh_token).not.eql(undefined);",
+									"});",
+									"// set access token as environement variable",
+									"if (jsonData.access_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"access_token\", null);",
+									"}",
+									"// set refresh token as environement variable",
+									"if (jsonData.refresh_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"refresh_token\", null);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\" : \"jose\",\n  \"password\" : \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{server_address}}/login",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc763e9b-e6c7-4ff3-9766-637976a5c64b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server_address}}/logout",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad818ea6-8f79-436e-b756-ad878666ae9e",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"access_token not empty\", function () {",
+									"    pm.expect(jsonData.access_token).not.eql(undefined);",
+									"});",
+									"// set access token as environement variable",
+									"if (jsonData.access_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"access_token\", null);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{refresh_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{local_flask}}/refresh",
+							"host": [
+								"{{local_flask}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "kvc",
+			"item": [
+				{
+					"name": "islem",
+					"item": [
+						{
+							"name": "/islem/<id>",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/islem/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"islem",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/islem/<id>",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/islem/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"islem",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/islem",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"islem_no\": 101,\n\t\"kayit_tarihi\": \"01.01.2019 00:00:00\",\n\t\"cinsiyet\": 0,\n\t\"yas\":12,\n\t\"operasyon_tarihi\": \"01.01.2019 00:00:00\",\n\t\"cikis_tarihi\": \"01.01.2019 00:00:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/islem",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"islem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/islem",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 1,\r\n    \"islem_no\": 102,\r\n    \"kayit_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"cinsiyet\": 0,\r\n    \"yas\": 12,\r\n    \"operasyon_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"cikis_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"etiket\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/islem",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"islem"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "hemsiregozlem",
+					"item": [
+						{
+							"name": "/hemsiregozlem/<id>",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/hemsiregozlem/10",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"hemsiregozlem",
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/hemsiregozlem/<id>",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/hemsiregozlem/9",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"hemsiregozlem",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/hemsiregozlem",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"islem_no\": 103,\n\t\"olcum_tarihi\": \"01.01.2019 00:10:20\",\n\t\"vucut_sicakligi\": 35.7,\n\t\"nabiz\":65,\n\t\"tansiyon_sistolik\": 90,\n\t\"tansiyon_diastolik\": 45,\n\t\"spo\": 30,\n\t\"o2\": 40,\n\t\"aspirasyon\": true,\n\t\"kan_transfuzyonu\": false,\n\t\"diren_takibi\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/hemsiregozlem",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"hemsiregozlem"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/hemsiregozlem",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 10,\r\n    \"islem_no\": 103,\r\n    \"islem_id\": 1,\r\n    \"olcum_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"vucut_sicakligi\": 35.7,\r\n    \"nabiz\": 75,\r\n    \"tansiyon_sistolik\": 90,\r\n    \"tansiyon_diastolik\": 45,\r\n    \"spo\": 30,\r\n    \"o2\": 40,\r\n    \"aspirasyon\": true,\r\n    \"kan_transfuzyonu\": false,\r\n    \"diren_takibi\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/hemsiregozlem",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"hemsiregozlem"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "45ef6066-4443-4806-8ae0-2e8daa528b98",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "34b959f1-c175-4f4f-b3f5-8f11baa361c1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

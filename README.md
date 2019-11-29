@@ -1,0 +1,1 @@
+# KEYMIND Yapay ZekaPlatformu 
