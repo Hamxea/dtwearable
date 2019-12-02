@@ -11,10 +11,6 @@ from keymind.resources.security.TokenRefreshResource import TokenRefreshResource
 from keymind.resources.security.UserLogoutResource import UserLogoutResource
 from keymind.resources.security.UserRegisterResource import UserRegisterResource
 
-from keymind.resources.item import Item, ItemList
-from keymind.resources.store import Store, StoreList
-from kvc.resources.HemsireGozlemResource import HemsireGozlemResource
-from kvc.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
 from kvc.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.resources.IslemResource import IslemResource
 
@@ -102,10 +98,6 @@ def create_tables():
 
 
 # Security resources
-api.add_resource(Store, '/store/<string:name>')
-api.add_resource(StoreList, '/stores')
-api.add_resource(Item, '/item/<string:name>')
-api.add_resource(ItemList, '/items')
 api.add_resource(UserRegisterResource, '/register')
 api.add_resource(UserLoginResource, '/login')
 api.add_resource(UserResource, '/user/<int:user_id>')
@@ -115,8 +107,6 @@ api.add_resource(UserLogoutResource, '/logout')
 # KVK resources
 api.add_resource(IslemResource, '/islem/<int:islem_id>')
 api.add_resource(IslemRegisterResource, '/islem')
-api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
-api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
 
 
 if __name__ == '__main__':

@@ -1,8 +1,6 @@
 import datetime
 
 from db import db
-from kvc.models.HemsireGozlem import HemsireGozlem
-from kvc.models.IslemOperasyon import IslemOperasyon
 
 
 class Islem(db.Model):
@@ -19,8 +17,8 @@ class Islem(db.Model):
     # etiket = db.Column(IntEnum(KVCLabelEnum))
     etiket = db.Column(db.Integer)
 
-    islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
-    hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')
+    # islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
+    # hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')
 
     def __init__(self, id:int, islem_no: int, kayit_tarihi: datetime, cinsiyet: int,
                  yas: int, operasyon_tarihi: datetime, cikis_tarihi: datetime, etiket: int):
