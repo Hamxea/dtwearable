@@ -7,39 +7,39 @@ from kvc.models.Islem import Islem
 
 
 class IslemRegisterResource(Resource):
-    islem_parser = reqparse.RequestParser()
-    islem_parser.add_argument('id',
-                              type=int,
-                              required=False,
-                              )
-    islem_parser.add_argument('islem_no',
-                              type=int,
-                              required=True,
-                              )
-    islem_parser.add_argument('kayit_tarihi',
-                              type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
-                              required=True
-                              )
-    islem_parser.add_argument('cinsiyet',
-                              type=int,
-                              required=True,
-                              )
-    islem_parser.add_argument('yas',
-                              type=int,
-                              required=True,
-                              )
-    islem_parser.add_argument('operasyon_tarihi',
-                              type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
-                              required=True,
-                              )
-    islem_parser.add_argument('cikis_tarihi',
-                              type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
-                              required=True
-                              )
-    islem_parser.add_argument('etiket',
-                              type=int,
-                              required=False
-                              )
+    islem_post_parser = reqparse.RequestParser()
+    islem_post_parser.add_argument('id',
+                                   type=int,
+                                   required=False,
+                                   )
+    islem_post_parser.add_argument('islem_no',
+                                   type=int,
+                                   required=True,
+                                   )
+    islem_post_parser.add_argument('kayit_tarihi',
+                                   type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
+                                   required=True
+                                   )
+    islem_post_parser.add_argument('cinsiyet',
+                                   type=int,
+                                   required=True,
+                                   )
+    islem_post_parser.add_argument('yas',
+                                   type=int,
+                                   required=True,
+                                   )
+    islem_post_parser.add_argument('operasyon_tarihi',
+                                   type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
+                                   required=True,
+                                   )
+    islem_post_parser.add_argument('cikis_tarihi',
+                                   type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
+                                   required=True
+                                   )
+    islem_post_parser.add_argument('etiket',
+                                   type=int,
+                                   required=False
+                                   )
     # islem_parser.add_argument('islem_operasyon_list',
     #                           action='append',
     #                           required=False
@@ -48,7 +48,7 @@ class IslemRegisterResource(Resource):
     islemDAO = IslemDAO()
 
     def post(self):
-        data = self.islem_parser.parse_args()
+        data = self.islem_post_parser.parse_args()
 
         islem = Islem(**data)
 
@@ -62,7 +62,7 @@ class IslemRegisterResource(Resource):
         return islem.serialize, 201
 
     def put(self):
-        data = self.islem_parser.parse_args()
+        data = self.islem_post_parser.parse_args()
 
         islem = self.islemDAO.find_by_id(data['id'])
 
