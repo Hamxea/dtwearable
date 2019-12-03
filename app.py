@@ -1,9 +1,11 @@
+import os
+
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from db import db
 from keymind.security.blacklist import BLACKLIST
+from db import db
 
 from keymind.resources.security.UserLoginResource import UserLoginResource
 from keymind.resources.security.UserResource import UserResource
@@ -15,7 +17,8 @@ from kvc.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.resources.IslemResource import IslemResource
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://arge05:arge05@10.0.0.59:5432/keymind')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
@@ -91,7 +94,6 @@ def revoked_token_callback():
 
 # JWT configuration ends
 
-
 @app.before_first_request
 def create_tables():
     db.create_all()
@@ -108,7 +110,7 @@ api.add_resource(UserLogoutResource, '/logout')
 api.add_resource(IslemResource, '/islem/<int:islem_id>')
 api.add_resource(IslemRegisterResource, '/islem')
 
+db.init_app(app)
 
 if __name__ == '__main__':
-    db.init_app(app)
     app.run(port=5000, debug=True)
