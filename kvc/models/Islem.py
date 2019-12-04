@@ -2,7 +2,9 @@ import datetime
 
 from db import db
 
-
+"""
+Islem tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
+"""
 class Islem(db.Model):
     __tablename__ = "islem"
 
@@ -31,6 +33,7 @@ class Islem(db.Model):
         self.cikis_tarihi = cikis_tarihi
         self.etiket = etiket
 
+    # Nesneyi json'a çeviren metod
     @property
     def serialize(self):
         return {

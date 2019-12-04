@@ -24,11 +24,9 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 api = Api(app)
 
 """
-JWT related configuration. The following functions includes:
-1) add claims to each jwt
-2) customize the token expired error message 
+JWT related configuration.
 """
-app.config['JWT_SECRET_KEY'] = 'jose'  # we can also use app.secret like before, Flask-JWT-Extended can recognize both
+app.config['JWT_SECRET_KEY'] = 'k@ym1nd'  # we can also use app.secret like before, Flask-JWT-Extended can recognize both
 app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']  # allow blacklisting for access and refresh tokens
 jwt = JWTManager(app)
