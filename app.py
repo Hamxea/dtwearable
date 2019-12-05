@@ -15,6 +15,8 @@ from keymind.resources.security.UserRegisterResource import UserRegisterResource
 
 from kvc.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.resources.IslemResource import IslemResource
+from kvc.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
+from kvc.resources.SiviAlimiResource import SiviAlimiResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -119,6 +121,11 @@ api.add_resource(UserLogoutResource, '/logout')
 # KVK resources
 api.add_resource(IslemResource, '/islem/<int:islem_id>')
 api.add_resource(IslemRegisterResource, '/islem')
+
+api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
+api.add_resource(SiviAlimiRegisterResource, '/sivialimi')
+
+db.init_app(app)
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
