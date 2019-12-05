@@ -4,9 +4,13 @@ from keymind.resources.security.AbstractUserResource import AbstractUserResource
 
 
 class UserRegisterResource(AbstractUserResource):
+    """ Kullanıcı kaydı oluşturan restful servis sınıfı"""
+
     userDAO = UserDAO()
 
     def post(self):
+        """ Yeni kullanıcı kaydı oluşturan restful metodu """
+
         data = self._user_parser.parse_args()
 
         if self.userDAO.find_by_username(data['username']):

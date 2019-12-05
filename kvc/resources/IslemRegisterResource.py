@@ -5,13 +5,13 @@ from flask_restful import reqparse, Resource
 from kvc.daos.IslemDAO import IslemDAO
 from kvc.models.Islem import Islem
 
-"""
-Islem nesnesi için parametre almayan metodları barındıran Resource sınıfı
-Restful istek tiplerine karşılık metodlar oluşturulur
-"""
 class IslemRegisterResource(Resource):
+    """
+    Islem nesnesi için parametre almayan metodları barındıran Resource sınıfı
+    Restful istek tiplerine karşılık metodlar oluşturulur
+    """
 
-    # Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır
+    """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     islem_post_parser = reqparse.RequestParser()
     islem_post_parser.add_argument('id',
                                    type=int,
@@ -52,8 +52,9 @@ class IslemRegisterResource(Resource):
 
     islemDAO = IslemDAO()
 
-    # Restful isteğinin body kısmında bulunan veriye gore Islem nesnesini olusturan ve veritabanına yazan metod
     def post(self):
+        """ Restful isteğinin body kısmında bulunan veriye gore Islem nesnesini olusturan ve veritabanına yazan metod """
+
         data = self.islem_post_parser.parse_args()
 
         islem = Islem(**data)
@@ -67,8 +68,9 @@ class IslemRegisterResource(Resource):
 
         return islem.serialize, 201
 
-    # Restful isteğinin body kısmında bulunan veriye gore Islem nesnesini olusturan veya guncelleyen metod
     def put(self):
+        """ Restful isteğinin body kısmında bulunan veriye gore Islem nesnesini olusturan veya guncelleyen metod """
+
         data = self.islem_post_parser.parse_args()
 
         islem = self.islemDAO.find_by_id(data['id'])
