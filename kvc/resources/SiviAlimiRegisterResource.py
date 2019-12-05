@@ -7,7 +7,14 @@ from kvc.models.SiviAlimi import SiviAlimi
 
 
 class SiviAlimiRegisterResource(Resource):
+    """
+    Sıvı Alımı nesnesi için parametre almayan metodları barındıran Register Resource sınıfı
+    Restful istek tiplerine karşılık metodlar oluşturulur
+    """
+
     sivi_alimi_post_parser = reqparse.RequestParser()
+    """ Restful isteklerini tanımlamak için oluşturulur, uyumsuzluk halinde hata dönmesi sağlanır """
+
     sivi_alimi_post_parser.add_argument('id',
                                         type=int,
                                         required=False,
@@ -56,6 +63,8 @@ class SiviAlimiRegisterResource(Resource):
     siviAlimiDAO = SiviAlimiDAO()
 
     def post(self):
+        """ Restful isteğinin body kısmındaki veriye gore Sıvı Alımı nesnesini olusturan ve veritabanına yazan metod """
+
         data = self.sivi_alimi_post_parser.parse_args()
 
         sivi_alimi = SiviAlimi(**data)
@@ -70,6 +79,8 @@ class SiviAlimiRegisterResource(Resource):
         return sivi_alimi.serialize, 201
 
     def put(self):
+        """ Restful isteğinin body kısmındaki veriye gore Sıvı Alımı nesnesini oluşturan veya güncelleyen metod """
+
         data = self.sivi_alimi_post_parser.parse_args()
 
         sivi_alimi = self.siviAlimiDAO.find_by_id(data['id'])

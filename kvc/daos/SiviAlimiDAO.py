@@ -3,9 +3,9 @@ from kvc.models.SiviAlimi import SiviAlimi
 
 
 class SiviAlimiDAO(AbstractDAO):
+    """ Sıvı Alımı nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """
 
     def find_by_id(self, _id):
-        return SiviAlimi.query.filter_by(id=_id).first()
+        """ _id değerine göre Sıvı Alımı nesnesini veritabanından getiren metod """
 
-    # def find_by_islem_id(self, islem_id):
-    #     return SiviAlimi.query.filter_by(islem_id=islem_id).all()
+        return SiviAlimi.query.filter_by(id=_id).first()

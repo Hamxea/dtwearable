@@ -4,16 +4,24 @@ from kvc.daos.SiviAlimiDAO import SiviAlimiDAO
 
 
 class SiviAlimiResource(Resource):
+    """
+    Sıvı Alımı nesnesi için int tipinde id parametre alan metodları barındıran Resource sınıfı
+    Restful istek tiplerine karşılık metodlar oluşturulur
+    """
+
     siviAlimiDAO = SiviAlimiDAO()
 
-    # @marshal_with(IslemRegisterResource.resource_fields)
     def get(self, sivi_alimi_id: int):
+        """ sivi_alimi_id parametresine karsılık Sıvı Alımı bilgisi donen metod """
+
         sivi_alimi = self.siviAlimiDAO.find_by_id(sivi_alimi_id)
         if not sivi_alimi:
             return {'message': 'Sıvı Alımı Not Found'}, 404
         return sivi_alimi.serialize, 200
 
     def delete(self, sivi_alimi_id: int):
+        """ sivi_alimi_id parametresine karsılık gelen Sıvı Alımı nesnesini veri tabanından silen metod """
+
         sivi_alimi = self.siviAlimiDAO.find_by_id(sivi_alimi_id)
         if not sivi_alimi:
             return {'message': 'Sıvı Alımı Not Found'}, 404

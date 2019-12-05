@@ -5,9 +5,11 @@ from db import db
 
 
 class SiviAlimi(db.Model):
+    """ Sıvı Alımı tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı """
+
     __tablename__ = "sivi_alimi"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     islem_id = db.Column(db.BigInteger)
     olcum_tarihi = db.Column(db.DateTime)
     kilo = db.Column(db.Float)
@@ -19,14 +21,11 @@ class SiviAlimi(db.Model):
     cikardigi_sivi_diren = db.Column(db.Float)
     sivi_farki = db.Column(db.Float)
 
-    # cinsiyet = db.Column(IntEnum(CinsiyetEnum))
-    # etiket = db.Column(IntEnum(KVCLabelEnum))
+    # sivi_alimi_list = db.relationship('SiviAlimi', backref="sivi_alimi", lazy='dynamic')
 
-    # islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
-    # hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')
-
-    def __init__(self, id:int, islem_id: int, olcum_tarihi: datetime, kilo: float, aldigi_sivi_miktari_oral: float, aldigi_sivi_miktari_intravanoz: float,
+    def __init__(self, id: int, islem_id: int, olcum_tarihi: datetime, kilo: float, aldigi_sivi_miktari_oral: float, aldigi_sivi_miktari_intravanoz: float,
                  aldigi_sivi_miktari_nazogastrik: float, cikardigi_sivi_miktari_idrar: float, cikardigi_sivi_miktari_nazogastrik: float, cikardigi_sivi_diren: float, sivi_farki: float):
+
         self.id = id
         self.islem_id = islem_id
         self.olcum_tarihi = olcum_tarihi
@@ -41,6 +40,8 @@ class SiviAlimi(db.Model):
 
     @property
     def serialize(self):
+        """ Sıvı Alımı nesnesini json'a çeviren metod """
+
         return {
             'id': self.id,
             'islem_id': self.islem_id,
