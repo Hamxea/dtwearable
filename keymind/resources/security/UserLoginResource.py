@@ -6,9 +6,13 @@ from keymind.resources.security.AbstractUserResource import AbstractUserResource
 
 
 class UserLoginResource(AbstractUserResource):
+    """ Kullanıcının login olmasını sağlayan ve daha sonra kullanılmak üzere Token üreten Rest servis sınıfı """
+
     userDAO = UserDAO()
 
     def post(self):
+        """ Kullanıcı login sınıfı, geriye Token değerini döner """
+
         data = self._user_parser.parse_args()
 
         user = self.userDAO.find_by_username(data['username'])

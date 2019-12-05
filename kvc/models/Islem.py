@@ -2,8 +2,11 @@ import datetime
 
 from db import db
 
-
 class Islem(db.Model):
+    """
+    Islem tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
+    """
+
     __tablename__ = "islem"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +36,8 @@ class Islem(db.Model):
 
     @property
     def serialize(self):
+        """ Nesneyi json'a çeviren metod """
+
         return {
             'id': self.id,
             'islem_no': self.islem_no,

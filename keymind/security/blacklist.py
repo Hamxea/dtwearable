@@ -1,9 +1,6 @@
 """
-blacklist.py
-
-This file just contains the blacklist of the JWT tokens–it will be imported by
-app and the logout resource so that tokens can be added to the blacklist when the
-user logs out.
+Bu sınıf karalistede bulununa token'ları barındırır.
+Kullanıcının logout olması durumunda token bu listeye eklenir.
 """
 
 BLACKLIST = set()
