@@ -17,7 +17,7 @@ class Predict():
         model = pickle.load(open(model_name, 'rb'))
 
         Xnew = np.array([predict_array])
-        ynew = model.make_prediction(Xnew)
+        ynew = model.predict(Xnew)
 
         print("X=%s, Predicted=%s" % (Xnew[0], round(ynew[0][0], 2)))
         print()
