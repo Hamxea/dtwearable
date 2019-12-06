@@ -2,3 +2,5 @@ Flask-JWT-Extended
 Flask-RESTful
 Flask-SQLAlchemy
 psycopg2
+tensorflow
+keras

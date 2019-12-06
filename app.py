@@ -4,6 +4,8 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
+from keymind.resources.PredictionRegisterResource import PredictionRegisterResource
+from keymind.resources.PredictionResource import PredictionResource
 from keymind.security.blacklist import BLACKLIST
 from db import db
 
@@ -124,6 +126,9 @@ api.add_resource(IslemRegisterResource, '/islem')
 
 api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
 api.add_resource(SiviAlimiRegisterResource, '/sivialimi')
+
+api.add_resource(PredictionRegisterResource, '/prediction')
+api.add_resource(PredictionResource, '/prediction/<int:prediction_id>')
 
 db.init_app(app)
 
