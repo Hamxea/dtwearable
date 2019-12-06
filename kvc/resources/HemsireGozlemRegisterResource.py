@@ -85,22 +85,22 @@ class HemsireGozlemRegisterResource(Resource):
 
         data = self.hemsire_gozlem_post_parser.parse_args()
 
-        heemsire_gozlem = self.hemsireGozlemDAO.find_by_id(data['id'])
+        hemsire_gozlem = self.hemsireGozlemDAO.find_by_id(data['id'])
 
-        if heemsire_gozlem:
-            heemsire_gozlem.islem_id = data['islem_id']
-            heemsire_gozlem.olcum_tarihi = data['olcum_tarihi']
-            heemsire_gozlem.vucut_sicakligi = data['vucut_sicakligi']
-            heemsire_gozlem.nabiz = data['nabiz']
-            heemsire_gozlem.tansiyon_sistolik = data['tansiyon_sistolik']
-            heemsire_gozlem.tansiyon_diastolik = data['tansiyon_diastolik']
-            heemsire_gozlem.spo = data['spo']
-            heemsire_gozlem.aspirasyon = data['aspirasyon']
-            heemsire_gozlem.kan_transfuzyonu = data['kan_transfuzyonu']
-            heemsire_gozlem.diren_takibi = data['diren_takibi']
+        if hemsire_gozlem:
+            hemsire_gozlem.islem_id = data['islem_id']
+            hemsire_gozlem.olcum_tarihi = data['olcum_tarihi']
+            hemsire_gozlem.vucut_sicakligi = data['vucut_sicakligi']
+            hemsire_gozlem.nabiz = data['nabiz']
+            hemsire_gozlem.tansiyon_sistolik = data['tansiyon_sistolik']
+            hemsire_gozlem.tansiyon_diastolik = data['tansiyon_diastolik']
+            hemsire_gozlem.spo = data['spo']
+            hemsire_gozlem.aspirasyon = data['aspirasyon']
+            hemsire_gozlem.kan_transfuzyonu = data['kan_transfuzyonu']
+            hemsire_gozlem.diren_takibi = data['diren_takibi']
         else:
-            heemsire_gozlem = HemsireGozlem(**data)
+            hemsire_gozlem = HemsireGozlem(**data)
 
-        self.HemsireGozlemDAO.save_to_db(heemsire_gozlem)
+        self.hemsireGozlemDAO.save_to_db(hemsire_gozlem)
 
-        return heemsire_gozlem.serialize
+        return hemsire_gozlem.serialize

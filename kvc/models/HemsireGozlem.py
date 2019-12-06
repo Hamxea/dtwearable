@@ -21,8 +21,8 @@ class HemsireGozlem(db.Model):
     diren_takibi = db.Column(db.Boolean)
 
     def __init__(self, id: int, islem_id: int, olcum_tarihi: datetime, vucut_sicakligi: float, nabiz: int,
-                 tansiyon_sistolik: int, tansiyon_diastolik: int, spo: int, o2: int, aspirasyon: float,
-                 kan_transfuzyonu: int, diren_takibi: int):
+                 tansiyon_sistolik: int, tansiyon_diastolik: int, spo: int, o2: int, aspirasyon: bool,
+                 kan_transfuzyonu: int, diren_takibi: bool):
 
         self.id = id
         self.islem_id = islem_id
@@ -45,7 +45,7 @@ class HemsireGozlem(db.Model):
         return {
             'id': self.id,
             'islem_id': self.islem_id,
-            'olcum_tarihi': self.olcum_tarihi,
+            'olcum_tarihi': self.olcum_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
             'vucut_sicakligi': self.vucut_sicakligi,
             'nabiz': self.nabiz,
             'tansiyon_sistolik': self.tansiyon_sistolik,
