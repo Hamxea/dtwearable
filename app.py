@@ -6,6 +6,8 @@ from flask_jwt_extended import JWTManager
 
 from keymind.resources.PredictionRegisterResource import PredictionRegisterResource
 from keymind.resources.PredictionResource import PredictionResource
+from keymind.resources.AIModelActivateResource import AIModelActivateResource
+from keymind.resources.AIModelTrainerResource import AIModelTrainerResource
 from keymind.security.blacklist import BLACKLIST
 from db import db
 
@@ -19,6 +21,8 @@ from kvc.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.resources.IslemResource import IslemResource
 from kvc.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
 from kvc.resources.SiviAlimiResource import SiviAlimiResource
+from kvc.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
+from kvc.resources.HemsireGozlemResource import HemsireGozlemResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -113,6 +117,7 @@ def create_tables():
     db.create_all()
 
 # Uygulamaya restful endpoint olarak tanımlanacak tüm sınıflar aşağıda belirtilir
+# Keymind
 # Security resources
 api.add_resource(UserRegisterResource, '/register')
 api.add_resource(UserLoginResource, '/login')
@@ -120,15 +125,24 @@ api.add_resource(UserResource, '/user/<int:user_id>')
 api.add_resource(TokenRefreshResource, '/refresh')
 api.add_resource(UserLogoutResource, '/logout')
 
+# AI
+api.add_resource(AIModelTrainerResource, '/ai/trainmodel')
+api.add_resource(AIModelActivateResource, '/ai/activatemodel')
+
+
 # KVK resources
-api.add_resource(IslemResource, '/islem/<int:islem_id>')
-api.add_resource(IslemRegisterResource, '/islem')
+api.add_resource(IslemResource, '/kvc/islem/<int:islem_id>')
+api.add_resource(IslemRegisterResource, '/kvc/islem')
 
 api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
 api.add_resource(SiviAlimiRegisterResource, '/sivialimi')
 
 api.add_resource(PredictionRegisterResource, '/prediction')
 api.add_resource(PredictionResource, '/prediction/<int:prediction_id>')
+
+api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
+api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
+
 
 db.init_app(app)
 
