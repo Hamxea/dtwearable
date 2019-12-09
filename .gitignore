@@ -2,6 +2,7 @@
 venv
 .idea
 __pycache__
+__init__.py
 *.pkl
 *.csv
 *.whl

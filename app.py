@@ -4,6 +4,8 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
+from keymind.resources.AIModelActivateResource import AIModelActivateResource
+from keymind.resources.AIModelTrainerResource import AIModelTrainerResource
 from keymind.security.blacklist import BLACKLIST
 from db import db
 
@@ -113,6 +115,7 @@ def create_tables():
     db.create_all()
 
 # Uygulamaya restful endpoint olarak tanımlanacak tüm sınıflar aşağıda belirtilir
+# Keymind
 # Security resources
 api.add_resource(UserRegisterResource, '/register')
 api.add_resource(UserLoginResource, '/login')
@@ -120,9 +123,14 @@ api.add_resource(UserResource, '/user/<int:user_id>')
 api.add_resource(TokenRefreshResource, '/refresh')
 api.add_resource(UserLogoutResource, '/logout')
 
+# AI
+api.add_resource(AIModelTrainerResource, '/ai/trainmodel')
+api.add_resource(AIModelActivateResource, '/ai/activatemodel')
+
+
 # KVK resources
-api.add_resource(IslemResource, '/islem/<int:islem_id>')
-api.add_resource(IslemRegisterResource, '/islem')
+api.add_resource(IslemResource, '/kvc/islem/<int:islem_id>')
+api.add_resource(IslemRegisterResource, '/kvc/islem')
 
 api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
 api.add_resource(SiviAlimiRegisterResource, '/sivialimi')
