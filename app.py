@@ -17,6 +17,8 @@ from kvc.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.resources.IslemResource import IslemResource
 from kvc.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
 from kvc.resources.SiviAlimiResource import SiviAlimiResource
+from kvc.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
+from kvc.resources.HemsireGozlemResource import HemsireGozlemResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -124,6 +126,10 @@ api.add_resource(IslemRegisterResource, '/islem')
 
 api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
 api.add_resource(SiviAlimiRegisterResource, '/sivialimi')
+
+api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
+api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
+
 
 db.init_app(app)
 
