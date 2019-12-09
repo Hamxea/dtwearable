@@ -3,7 +3,7 @@ from kvc.models.HemsireGozlem import HemsireGozlem
 
 
 class HemsireGozlemDAO(AbstractDAO):
-    """ Sıvı Alımı nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """
+    """ Hemsire Gözlem nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """
 
     def find_by_id(self, _id: int):
         """ _id değerine göre Hemşire Gözlem nesnesini veritabanından getiren metod """
