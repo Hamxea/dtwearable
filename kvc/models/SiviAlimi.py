@@ -1,6 +1,9 @@
 import datetime
 from builtins import float
 
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
 from db import db
 
 
@@ -10,7 +13,7 @@ class SiviAlimi(db.Model):
     __tablename__ = "sivi_alimi"
 
     id = db.Column(db.BigInteger, primary_key=True)
-    islem_id = db.Column(db.BigInteger)
+    islem_id = db.Column(db.BigInteger) #, ForeignKey('islem.id', ondelete='CASCADE'), nullable=False)
     olcum_tarihi = db.Column(db.DateTime)
     kilo = db.Column(db.Float)
     aldigi_sivi_miktari_oral = db.Column(db.Float)
@@ -20,6 +23,8 @@ class SiviAlimi(db.Model):
     cikardigi_sivi_miktari_nazogastrik = db.Column(db.Float)
     cikardigi_sivi_diren = db.Column(db.Float)
     sivi_farki = db.Column(db.Float)
+
+    # islem = relationship('Islem', backref="sivi_alimi", lazy='dynamic')
 
     # sivi_alimi_list = db.relationship('SiviAlimi', backref="sivi_alimi", lazy='dynamic')
 

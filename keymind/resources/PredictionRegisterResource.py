@@ -19,13 +19,25 @@ class PredictionRegisterResource(Resource):
                                         type=int,
                                         required=False,
                                         )
-    prediction_post_parser.add_argument('islem_id',
+    prediction_post_parser.add_argument('reference_table',
+                                        type=str,
+                                        required=True,
+                                        )
+    prediction_post_parser.add_argument('reference_id',
                                         type=int,
                                         required=True,
                                         )
-    prediction_post_parser.add_argument('prediction_value',
-                                        type=int,
+    prediction_post_parser.add_argument('prediction_input',
+                                        type=str,
                                         required=True,
+                                        )
+    prediction_post_parser.add_argument('prediction_value',
+                                        type=float,
+                                        required=False,
+                                        )
+    prediction_post_parser.add_argument('prediction_error',
+                                        type=str,
+                                        required=False,
                                         )
     prediction_post_parser.add_argument('prediction_date',
                                         type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
@@ -62,10 +74,14 @@ class PredictionRegisterResource(Resource):
         prediction = self.predictionDAO.find_by_id(data['id'])
 
         if prediction:
-            prediction.islem_id = data['islem_id']
+            prediction.reference_table = data['reference_table']
+            prediction.reference_id = data['reference_id']
+            prediction.prediction_input = data['prediction_input']
             prediction.prediction_value = data['prediction_value']
+            prediction.prediction_error = data['prediction_error']
             prediction.prediction_date = data['prediction_date']
             prediction.ai_model_id = data['ai_model_id']
+
         else:
             prediction = Prediction(**data)
 
