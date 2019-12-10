@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from keymind.daos.PredictionDAO import PredictionDAO
+from ai.restful.daos.PredictionDAO import PredictionDAO
 
 
 class PredictionResource(Resource):

@@ -1,5 +1,6 @@
-from keymind.daos.AbstractDAO import AbstractDAO
-from keymind.models.Prediction import Prediction
+from ai.restful.daos.AbstractDAO import AbstractDAO
+from ai.restful.models.Prediction import Prediction
+
 
 class PredictionDAO(AbstractDAO):
     """ Prediction nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """

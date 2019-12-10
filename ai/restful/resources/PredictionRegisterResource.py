@@ -1,10 +1,6 @@
-from datetime import datetime
-
 from flask_restful import reqparse, Resource
 
-from keymind.ai_predictions.PredictionService import PredictionService
-from keymind.daos.PredictionDAO import PredictionDAO
-from keymind.models.Prediction import Prediction
+from ai.restful.services.PredictionService import PredictionService
 
 
 class PredictionRegisterResource(Resource):
@@ -29,7 +25,7 @@ class PredictionRegisterResource(Resource):
                                         required=True,
                                         )
     prediction_post_parser.add_argument('prediction_input',
-                                        type=str,
+                                        type=dict,
                                         required=True,
                                         )
 

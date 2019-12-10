@@ -1,14 +1,13 @@
+import json
 import pickle
-from _lsprof import profiler_entry
 from datetime import datetime
 
 import numpy as np
 from flask import jsonify
 
-from keymind.ai_predictions.Predict import Predict
-from keymind.daos.AIModelDAO import AIModelDAO
-from keymind.daos.PredictionDAO import PredictionDAO
-from keymind.models.Prediction import Prediction
+from ai.restful.daos.AIModelDAO import AIModelDAO
+from ai.restful.daos.PredictionDAO import PredictionDAO
+from ai.restful.models.Prediction import Prediction
 
 
 class PredictionService():
@@ -26,16 +25,13 @@ class PredictionService():
         ai_model_dto = self.ai_model_dao.find_last_enabled_version_by_name(ai_model_class)
         model = self.load_model(ai_model_dto.model_url)
 
-        prediction_dto = Prediction()
-        prediction_dto.reference_table = reference_table
-        prediction_dto.reference_id = reference_id
-        prediction_dto.prediction_input = jsonify(prediction_input)
-        prediction_dto.prediction_date = datetime.now()
-        prediction_dto.ai_model_id = ai_model_dto.id
-
+        prediction_dto = Prediction(id=None, reference_table=reference_table, reference_id=reference_id,
+                                    prediction_input=json.dumps(prediction_input), prediction_value=None,
+                                    prediction_error=None, prediction_date=datetime.now(),
+                                    ai_model_id=ai_model_dto.id)
         try:
             new_prediction = self.predict(model, prediction_input)
-            prediction_dto.prediction_value = new_prediction
+            prediction_dto.prediction_value = new_prediction[0]
             self.prediction_dao.save_to_db(prediction_dto)
             return prediction_dto
         except Exception as e:
@@ -61,12 +57,9 @@ class PredictionService():
         for key in prediction_input:
             input.append(prediction_input[key])
 
-        Xnew = np.array([input])
-        return model.predict(Xnew)
+        return model.predict(input)
 
     def load_model(self, model_url):
         """ Modeli dosya sisteminden yükleyen metod """
 
         return pickle.load(open(model_url, 'rb'))
-
-

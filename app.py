@@ -12,13 +12,13 @@ from ai.security.blacklist import BLACKLIST
 from db import db
 
 from ai.restful.resources.security.UserLoginResource import UserLoginResource
-from ai.restful.resources.security import UserResource
-from ai.restful.resources.security import TokenRefreshResource
-from ai.restful.resources.security import UserLogoutResource
+from ai.restful.resources.security.UserResource import UserResource
+from ai.restful.resources.security.TokenRefreshResource import TokenRefreshResource
+from ai.restful.resources.security.UserLogoutResource import UserLogoutResource
 from ai.restful.resources.security.UserRegisterResource import UserRegisterResource
 
-from kvc.restful.resources import IslemRegisterResource
-from kvc.restful.resources import IslemResource
+from kvc.restful.resources.IslemRegisterResource import IslemRegisterResource
+from kvc.restful.resources.IslemResource import IslemResource
 from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
 from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
@@ -31,7 +31,7 @@ api = Api(app)
 SqlAlchemy ayarları
 """
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://arge05:arge05@10.0.0.59:5432/ai')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://arge05:arge05@10.0.0.59:5432/keymind')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 db.init_app(app)
