@@ -1,11 +1,229 @@
 {
 	"info": {
-		"_postman_id": "1e39d0b8-ff7c-4b39-915b-78401d95ccf7",
+		"_postman_id": "cada0800-dc16-416c-9e57-ddf9aa7bfe5f",
 		"name": "Keymind",
 		"description": "This collection contains requests associated witht the Flask-JWT-Extended section of the REST API course.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "security",
+			"item": [
+				{
+					"name": "register a new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"jose\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{server_address}}/register",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server_address}}/islem/1",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"islem",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"jose\",\n\t\"password\": \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{server_address}}/user/2",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8c0c0ed6-c206-4c88-9349-429e024e312b",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"access_token not empty\", function () {",
+									"    pm.expect(jsonData.access_token).not.eql(undefined);",
+									"});",
+									"",
+									"pm.test(\"refresh token not empty\", function () {",
+									"    pm.expect(jsonData.refresh_token).not.eql(undefined);",
+									"});",
+									"// set access token as environement variable",
+									"if (jsonData.access_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"access_token\", null);",
+									"}",
+									"// set refresh token as environement variable",
+									"if (jsonData.refresh_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"refresh_token\", null);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\" : \"jose\",\n  \"password\" : \"1234\"\n}"
+						},
+						"url": {
+							"raw": "{{server_address}}/login",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc763e9b-e6c7-4ff3-9766-637976a5c64b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server_address}}/logout",
+							"host": [
+								"{{server_address}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ad818ea6-8f79-436e-b756-ad878666ae9e",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.test(\"access_token not empty\", function () {",
+									"    pm.expect(jsonData.access_token).not.eql(undefined);",
+									"});",
+									"// set access token as environement variable",
+									"if (jsonData.access_token !== undefined) {",
+									"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+									"} else {",
+									"    postman.setEnvironmentVariable(\"access_token\", null);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{refresh_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{local_flask}}/refresh",
+							"host": [
+								"{{local_flask}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
 		{
 			"name": "kvc",
 			"item": [
@@ -18,13 +236,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}/islem/3",
+									"raw": "{{url}}/islem/1",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"islem",
-										"3"
+										"1"
 									]
 								}
 							},
@@ -109,6 +327,224 @@
 									],
 									"path": [
 										"islem"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "sivialimi",
+					"item": [
+						{
+							"name": "/sivialimi/<id>",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/sivialimi/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"sivialimi",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sivialimi/<id>",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/islem/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"islem",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sivialimi",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"islem_id\": 1,\n\t\"olcum_tarihi\": \"01.01.2019 00:00:00\",\n\t\"kilo\": 0,\n\t\"aldigi_sivi_miktari_oral\":12,\n    \"aldigi_sivi_miktari_intravanoz\": 100,\n    \"aldigi_sivi_miktari_nazogastrik\": 100,\n    \"cikardigi_sivi_miktari_idrar\": 100,\n    \"cikardigi_sivi_miktari_nazogastrik\": 100,\n    \"cikardigi_sivi_diren\": 100,\n    \"sivi_farki\": 5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/sivialimi",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"sivialimi"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sivialimi",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"islem_id\": 2,\n\t\"olcum_tarihi\": \"12.01.2019 00:00:00\",\n\t\"kilo\": 70,\n\t\"aldigi_sivi_miktari_oral\":12,\n    \"aldigi_sivi_miktari_intravanoz\": 222,\n    \"aldigi_sivi_miktari_nazogastrik\": 222,\n    \"cikardigi_sivi_miktari_idrar\": 222,\n    \"cikardigi_sivi_miktari_nazogastrik\": 222,\n    \"cikardigi_sivi_diren\": 222,\n    \"sivi_farki\": 55\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/sivialimi",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"sivialimi"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "prediction",
+					"item": [
+						{
+							"name": "/prediction/<id>",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/prediction/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"prediction",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/prediction/<id>",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/prediction/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"prediction",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/prediction",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"islem_id\": 1,\n\t\"prediction_value\": 0,\n\t\"prediction_date\": \"01.01.2019 00:00:00\",\n\t\"ai_model_id\":12\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/prediction",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"prediction"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/prediction",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"islem_id\": 1,\n\t\"prediction_value\": 0,\n\t\"prediction_date\": \"01.01.2019 00:00:00\",\n\t\"ai_model_id\":12\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/prediction",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"prediction"
 									]
 								}
 							},
@@ -222,328 +658,6 @@
 								}
 							},
 							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "keymind",
-			"item": [
-				{
-					"name": "security",
-					"item": [
-						{
-							"name": "/register (register a new user)",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"username\": \"umit\",\n\t\"password\": \"1234\"\n}"
-								},
-								"url": {
-									"raw": "{{url}}/register",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"register"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/user/<id> (get user by id)",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{url}}/user/1",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"user",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/user/<id> (delete user by id)",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"username\": \"jose\",\n\t\"password\": \"1234\"\n}"
-								},
-								"url": {
-									"raw": "{{url}}/user/1",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"user",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/login (user login)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "8c0c0ed6-c206-4c88-9349-429e024e312b",
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"pm.test(\"access_token not empty\", function () {",
-											"    pm.expect(jsonData.access_token).not.eql(undefined);",
-											"});",
-											"",
-											"pm.test(\"refresh token not empty\", function () {",
-											"    pm.expect(jsonData.refresh_token).not.eql(undefined);",
-											"});",
-											"// set access token as environement variable",
-											"if (jsonData.access_token !== undefined) {",
-											"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
-											"} else {",
-											"    postman.setEnvironmentVariable(\"access_token\", null);",
-											"}",
-											"// set refresh token as environement variable",
-											"if (jsonData.refresh_token !== undefined) {",
-											"    postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
-											"} else {",
-											"    postman.setEnvironmentVariable(\"refresh_token\", null);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"username\" : \"umit\",\n  \"password\" : \"1234\"\n}"
-								},
-								"url": {
-									"raw": "{{url}}/login",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/logout (user logout)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "dc763e9b-e6c7-4ff3-9766-637976a5c64b",
-										"type": "text/javascript",
-										"exec": [
-											""
-										]
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{access_token}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{server_address}}/logout",
-									"host": [
-										"{{server_address}}"
-									],
-									"path": [
-										"logout"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/refresh (refresh token)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"id": "ad818ea6-8f79-436e-b756-ad878666ae9e",
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"pm.test(\"access_token not empty\", function () {",
-											"    pm.expect(jsonData.access_token).not.eql(undefined);",
-											"});",
-											"// set access token as environement variable",
-											"if (jsonData.access_token !== undefined) {",
-											"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
-											"} else {",
-											"    postman.setEnvironmentVariable(\"access_token\", null);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Authorization",
-										"value": "Bearer {{refresh_token}}"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{url}}/refresh",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"refresh"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "ai",
-					"item": [
-						{
-							"name": "/ai/trainmodel",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"class_name\": \"keymind.ai.aimodels.TestModel.TestModel\",\n\t\"dataset_parameters\" : {\n\t\t\"dataset_start_time\": \"01.01.2019\",\n\t\t\"dataset_end_time\": \"01.01.2019\",\n\t\t\"train_ratio\": 80,\n\t\t\"test_ratio\": 20\n\t},\n\t\"hyperparameters\" : {\n\t\t\"tree_size\" : 100\n\t} \n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/ai/trainmodel",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"ai",
-										"trainmodel"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/ai/activatemodel",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Content-Type",
-										"name": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"class_name\": \"keymind.ai.aimodels.TestModel.TestModel\",\n\t\"version\": 2\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/ai/activatemodel",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"ai",
-										"activatemodel"
-									]
-								}
-							},
-							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"id": "09c4a92b-4013-43fc-9874-ed5072e981fa",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"id": "c7e93f9f-c4e2-4558-a96f-d466ed4e3026",
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
 						}
 					],
 					"protocolProfileBehavior": {},

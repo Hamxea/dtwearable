@@ -20,7 +20,9 @@ class PredictionResource(Resource):
         return prediction.serialize, 200
 
     def delete(self, prediction_id: int):
-        """ prediction_id parametresine karsılık gelen Prediction nesnesini veri tabanından silen metod """
+        """ prediction_id parametresine karsılık gelen Prediction nesnesini veri tabanından silen metod. """
+
+        # TODO Bu işlem admin yetkisi gerektirir
 
         prediction = self.predictionAlimiDAO.find_by_id(prediction_id)
         if not prediction:
