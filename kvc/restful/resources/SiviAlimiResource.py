@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from kvc.restful.daos import SiviAlimiDAO
+from kvc.restful.daos.SiviAlimiDAO import SiviAlimiDAO
 
 
 class SiviAlimiResource(Resource):

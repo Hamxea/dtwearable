@@ -15,7 +15,7 @@ class UserResource(AbstractUserResource):
         user = self.userDAO.find_by_id(user_id)
         if not user:
             return {'message': 'User Not Found'}, 404
-        return user.json(), 200
+        return user.serialize(), 200
 
     def delete(self, user_id: int):
         """ user__id değerine göre kullanıcıyı silen metod """

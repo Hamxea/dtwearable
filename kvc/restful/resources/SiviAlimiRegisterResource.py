@@ -2,8 +2,8 @@ from datetime import datetime
 
 from flask_restful import reqparse, Resource
 
-from kvc.restful.daos import SiviAlimiDAO
-from kvc.restful.models import SiviAlimi
+from kvc.restful.daos.SiviAlimiDAO import SiviAlimiDAO
+from kvc.restful.models.SiviAlimi import SiviAlimi
 
 
 class SiviAlimiRegisterResource(Resource):
