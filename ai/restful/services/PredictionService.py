@@ -2,9 +2,6 @@ import json
 import pickle
 from datetime import datetime
 
-import numpy as np
-from flask import jsonify
-
 from ai.restful.daos.AIModelDAO import AIModelDAO
 from ai.restful.daos.PredictionDAO import PredictionDAO
 from ai.restful.models.Prediction import Prediction
@@ -42,12 +39,15 @@ class PredictionService():
     def predict(self, model, prediction_input):
         """
         Modeli kullanarak tahmin yapan metod
+        """
+
+        """
         Örnek input formatı
         {
          "ates": [35, 36],
          "nabız": [100, 120]
         }
-
+        veya
         {
             "ates": [35, 36]
         }
