@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1e39d0b8-ff7c-4b39-915b-78401d95ccf7",
+		"_postman_id": "f074cac3-c32e-49a1-b83d-75fe460f175a",
 		"name": "Keymind",
 		"description": "This collection contains requests associated witht the Flask-JWT-Extended section of the REST API course.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
