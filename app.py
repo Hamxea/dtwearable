@@ -4,8 +4,8 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from keymind.resources.PredictionRegisterResource import PredictionRegisterResource
-from keymind.resources.PredictionResource import PredictionResource
+from ai.restful.resources.PredictionRegisterResource import PredictionRegisterResource
+from ai.restful.resources.PredictionResource import PredictionResource
 from ai.restful.resources.AIModelActivateResource import AIModelActivateResource
 from ai.restful.resources.AIModelTrainerResource import AIModelTrainerResource
 from ai.security.blacklist import BLACKLIST
