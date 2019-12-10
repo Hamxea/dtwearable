@@ -51,3 +51,4 @@ class PredictionRegisterResource(Resource):
                     }, 500
 
         return prediction_dto.serialize, 201
+
