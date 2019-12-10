@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "b02a91f6-c68f-49ba-bcc8-8b429d6c37f5",
+		"name": "keymind.ai.prediction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/prediction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"islem_id\": 1,\n\t\"prediction_value\": 0,\n\t\"prediction_date\": \"01.01.2019 00:00:00\",\n\t\"ai_model_id\":12\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/prediction",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"prediction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/prediction/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/prediction/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"prediction",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
