@@ -32,7 +32,8 @@ class IslemOperasyonRegisterResource(Resource) :
     islemOperasyonDAO = IslemOperasyonDAO()
 
     def post(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore Hemsire Gözlem nesnesini olusturan ve veritabanına yazan metod """
+        """ Restful isteğinin body kısmında bulunan veriye gore Islem Operasyon nesnesini olusturan ve veritabanına yazan metod """
+
         data = self.islem_operasyon_post_parser.parse_args()
         islem_operasyon = IslemOperasyon(**data)
         try:
@@ -44,7 +45,8 @@ class IslemOperasyonRegisterResource(Resource) :
 
         return islem_operasyon.serialize, 201
     def put(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore Hemsire Gözlem nesnesini olusturan veya guncelleyen metod """
+        """ Restful isteğinin body kısmında bulunan veriye gore Islem Operasyon nesnesini olusturan veya guncelleyen metod """
+
         data = self.islem_operasyon_post_parser.parse_args()
 
         islem_operasyon = self.islemOperasyonDAO.find_by_id(data['id'])

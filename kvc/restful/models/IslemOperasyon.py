@@ -22,6 +22,7 @@ class IslemOperasyon(db.Model):
     @property
     def serialize(self):
         """ Nesneyi json'a çeviren metod """
+
         return {
             'id': self.id,
             'islem_id': self.islem_id,
