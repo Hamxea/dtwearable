@@ -7,5 +7,3 @@ class SiviAlimiDAO(AbstractDAO):
 
     def __init__(self):
         super().__init__(SiviAlimiDTO)
-
-        return SiviAlimiDTO.query.filter_by(id=_id).first()
