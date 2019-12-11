@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "41a416b8-34d6-4796-afe4-31d7ba71d897",
+		"name": "keymind.kvc.kvcnotification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/kvc/kvcnotification/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/kvc/kvcnotification/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"kvc",
+						"kvcnotification",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/kvc/kvcnotification/<id>",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/kvc/kvcnotification/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"kvc",
+						"kvcnotification",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/kvc/kvcnotification",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rule_violation_id\": 101,\n\t\"staff_id\": 1,\n\t\"priority\": 0,\n\t\"message\": \"Test message\",\n\t\"notification_date\": \"01.01.2019 00:00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/kvc/kvcnotification",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"kvc",
+						"kvcnotification"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/kvc/kvcnotification",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"rule_violation_id\": 111,\r\n    \"staff_id\": 1,\r\n    \"priority\": 0,\r\n    \"message\": \"Test message\",\r\n    \"notification_date\": \"01.01.2019 00:00:00\",\r\n    \"error_message\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/kvc/kvcnotification",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"kvc",
+						"kvcnotification"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
