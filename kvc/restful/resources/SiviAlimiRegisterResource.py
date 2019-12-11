@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.SiviAlimiDAO import SiviAlimiDAO
-from kvc.restful.models.SiviAlimi import SiviAlimi
+from kvc.restful.models.SiviAlimiDTO import SiviAlimiDTO
 
 
 class SiviAlimiRegisterResource(Resource):
@@ -67,7 +67,7 @@ class SiviAlimiRegisterResource(Resource):
 
         data = self.sivi_alimi_post_parser.parse_args()
 
-        sivi_alimi = SiviAlimi(**data)
+        sivi_alimi = SiviAlimiDTO(**data)
 
         try:
             self.siviAlimiDAO.save_to_db(sivi_alimi)
@@ -97,7 +97,7 @@ class SiviAlimiRegisterResource(Resource):
             sivi_alimi.cikardigi_sivi_diren = data['cikardigi_sivi_diren']
             sivi_alimi.sivi_farki = data['sivi_farki']
         else:
-            sivi_alimi = SiviAlimi(**data)
+            sivi_alimi = SiviAlimiDTO(**data)
 
         self.siviAlimiDAO.save_to_db(sivi_alimi)
 

@@ -2,7 +2,8 @@ import datetime
 
 from db import db
 
-class Islem(db.Model):
+
+class IslemDTO(db.Model):
     """
     Islem tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
     """

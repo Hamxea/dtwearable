@@ -4,7 +4,7 @@ from datetime import datetime
 
 from ai.restful.daos.AIModelDAO import AIModelDAO
 from ai.restful.daos.PredictionDAO import PredictionDAO
-from ai.restful.models.Prediction import Prediction
+from ai.restful.models.PredictionDTO import PredictionDTO
 
 
 class PredictionService():
@@ -22,10 +22,10 @@ class PredictionService():
         ai_model_dto = self.ai_model_dao.find_last_enabled_version_by_name(ai_model_class)
         model = self.load_model(ai_model_dto.model_url)
 
-        prediction_dto = Prediction(id=None, reference_table=reference_table, reference_id=reference_id,
-                                    prediction_input=json.dumps(prediction_input), prediction_value=None,
-                                    prediction_error=None, prediction_date=datetime.now(),
-                                    ai_model_id=ai_model_dto.id)
+        prediction_dto = PredictionDTO(id=None, reference_table=reference_table, reference_id=reference_id,
+                                       prediction_input=json.dumps(prediction_input), prediction_value=None,
+                                       prediction_error=None, prediction_date=datetime.now(),
+                                       ai_model_id=ai_model_dto.id)
         try:
             new_prediction = self.predict(model, prediction_input)
             prediction_dto.prediction_value = new_prediction[0]

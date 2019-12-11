@@ -19,6 +19,8 @@ from ai.restful.resources.security.UserRegisterResource import UserRegisterResou
 
 from kvc.restful.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.restful.resources.IslemResource import IslemResource
+from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
+from kvc.restful.resources.LabSonucResource import LabSonucResource
 from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
 from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
@@ -142,6 +144,10 @@ api.add_resource(PredictionResource, '/prediction/<int:prediction_id>')
 
 api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
 api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
+
+api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
+api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
+
 
 
 db.init_app(app)

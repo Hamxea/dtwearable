@@ -2,7 +2,7 @@ import datetime
 
 from db import db
 
-class HemsireGozlem(db.Model):
+class HemsireGozlemDTO(db.Model):
     """ Hemşire Gözlem tablosu için veritabanı eşleştirmelerinin yapıldığı model sınıfı """
 
     __tablename__ = "hemsire_gozlem"

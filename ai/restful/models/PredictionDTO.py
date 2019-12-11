@@ -4,7 +4,7 @@ from builtins import float
 from db import db
 
 
-class Prediction(db.Model):
+class PredictionDTO(db.Model):
     """ Prediction tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı """
 
     __tablename__ = 'prediction'
