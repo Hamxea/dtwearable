@@ -23,6 +23,8 @@ from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterRes
 from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
 from kvc.restful.resources.HemsireGozlemResource import HemsireGozlemResource
+from kvc.restful.resources.IslemTaniRegisterResource import IslemTaniRegisterResource
+from kvc.restful.resources.IslemTaniResource import IslemTaniResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -143,6 +145,8 @@ api.add_resource(PredictionResource, '/prediction/<int:prediction_id>')
 api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
 api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
 
+api.add_resource(IslemTaniResource, '/islemTani/<int:islem_id>')
+api.add_resource(IslemTaniRegisterResource, '/islemTani')
 
 db.init_app(app)
 

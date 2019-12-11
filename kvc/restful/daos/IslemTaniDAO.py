@@ -1,5 +1,5 @@
 from ai.restful.daos.AbstractDAO import AbstractDAO
-from kvc.restful.models import IslemTani
+from kvc.restful.models.IslemTani import IslemTani
 
 class IslemTaniDAO(AbstractDAO):
     """

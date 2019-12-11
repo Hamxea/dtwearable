@@ -24,5 +24,7 @@ class IslemTaniResource(Resource):
         islemTani = self.islemTaniDAO.find_by_id(islem_id)
         if not islemTani:
             return {'message': 'Islem Tani Not Found'}, 404
-        self.islemTani.delete_from_db(islemTani)
+        self.islemTaniDAO.delete_from_db(islemTani)
         return {'message': 'Islem Tani deleted.'}, 200
+
+
