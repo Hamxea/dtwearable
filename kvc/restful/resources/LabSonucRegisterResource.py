@@ -16,9 +16,9 @@ class LabSonucRegisterResource(Resource):
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('id', type=int, required=False)
     post_parser.add_argument('islem_id', type=int, required=True)
+    post_parser.add_argument('lis_kabul_id', type=int, required=True)
     post_parser.add_argument('numune_tarihi', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(), required=True)
-    post_parser.add_argument('tahlil_id', type=int, required=True)
-    post_parser.add_argument('tahlil_adi', type=str, required=True)
+    post_parser.add_argument('tahlil_kodu', type=str, required=True)
     post_parser.add_argument('tahlil_deger', type=str, required=True)
 
     dao = LabSonucDAO()
@@ -48,9 +48,9 @@ class LabSonucRegisterResource(Resource):
 
         if lab_sonuc_dto:
             lab_sonuc_dto.islem_id = data['islem_id']
+            lab_sonuc_dto.lis_kabul_id = data['lis_kabul_id']
             lab_sonuc_dto.numune_tarihi = data['numune_tarihi']
-            lab_sonuc_dto.tahlil_id = data['tahlil_id']
-            lab_sonuc_dto.tahlil_adi = data['tahlil_adi']
+            lab_sonuc_dto.tahlil_kodu = data['tahlil_kodu']
             lab_sonuc_dto.tahlil_deger = data['tahlil_deger']
         else:
             lab_sonuc_dto = LabSonucDTO(**data)
