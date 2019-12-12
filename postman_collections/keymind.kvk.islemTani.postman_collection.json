@@ -1,0 +1,77 @@
+{
+	"variables": [],
+	"info": {
+		"name": "islemTani",
+		"_postman_id": "26fd2ad5-f074-b294-9bac-84bd281e3484",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/islemTani/<id>",
+			"request": {
+				"url": "{{url}}/islem/1",
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/islemTani/<id>",
+			"request": {
+				"url": "{{url}}/islemTani/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/islemTani",
+			"request": {
+				"url": "{{url}}/islem",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"islem_no\": 102,\r\n    \"kayit_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"cinsiyet\": 0,\r\n    \"yas\": 12,\r\n    \"operasyon_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"cikis_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"etiket\": null\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/islemTani",
+			"request": {
+				"url": "{{url}}/islemTani",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\t\"islem_id\": 104,\n\t\"tani_kodu\": \"tani kodu 1\",\n\t\"tani_tipi\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
