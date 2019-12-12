@@ -5,8 +5,8 @@ from kvc.restful.models.KvcNotificationDTO import KvcNotificationDTO
 class KvcNotificationDAO(AbstractDAO):
     """ KvcNotification nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """
 
-    def __init__(self):
-        super().__init__(KvcNotificationDTO)
+    # def __init__(self):
+    #     super().__init__(KvcNotificationDTO)
 
     def get_by_islem_no(self, islem_no_list):
         """ islem_no değerlerine göre KvcNotification nesnelerini dönen metod """
