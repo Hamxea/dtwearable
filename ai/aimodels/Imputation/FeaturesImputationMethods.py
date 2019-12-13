@@ -14,27 +14,27 @@ import numpy as np
 class FeaturesImputationMethods():
   """ Eksik özeklikler (Imputation) yöntemlar with Multi-Step Output """
 
-  def fancy_imputation_nuclear__norm_minimization(self, dataset):
+  def fancy_imp_nuclear__norm_min(self, dataset):
       """ basit bir şekilde uygulanması cvxpy kullanarak Eksik özeklikler yöntem (Exact Matrix Completion via Convex Optimization """
 
       dataset_filled_nnm = NuclearNormMinimization().fit_transform(dataset)
       return dataset_filled_nnm
 
-  def fancy_impute_KNN(self, dataset):
+  def fancy_imp_KNN(self, dataset):
       """ k-Nearest Neighbors imputation eksik veri içeren diziler için empoze edilmiştir. Yalnızca en fazla birkaç satır içeren yoğun dizilerde çalışır."""
 
       dataset_filled_knn = KNN(k=3).fit_transform(dataset)
 
       return dataset_filled_knn
 
-  def fast_knn_impyute(self, dataset):
+  def fast_knn_imp(self, dataset):
       """ En yakın komşular yaklaşımının bir çeşidini kullanarak Impute """
 
       dataset_filled_fast_knn = fast_knn(dataset, k=30)
 
       return dataset_filled_fast_knn
 
-  def fancy_soft_impute(self, dataset):
+  def fancy_soft_imp(self, dataset):
       """" Büyük Eksik Matrisleri Öğrenmek İçin Spektral Düzenleme Algoritmaları
             Nükleer norm hedefini doğrudan çözmek yerine, tekil değer eşiklemesi kullanarak seyrekliği sağlar. """
 
@@ -43,7 +43,7 @@ class FeaturesImputationMethods():
 
       return dataset_filled_softimpute
 
-  def sklearn_mean_impute(self, dataset):
+  def sklearn_mean_imp(self, dataset):
       """ eksik değerleri ortalama sütun değerleriyle doldur """
 
       imputer = Imputer()
@@ -51,7 +51,7 @@ class FeaturesImputationMethods():
 
       return dataset_filled_sklearn_impute
 
-  def multivariate_feature_imputation(self, dataset):
+  def multivariate_feature_imp(self, dataset):
       """ sklearn.impute'den SimpleImputer """
       """ Parameter strategy:
                             string ('mean', 'median', most_frequent, constant ) """
@@ -63,7 +63,7 @@ class FeaturesImputationMethods():
 
       return dataset_multivariate_feature_imputation
 
-  def multivariate_imputation_chained_equation(self, dataset):
+  def multivariate_imp_chained_equa(self, dataset):
       """ Çok Değişkenli KullanmaImputation by Chained Equation (MICE) """
 
       dataset_mice = mice(dataset)
