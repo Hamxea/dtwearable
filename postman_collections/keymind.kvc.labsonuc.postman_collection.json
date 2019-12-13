@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"islem_id\": 101,\n\t\"lis_kabul_id\": 201,\n\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\"tahlil_kodu\": \"ATC\",\n\t\"tahlil_deger\": \"12.7\"\n}",
+					"raw": "{\n\t\"islem_id\": 121,\n\t\"lis_kabul_id\": 21,\n\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\"tahlil_kodu\": \"ATC\",\n\t\"tahlil_deger\": \"12.7\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,6 +72,41 @@
 					"path": [
 						"kvc",
 						"labsonuc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/kvc/labsonuc/batch",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"islem_id\": 101,\n\t\t\"lis_kabul_id\": 201,\n\t\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\t\"tahlil_kodu\": \"ATC\",\n\t\t\"tahlil_deger\": \"12.7\"\n\t},\n\t{\n\t\t\"islem_id\": 102,\n\t\t\"lis_kabul_id\": 201,\n\t\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\t\"tahlil_kodu\": \"ATC\",\n\t\t\"tahlil_deger\": \"12.7\"\n\t}\n]\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/kvc/labsonuc/batch",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"kvc",
+						"labsonuc",
+						"batch"
 					]
 				}
 			},
