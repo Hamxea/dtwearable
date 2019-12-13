@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "6a4615f0-2418-4ea7-b5d8-811bb6fff3c1",
+		"name": "keymind.kvc.islemoperasyon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/islemoperasyon/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/hemsiregozlem/10"
+			},
+			"response": []
+		},
+		{
+			"name": "/islemoperasyon/<id>",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "{{url}}/hemsiregozlem/9"
+			},
+			"response": []
+		},
+		{
+			"name": "/islemoperasyon",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"islem_id\":8,\n\t\"operasyon_sut\" : \"m23.0\",\n\t\"operasyon_tipi\":0\n}"
+				},
+				"url": "{{url}}/islemoperasyon"
+			},
+			"response": []
+		},
+		{
+			"name": "/islemoperasyon",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 10,\r\n    \"islem_no\": 103,\r\n    \"islem_id\": 1,\r\n    \"olcum_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"vucut_sicakligi\": 35.7,\r\n    \"nabiz\": 75,\r\n    \"tansiyon_sistolik\": 90,\r\n    \"tansiyon_diastolik\": 45,\r\n    \"spo\": 30,\r\n    \"o2\": 40,\r\n    \"aspirasyon\": true,\r\n    \"kan_transfuzyonu\": false,\r\n    \"diren_takibi\": true\r\n}"
+				},
+				"url": "{{url}}/hemsiregozlem"
+			},
+			"response": []
+		}
+	]
+}

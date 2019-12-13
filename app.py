@@ -26,7 +26,11 @@ from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterRes
 from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
 from kvc.restful.resources.HemsireGozlemResource import HemsireGozlemResource
+from kvc.restful.resources.IslemTaniRegisterResource import IslemTaniRegisterResource
+from kvc.restful.resources.IslemTaniResource import IslemTaniResource
 
+from kvc.restful.resources.IslemOperasyonRegisterResource import IslemOperasyonRegisterResource
+from kvc.restful.resources.IslemOperasyonResource import IslemOperasyonResource
 app = Flask(__name__)
 api = Api(app)
 
@@ -150,6 +154,11 @@ api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
 api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
 api.add_resource(LabSonucBatchRegisterResource, '/kvc/labsonuc/batch')
 
+api.add_resource(IslemTaniResource, '/islemtani/<int:islem_id>')
+api.add_resource(IslemTaniRegisterResource, '/islemtani')
+
+api.add_resource(IslemOperasyonResource, '/islemoperasyon/<int:islem_operasyon_id>')
+api.add_resource(IslemOperasyonRegisterResource, '/islemoperasyon')
 
 db.init_app(app)
 
