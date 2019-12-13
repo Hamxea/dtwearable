@@ -5,3 +5,5 @@ psycopg2
 tensorflow
 keras
 sklearn
+pandas
+numpy

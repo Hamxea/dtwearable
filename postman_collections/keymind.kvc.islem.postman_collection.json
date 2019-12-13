@@ -6,16 +6,17 @@
 	},
 	"item": [
 		{
-			"name": "/islem/<id>",
+			"name": "/kvc/islem/<id>",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/islem/3",
+					"raw": "{{url}}/kvc/islem/3",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islem",
 						"3"
 					]
@@ -29,11 +30,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/islem/1",
+					"raw": "{{url}}/kvc/islem/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islem",
 						"1"
 					]
@@ -42,15 +44,15 @@
 			"response": []
 		},
 		{
-			"name": "/islem",
+			"name": "/kvc/islem",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
@@ -63,11 +65,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/islem",
+					"raw": "{{url}}/kvc/islem",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islem"
 					]
 				}
@@ -75,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "/islem",
+			"name": "/kvc/islem",
 			"request": {
 				"method": "PUT",
 				"header": [

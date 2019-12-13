@@ -1,6 +1,6 @@
 from db import db
 
-class User(db.Model):
+class UserDTO(db.Model):
     """
     User tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
     """

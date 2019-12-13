@@ -23,6 +23,9 @@ from kvc.restful.resources.KvcNotificationRegisterResource import KvcNotificatio
 from kvc.restful.resources.KvcNotificationResource import KvcNotificationResource
 from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
 from kvc.restful.resources.LabSonucResource import LabSonucResource
+from kvc.restful.resources.LabSonucBatchRegisterResource import LabSonucBatchRegisterResource
+from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
+from kvc.restful.resources.LabSonucResource import LabSonucResource
 from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
 from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
@@ -156,6 +159,10 @@ api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
 
 api.add_resource(KvcNotificationResource, '/kvc/kvcnotification/<int:kvc_notification_id>')
 api.add_resource(KvcNotificationRegisterResource, '/kvc/kvcnotification')
+
+api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
+api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
+api.add_resource(LabSonucBatchRegisterResource, '/kvc/labsonuc/batch')
 
 api.add_resource(IslemTaniResource, '/islemtani/<int:islem_id>')
 api.add_resource(IslemTaniRegisterResource, '/islemtani')

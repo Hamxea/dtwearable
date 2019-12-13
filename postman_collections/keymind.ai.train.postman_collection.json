@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0c166900-6c97-4df1-b13a-4ae4dfc68d77",
+		"_postman_id": "f2e3696e-9ef4-4895-975f-d28590484d1b",
 		"name": "keymind.ai.train",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"class_name\": \"keymind.ai.aimodels.TestModel.TestModel\",\n\t\"dataset_parameters\" : {\n\t\t\"dataset_start_time\": \"01.01.2019\",\n\t\t\"dataset_end_time\": \"01.01.2019\",\n\t\t\"train_ratio\": 80,\n\t\t\"test_ratio\": 20\n\t},\n\t\"hyperparameters\" : {\n\t\t\"tree_size\" : 100\n\t} \n}",
+					"raw": "{\r\n\t\"class_name\": \"keymind.ai.aimodels.TestModel.TestModel\",\r\n\t\"dataset_parameters\" : {\r\n\t\t\"dataset_start_time\": \"01.01.2019\",\r\n\t\t\"dataset_end_time\": \"01.12.2019\",\r\n\t\t\"test_ratio\": 0.2\r\n\t},\r\n\t\"hyperparameters\" : {\r\n\t\t\"tree_size\" : 100\r\n\t} \r\n} ",
 					"options": {
 						"raw": {
 							"language": "json"
