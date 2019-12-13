@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask_restful import reqparse, Resource
 from kvc.restful.daos.IslemOperasyonDAO import IslemOperasyonDAO
-from kvc.restful.models.IslemOperasyon import IslemOperasyon
+from kvc.restful.models.IslemOperasyonDTO import IslemOperasyonDTO
 
 class IslemOperasyonRegisterResource(Resource) :
     """
@@ -35,7 +35,7 @@ class IslemOperasyonRegisterResource(Resource) :
         """ Restful isteğinin body kısmında bulunan veriye gore Islem Operasyon nesnesini olusturan ve veritabanına yazan metod """
 
         data = self.islem_operasyon_post_parser.parse_args()
-        islem_operasyon = IslemOperasyon(**data)
+        islem_operasyon = IslemOperasyonDTO(**data)
         try:
             self.islemOperasyonDAO.save_to_db(islem_operasyon)
         except Exception as e:
@@ -55,7 +55,7 @@ class IslemOperasyonRegisterResource(Resource) :
             islem_operasyon.operasyon_sut = data['operasyon_sut']
             islem_operasyon.operasyon_tipi = data['operasyon_tipi']
         else:
-            islem_operasyon = IslemOperasyon(**data)
+            islem_operasyon = IslemOperasyonDTO(**data)
 
         self.islemOperasyonDAO.save_to_db(islem_operasyon)
 

@@ -1,6 +1,6 @@
 from db import db
 
-class IslemTani(db.Model):
+class IslemTaniDTO(db.Model):
     """ Işlem Tani tablosu için veritabanı eşleştirmelerinin yapıldığı model sınıfı """
 
     __tablename__ = "islem_tani"

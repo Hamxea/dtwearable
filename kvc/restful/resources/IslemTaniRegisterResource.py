@@ -3,7 +3,7 @@ from builtins import str
 from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.IslemTaniDAO import IslemTaniDAO
-from kvc.restful.models.IslemTani import IslemTani
+from kvc.restful.models.IslemTaniDTO import IslemTaniDTO
 
 class IslemTaniRegisterResource(Resource):
     """
@@ -38,7 +38,7 @@ class IslemTaniRegisterResource(Resource):
 
         data = self.islemTani_post_parser.parse_args()
 
-        islemTani = IslemTani(**data)
+        islemTani = IslemTaniDTO(**data)
 
         try:
             self.islemTaniDAO.save_to_db(islemTani)
@@ -62,7 +62,7 @@ class IslemTaniRegisterResource(Resource):
             islemTani.tani_kodu = data['tani_kodu']
             islemTani.tani_tipi = data['tani_tipi']
         else:
-            islemTani = IslemTani(**data)
+            islemTani = IslemTaniDTO(**data)
 
         self.islemTaniDAO.save_to_db(islemTani)
 
