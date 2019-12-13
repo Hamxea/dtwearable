@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"islem_id\": 101,\n\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\"tahlil_id\": 0,\n\t\"tahlil_adi\": \"ATC\",\n\t\"tahlil_deger\": \"12.7\"\n}",
+					"raw": "{\n\t\"islem_id\": 101,\n\t\"lis_kabul_id\": 201,\n\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\"tahlil_kodu\": \"ATC\",\n\t\"tahlil_deger\": \"12.7\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -91,7 +91,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\": 1,\n\t\"islem_id\": 111,\n\t\"numune_tarihi\": \"01.01.2019 00:00:00\",\n\t\"tahlil_id\": 0,\n\t\"tahlil_adi\": \"ATC\",\n\t\"tahlil_deger\": \"12.7\"\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"islem_id\": 121,\r\n    \"lis_kabul_id\": 221,\r\n    \"numune_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"tahlil_kodu\": \"ATC\",\r\n    \"tahlil_deger\": \"12.7\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
