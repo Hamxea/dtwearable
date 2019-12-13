@@ -1,5 +1,5 @@
 from ai.restful.daos.UserDAO import UserDAO
-from ai.restful.models.User import User
+from ai.restful.models.UserDTO import UserDTO
 from ai.restful.resources.security.AbstractUserResource import AbstractUserResource
 
 
@@ -16,7 +16,7 @@ class UserRegisterResource(AbstractUserResource):
         if self.userDAO.find_by_username(data['username']):
             return {"message": "A user with that username already exists"}, 400
 
-        user = User(data['username'], data['password'])
+        user = UserDTO(data['username'], data['password'])
         self.userDAO.save_to_db(user)
 
         return {"message": "User created successfully."}, 201

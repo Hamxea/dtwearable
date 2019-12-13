@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.IslemDAO import IslemDAO
-from kvc.restful.models import Islem
+from kvc.restful.models.IslemDTO import IslemDTO
 
 class IslemRegisterResource(Resource):
     """
@@ -57,7 +57,7 @@ class IslemRegisterResource(Resource):
 
         data = self.islem_post_parser.parse_args()
 
-        islem = Islem(**data)
+        islem = IslemDTO(**data)
 
         try:
             self.islemDAO.save_to_db(islem)
@@ -84,7 +84,7 @@ class IslemRegisterResource(Resource):
             islem.cikis_tarihi = data['cikis_tarihi']
             islem.etiket = data['etiket']
         else:
-            islem = Islem(**data)
+            islem = IslemDTO(**data)
 
         self.islemDAO.save_to_db(islem)
 

@@ -3,7 +3,7 @@ from datetime import datetime
 from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
-from kvc.restful.models.HemsireGozlem import HemsireGozlem
+from kvc.restful.models.HemsireGozlemDTO import HemsireGozlemDTO
 
 class HemsireGozlemRegisterResource(Resource):
     """
@@ -69,7 +69,7 @@ class HemsireGozlemRegisterResource(Resource):
 
         data = self.hemsire_gozlem_post_parser.parse_args()
 
-        hemsire_gozlem = HemsireGozlem(**data)
+        hemsire_gozlem = HemsireGozlemDTO(**data)
 
         try:
             self.hemsireGozlemDAO.save_to_db(hemsire_gozlem)
@@ -99,7 +99,7 @@ class HemsireGozlemRegisterResource(Resource):
             hemsire_gozlem.kan_transfuzyonu = data['kan_transfuzyonu']
             hemsire_gozlem.diren_takibi = data['diren_takibi']
         else:
-            hemsire_gozlem = HemsireGozlem(**data)
+            hemsire_gozlem = HemsireGozlemDTO(**data)
 
         self.hemsireGozlemDAO.save_to_db(hemsire_gozlem)
 

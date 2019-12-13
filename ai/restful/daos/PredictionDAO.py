@@ -1,12 +1,10 @@
 from ai.restful.daos.AbstractDAO import AbstractDAO
-from ai.restful.models.Prediction import Prediction
+from ai.restful.models.PredictionDTO import PredictionDTO
 
 
 class PredictionDAO(AbstractDAO):
     """ Prediction nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """
 
-    def find_by_id(self, _id):
-        """ _id değerine göre Prediction nesnesini veritabanından getiren metod """
-
-        return Prediction.query.filter_by(id=_id).first()
+    def __init__(self):
+        super().__init__(PredictionDTO)
 

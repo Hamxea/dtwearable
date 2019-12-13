@@ -4,7 +4,7 @@ from datetime import datetime
 from flask_restful import reqparse, Resource
 
 from ai.restful.daos.AIModelDAO import AIModelDAO
-from ai.restful.models.AIModel import AIModel
+from ai.restful.models.AIModelDTO import AIModelDTO
 from ai.restful.services.AIModelTrainerService import AIModelTrainerService
 
 
@@ -34,13 +34,13 @@ class AIModelTrainerResource(Resource):
         ai_model_file_name, performance_metrics = self.ai_model_trainer_service.train(data['class_name'], data['dataset_parameters'], data['hyperparameters'])
         # TODO exception oluşması durumuna karşı önlem alınmalı
 
-        ai_model = AIModel(id=None,
-                           class_name=data['class_name'],
-                           version=1 if last_model is None else last_model.version + 1,
-                           model_url=ai_model_file_name,
-                           parameters=json.dumps({'dataset_parameters': data['dataset_parameters'], 'hyperparameters': data['hyperparameters']}),
-                           performance_metrics=json.dumps(performance_metrics),
-                           enabled=False,
-                           date_created=datetime.now())
+        ai_model = AIModelDTO(id=None,
+                              class_name=data['class_name'],
+                              version=1 if last_model is None else last_model.version + 1,
+                              model_url=ai_model_file_name,
+                              parameters=json.dumps({'dataset_parameters': data['dataset_parameters'], 'hyperparameters': data['hyperparameters']}),
+                              performance_metrics=json.dumps(performance_metrics),
+                              enabled=False,
+                              date_created=datetime.now())
         self.ai_model_dao.save_to_db(ai_model)
         return ai_model.serialize, 201

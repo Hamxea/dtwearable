@@ -1,7 +1,7 @@
 from db import db
 
 
-class AIModel(db.Model):
+class AIModelDTO(db.Model):
     """
     AIModel tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
     """

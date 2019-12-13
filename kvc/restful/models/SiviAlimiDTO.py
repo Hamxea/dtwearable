@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from db import db
 
 
-class SiviAlimi(db.Model):
+class SiviAlimiDTO(db.Model):
     """ Sıvı Alımı tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı """
 
     __tablename__ = "sivi_alimi"
