@@ -8,7 +8,6 @@ from fancyimpute import SoftImpute, BiScaler
 from sklearn.preprocessing import Imputer
 from sklearn.impute import SimpleImputer
 
-
 import numpy as np
 
 class FeaturesImputationMethods():
