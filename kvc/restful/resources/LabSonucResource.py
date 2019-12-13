@@ -20,7 +20,7 @@ class LabSonucResource(Resource):
         return dto.serialize, 200
 
     def delete(self, lab_sonuc_id: int):
-        """ _id parametresine göre LabSonuc nesnesini donen metod """
+        """ _id parametresine göre LabSonuc nesnesini silen metod """
 
         dto = self.dao.find_by_id(lab_sonuc_id)
         if not dto:
