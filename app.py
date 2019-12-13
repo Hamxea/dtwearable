@@ -1,40 +1,37 @@
 import os
 
 from flask import Flask, jsonify
-from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_restful import Api
 
-from ai.restful.resources.PredictionRegisterResource import PredictionRegisterResource
-from ai.restful.resources.PredictionResource import PredictionResource
 from ai.restful.resources.AIModelActivateResource import AIModelActivateResource
 from ai.restful.resources.AIModelTrainerResource import AIModelTrainerResource
-from ai.security.blacklist import BLACKLIST
-from db import db
-
-from ai.restful.resources.security.UserLoginResource import UserLoginResource
-from ai.restful.resources.security.UserResource import UserResource
+from ai.restful.resources.PredictionRegisterResource import PredictionRegisterResource
+from ai.restful.resources.PredictionResource import PredictionResource
 from ai.restful.resources.security.TokenRefreshResource import TokenRefreshResource
+from ai.restful.resources.security.UserLoginResource import UserLoginResource
 from ai.restful.resources.security.UserLogoutResource import UserLogoutResource
 from ai.restful.resources.security.UserRegisterResource import UserRegisterResource
-
+from ai.restful.resources.security.UserResource import UserResource
+from ai.security.blacklist import BLACKLIST
+from db import db
+from kvc.restful.resources.KvcNotificationListResource import KvcNotificationListResource
+from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
+from kvc.restful.resources.HemsireGozlemResource import HemsireGozlemResource
+from kvc.restful.resources.IslemOperasyonRegisterResource import IslemOperasyonRegisterResource
+from kvc.restful.resources.IslemOperasyonResource import IslemOperasyonResource
 from kvc.restful.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.restful.resources.IslemResource import IslemResource
+from kvc.restful.resources.IslemTaniRegisterResource import IslemTaniRegisterResource
+from kvc.restful.resources.IslemTaniResource import IslemTaniResource
 from kvc.restful.resources.KvcNotificationRegisterResource import KvcNotificationRegisterResource
 from kvc.restful.resources.KvcNotificationResource import KvcNotificationResource
-from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
-from kvc.restful.resources.LabSonucResource import LabSonucResource
 from kvc.restful.resources.LabSonucBatchRegisterResource import LabSonucBatchRegisterResource
 from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
 from kvc.restful.resources.LabSonucResource import LabSonucResource
 from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
 from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
-from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
-from kvc.restful.resources.HemsireGozlemResource import HemsireGozlemResource
-from kvc.restful.resources.IslemTaniRegisterResource import IslemTaniRegisterResource
-from kvc.restful.resources.IslemTaniResource import IslemTaniResource
 
-from kvc.restful.resources.IslemOperasyonRegisterResource import IslemOperasyonRegisterResource
-from kvc.restful.resources.IslemOperasyonResource import IslemOperasyonResource
 app = Flask(__name__)
 api = Api(app)
 
@@ -154,11 +151,9 @@ api.add_resource(PredictionResource, '/prediction/<int:prediction_id>')
 api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
 api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
 
-api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
-api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
-
 api.add_resource(KvcNotificationResource, '/kvc/kvcnotification/<int:kvc_notification_id>')
 api.add_resource(KvcNotificationRegisterResource, '/kvc/kvcnotification')
+api.add_resource(KvcNotificationListResource, '/kvc/kvcnotification/list')
 
 api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
 api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
