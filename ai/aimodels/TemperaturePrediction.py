@@ -4,7 +4,7 @@ from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSe
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
-class FeverPrediction(AbstractUnivariateTimeSeriesSvr):
+class TemperaturePrediction(AbstractUnivariateTimeSeriesSvr):
     """ Ateş değerleri üzerinden tahmin üreten sınıf. AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
 
     hemsire_gozlem_dao = HemsireGozlemDAO()
