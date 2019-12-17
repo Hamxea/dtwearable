@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"rule_violation_id\": 101,\n\t\"staff_id\": 1,\n\t\"priority\": 0,\n\t\"message\": \"Test message\",\n\t\"notification_date\": \"01.01.2019 00:00:00\"\n}",
+					"raw": "{\n\t\"rule_violation_id\": 111,\n\t\"staff_id\": 1,\n\t\"priority\": \"HIGH\",\n\t\"message\": \"Test message\",\n\t\"notification_date\": \"01.01.2019 00:00:00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
