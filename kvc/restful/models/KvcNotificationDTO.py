@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from db import db
+from kvc.restful.models.enums.IntEnum import IntEnum
+from kvc.restful.models.enums.PriorityEnum import PriorityEnum
 
 
 class KvcNotificationDTO(db.Model):
@@ -11,7 +13,7 @@ class KvcNotificationDTO(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     rule_violation_id = db.Column(db.BigInteger)
     staff_id = db.Column(db.BigInteger)
-    priority = db.Column(db.Integer)
+    priority = db.Column(IntEnum(PriorityEnum), default=PriorityEnum.MEDIUM)
     message = db.Column(db.String)
     notification_date = db.Column(db.DateTime)
     error_message = db.Column(db.String)
@@ -33,7 +35,7 @@ class KvcNotificationDTO(db.Model):
             'id': self.id,
             'rule_violation_id': self.rule_violation_id,
             'staff_id': self.staff_id,
-            'priority': self.priority,
+            'priority': self.priority.name,
             'message': self.message,
             'notification_date': self.notification_date.strftime('%d.%m.%Y %H:%M:%S'),
             'error_message': self.error_message
