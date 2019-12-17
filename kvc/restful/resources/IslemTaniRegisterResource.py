@@ -4,6 +4,8 @@ from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.IslemTaniDAO import IslemTaniDAO
 from kvc.restful.models.IslemTaniDTO import IslemTaniDTO
+from kvc.restful.models.enums.TaniTipiEnum import TaniTipiEnum
+
 
 class IslemTaniRegisterResource(Resource):
     """
@@ -26,7 +28,7 @@ class IslemTaniRegisterResource(Resource):
                                    required=True,
                                    )
     islemTani_post_parser.add_argument('tani_tipi',
-                                   type=int,
+                                   type=str,
                                    required=True,
                                    )
 
@@ -38,16 +40,16 @@ class IslemTaniRegisterResource(Resource):
 
         data = self.islemTani_post_parser.parse_args()
 
-        islemTani = IslemTaniDTO(**data)
+        islem_tani = IslemTaniDTO(None, data['islem_id'], data['tani_kodu'], TaniTipiEnum.get_by_name(data['tani_tipi']))
 
         try:
-            self.islemTaniDAO.save_to_db(islemTani)
+            self.islemTaniDAO.save_to_db(islem_tani)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
                     "exception": e
                     }, 500
 
-        return islemTani.serialize, 201
+        return islem_tani.serialize, 201
 
 
     def put(self):
@@ -55,15 +57,15 @@ class IslemTaniRegisterResource(Resource):
 
         data = self.islemTani_post_parser.parse_args()
 
-        islemTani = self.islemTaniDAO.find_by_id(data['id'])
+        islem_tani = self.islemTaniDAO.find_by_id(data['id'])
 
-        if islemTani:
-            islemTani.islem_id = data['islem_id']
-            islemTani.tani_kodu = data['tani_kodu']
-            islemTani.tani_tipi = data['tani_tipi']
+        if islem_tani:
+            islem_tani.islem_id = data['islem_id']
+            islem_tani.tani_kodu = data['tani_kodu']
+            islem_tani.tani_tipi = TaniTipiEnum.get_by_name(data['tani_tipi'])
         else:
-            islemTani = IslemTaniDTO(**data)
+            islem_tani = IslemTaniDTO(**data)
 
-        self.islemTaniDAO.save_to_db(islemTani)
+        self.islemTaniDAO.save_to_db(islem_tani)
 
-        return islemTani.serialize, 201
+        return islem_tani.serialize, 201
