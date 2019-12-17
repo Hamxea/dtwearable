@@ -52,9 +52,7 @@ class TemperaturePreprocessor():
                     counter += 1
                     print(temp_list)
                     df.loc[len(df)] = [temp_list][0]
-                    df.head()
 
-        df.head()
         return  df
 
 
