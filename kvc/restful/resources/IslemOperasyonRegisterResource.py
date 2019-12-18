@@ -3,6 +3,8 @@ from datetime import datetime
 from flask_restful import reqparse, Resource
 from kvc.restful.daos.IslemOperasyonDAO import IslemOperasyonDAO
 from kvc.restful.models.IslemOperasyonDTO import IslemOperasyonDTO
+from kvc.restful.models.enums.OperasyonTipiEnum import OperasyonTipiEnum
+
 
 class IslemOperasyonRegisterResource(Resource) :
     """
@@ -26,7 +28,7 @@ class IslemOperasyonRegisterResource(Resource) :
                                              required=False,
                                              )
     islem_operasyon_post_parser.add_argument('operasyon_tipi',
-                                             type=int,
+                                             type=str,
                                              required=False,
                                              )
     islemOperasyonDAO = IslemOperasyonDAO()
@@ -35,25 +37,29 @@ class IslemOperasyonRegisterResource(Resource) :
         """ Restful isteğinin body kısmında bulunan veriye gore Islem Operasyon nesnesini olusturan ve veritabanına yazan metod """
 
         data = self.islem_operasyon_post_parser.parse_args()
-        islem_operasyon = IslemOperasyonDTO(**data)
+
         try:
+            islem_operasyon = IslemOperasyonDTO(None, data['islem_id'], data['operasyon_sut'],
+                                                OperasyonTipiEnum.get_by_name(data['operasyon_tipi']))
             self.islemOperasyonDAO.save_to_db(islem_operasyon)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return islem_operasyon.serialize, 201
+
     def put(self):
         """ Restful isteğinin body kısmında bulunan veriye gore Islem Operasyon nesnesini olusturan veya guncelleyen metod """
 
         data = self.islem_operasyon_post_parser.parse_args()
 
         islem_operasyon = self.islemOperasyonDAO.find_by_id(data['id'])
+
         if islem_operasyon:
             islem_operasyon.islem_id = data['islem_id']
             islem_operasyon.operasyon_sut = data['operasyon_sut']
-            islem_operasyon.operasyon_tipi = data['operasyon_tipi']
+            islem_operasyon.operasyon_tipi = OperasyonTipiEnum.get_by_name(data['operasyon_tipi'])
         else:
             islem_operasyon = IslemOperasyonDTO(**data)
 

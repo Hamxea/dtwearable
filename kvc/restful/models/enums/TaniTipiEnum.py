@@ -1,6 +1,11 @@
-from kvc.restful.models.enums import IntEnum
+import enum
+
+from kvc.restful.models.enums.AbstractIntEnum import AbstractIntEnum
 
 
-class TaniTipiEnum(IntEnum):
-    ANA_TANI = 0,
+@enum.unique
+class TaniTipiEnum(AbstractIntEnum):
+    """ Tanı tipleri için enum sınıfı """
+
+    ANA_TANI = 0
     ESLIK_EDEN_TANI= 1

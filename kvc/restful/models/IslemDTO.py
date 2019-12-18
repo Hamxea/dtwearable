@@ -1,6 +1,9 @@
 import datetime
 
 from db import db
+from kvc.restful.models.enums.CinsiyetEnum import CinsiyetEnum
+from kvc.restful.models.enums.IntEnum import IntEnum
+from kvc.restful.models.enums.KVCLabelEnum import KVCLabelEnum
 
 
 class IslemDTO(db.Model):
@@ -13,13 +16,11 @@ class IslemDTO(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     islem_no = db.Column(db.Integer)
     kayit_tarihi = db.Column(db.DateTime)
-    # cinsiyet = db.Column(IntEnum(CinsiyetEnum))
-    cinsiyet = db.Column(db.Integer)
+    cinsiyet = db.Column(IntEnum(CinsiyetEnum))
     yas = db.Column(db.SmallInteger)
     operasyon_tarihi = db.Column(db.DateTime)
     cikis_tarihi = db.Column(db.DateTime)
-    # etiket = db.Column(IntEnum(KVCLabelEnum))
-    etiket = db.Column(db.Integer)
+    etiket = db.Column(IntEnum(KVCLabelEnum))
 
     # islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
     # hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')
@@ -43,10 +44,10 @@ class IslemDTO(db.Model):
             'id': self.id,
             'islem_no': self.islem_no,
             'kayit_tarihi': self.kayit_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
-            'cinsiyet': self.cinsiyet,
+            'cinsiyet': self.cinsiyet.name,
             'yas': self.yas,
             'operasyon_tarihi': self.operasyon_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
             'cikis_tarihi': self.cikis_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
-            'etiket': self.etiket
+            'etiket': self.etiket.name
             # 'islem_operrasyon_list': [islem_operasyon.json() for islem_operasyon in self.islem_operasyon_list.all()]
         }

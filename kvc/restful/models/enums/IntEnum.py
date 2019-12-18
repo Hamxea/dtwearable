@@ -1,6 +1,5 @@
 from db import db
 
-
 class IntEnum(db.TypeDecorator):
     """
     Enables passing in a Python enum and storing the enum's *value* in the db.

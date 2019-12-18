@@ -4,6 +4,9 @@ from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.IslemDAO import IslemDAO
 from kvc.restful.models.IslemDTO import IslemDTO
+from kvc.restful.models.enums.CinsiyetEnum import CinsiyetEnum
+from kvc.restful.models.enums.KVCLabelEnum import KVCLabelEnum
+
 
 class IslemRegisterResource(Resource):
     """
@@ -26,7 +29,7 @@ class IslemRegisterResource(Resource):
                                    required=True
                                    )
     islem_post_parser.add_argument('cinsiyet',
-                                   type=int,
+                                   type=str,
                                    required=True,
                                    )
     islem_post_parser.add_argument('yas',
@@ -42,7 +45,7 @@ class IslemRegisterResource(Resource):
                                    required=True
                                    )
     islem_post_parser.add_argument('etiket',
-                                   type=int,
+                                   type=str,
                                    required=False
                                    )
     # islem_parser.add_argument('islem_operasyon_list',
@@ -57,13 +60,14 @@ class IslemRegisterResource(Resource):
 
         data = self.islem_post_parser.parse_args()
 
-        islem = IslemDTO(**data)
-
         try:
+            islem = IslemDTO(None, data['islem_no'], data['kayit_tarihi'], CinsiyetEnum.get_by_name(data['cinsiyet']),
+                             data['yas'], data['operasyon_tarihi'], data['cikis_tarihi'],
+                             KVCLabelEnum.get_by_name(data['etiket']))
             self.islemDAO.save_to_db(islem)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return islem.serialize, 201
@@ -78,11 +82,11 @@ class IslemRegisterResource(Resource):
         if islem:
             islem.islem_no = data['islem_no']
             islem.kayit_tarihi = data['kayit_tarihi']
-            islem.cinsiyet = data['cinsiyet']
+            islem.cinsiyet = CinsiyetEnum.get_by_name(data['cinsiyet'])
             islem.yas = data['yas']
             islem.operasyon_tarihi = data['operasyon_tarihi']
             islem.cikis_tarihi = data['cikis_tarihi']
-            islem.etiket = data['etiket']
+            islem.etiket = KVCLabelEnum.get_by_name(data['etiket'])
         else:
             islem = IslemDTO(**data)
 
