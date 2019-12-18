@@ -1,15 +1,11 @@
 import enum
 
+from kvc.restful.models.enums.AbstractIntEnum import AbstractIntEnum
 
-class CinsiyetEnum(enum.IntEnum):
+
+@enum.unique
+class CinsiyetEnum(AbstractIntEnum):
     """ Cinsiyet tipleri için enum sınıfı """
 
     ERKEK = 0
     KADIN = 1
-
-    @staticmethod
-    def get_by_name(name: str):
-        for e in list(CinsiyetEnum):
-            if name == e.name:
-                return e
-        return None

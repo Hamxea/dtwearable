@@ -12,7 +12,7 @@ class IslemTaniDTO(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     islem_id = db.Column(db.BigInteger)
     tani_kodu = db.Column(db.String)
-    tani_tipi = db.Column(IntEnum(TaniTipiEnum), default=TaniTipiEnum.ANA_TANI)
+    tani_tipi = db.Column(IntEnum(TaniTipiEnum))
 
     def __init__(self, id: int, islem_id: int, tani_kodu: str, tani_tipi: int):
         self.id = id

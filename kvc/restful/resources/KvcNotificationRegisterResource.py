@@ -30,10 +30,10 @@ class KvcNotificationRegisterResource(Resource):
 
         data = self.post_parser.parse_args()
 
-        kvc_notification_dto = KvcNotificationDTO(None, data['rule_violation_id'], data['staff_id'], PriorityEnum.get_by_name(data['priority']),
-                                                  data['message'], data['notification_date'], data['error_message'])
-
         try:
+            kvc_notification_dto = KvcNotificationDTO(None, data['rule_violation_id'], data['staff_id'],
+                                                      PriorityEnum.get_by_name(data['priority']),
+                                                      data['message'], data['notification_date'], data['error_message'])
             self.dao.save_to_db(kvc_notification_dto)
         except Exception as e:
             print(str(e))

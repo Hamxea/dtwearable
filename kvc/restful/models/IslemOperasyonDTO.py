@@ -15,7 +15,7 @@ class IslemOperasyonDTO(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     islem_id = db.Column(db.BigInteger)
     operasyon_sut = db.Column(db.String)
-    operasyon_tipi = db.Column(IntEnum(OperasyonTipiEnum), default=OperasyonTipiEnum.ANA_ISLEM)
+    operasyon_tipi = db.Column(IntEnum(OperasyonTipiEnum))
 
     def __init__(self, id: int, islem_id: int,operasyon_sut:str,operasyon_tipi:int):
         self.id = id

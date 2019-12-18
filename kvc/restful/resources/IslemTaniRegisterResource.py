@@ -32,7 +32,6 @@ class IslemTaniRegisterResource(Resource):
                                    required=True,
                                    )
 
-
     islemTaniDAO = IslemTaniDAO()
 
     def post(self):
@@ -40,13 +39,13 @@ class IslemTaniRegisterResource(Resource):
 
         data = self.islemTani_post_parser.parse_args()
 
-        islem_tani = IslemTaniDTO(None, data['islem_id'], data['tani_kodu'], TaniTipiEnum.get_by_name(data['tani_tipi']))
-
         try:
+            islem_tani = IslemTaniDTO(None, data['islem_id'], data['tani_kodu'],
+                                      TaniTipiEnum.get_by_name(data['tani_tipi']))
             self.islemTaniDAO.save_to_db(islem_tani)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return islem_tani.serialize, 201

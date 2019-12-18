@@ -16,11 +16,11 @@ class IslemDTO(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     islem_no = db.Column(db.Integer)
     kayit_tarihi = db.Column(db.DateTime)
-    cinsiyet = db.Column(IntEnum(CinsiyetEnum), default=CinsiyetEnum.ERKEK)
+    cinsiyet = db.Column(IntEnum(CinsiyetEnum))
     yas = db.Column(db.SmallInteger)
     operasyon_tarihi = db.Column(db.DateTime)
     cikis_tarihi = db.Column(db.DateTime)
-    etiket = db.Column(IntEnum(KVCLabelEnum), default=KVCLabelEnum.TABURCU)
+    etiket = db.Column(IntEnum(KVCLabelEnum))
 
     # islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
     # hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')

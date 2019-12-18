@@ -13,7 +13,7 @@ class KvcNotificationDTO(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
     rule_violation_id = db.Column(db.BigInteger)
     staff_id = db.Column(db.BigInteger)
-    priority = db.Column(IntEnum(PriorityEnum), default=PriorityEnum.MEDIUM)
+    priority = db.Column(IntEnum(PriorityEnum))
     message = db.Column(db.String)
     notification_date = db.Column(db.DateTime)
     error_message = db.Column(db.String)

@@ -1,7 +1,10 @@
 import enum
 
+from kvc.restful.models.enums.AbstractIntEnum import AbstractIntEnum
 
-class KVCLabelEnum(enum.IntEnum):
+
+@enum.unique
+class KVCLabelEnum(AbstractIntEnum):
     """ KVC etiket tipleri için enum sınıfı """
 
     TABURCU = 0
@@ -9,10 +12,3 @@ class KVCLabelEnum(enum.IntEnum):
     AMELIYAT = 2
     YOGUN_BAKIM = 3
     OLUM = 4
-
-    @staticmethod
-    def get_by_name(name: str):
-        for e in list(KVCLabelEnum):
-            if name == e.name:
-                return e
-        return None

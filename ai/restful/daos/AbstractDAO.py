@@ -14,17 +14,27 @@ class AbstractDAO:
 
     def save_to_db(self, model):
         """ Model nesnesini veritabanına kaydeden veya id varsa güncelleyen metod """
-
-        db.session.add(model)
-        db.session.commit()
+        try:
+            db.session.add(model)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            raise Exception("Couldn't save into database! Object name is '{}'".format(type(model).__name__))
 
     def find_by_id(self, _id: int):
         """ _id değerine göre LabSonuc nesnesini veritabanından getiren metod """
 
-        return self.model.query.filter_by(id=_id).first()
+        try:
+            return self.model.query.filter_by(id=_id).first()
+        except Exception as e:
+            print(e)
+            raise Exception("Couldn't find in database! Id is '{}'".format(id))
 
     def delete_from_db(self, model):
         """ Model nesnesini veritabanından silen metod """
-
-        db.session.delete(model)
-        db.session.commit()
+        try:
+            db.session.delete(model)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            raise Exception("Couldn't delete from database! Object name is '{}'".format(type(model).__name__))

@@ -38,13 +38,13 @@ class IslemOperasyonRegisterResource(Resource) :
 
         data = self.islem_operasyon_post_parser.parse_args()
 
-        islem_operasyon = IslemOperasyonDTO(None, data['islem_id'], data['operasyon_sut'], OperasyonTipiEnum.get_by_name(data['operasyon_tipi']) )
-
         try:
+            islem_operasyon = IslemOperasyonDTO(None, data['islem_id'], data['operasyon_sut'],
+                                                OperasyonTipiEnum.get_by_name(data['operasyon_tipi']))
             self.islemOperasyonDAO.save_to_db(islem_operasyon)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return islem_operasyon.serialize, 201

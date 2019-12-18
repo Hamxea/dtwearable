@@ -60,14 +60,14 @@ class IslemRegisterResource(Resource):
 
         data = self.islem_post_parser.parse_args()
 
-        islem = IslemDTO(None, data['islem_no'], data['kayit_tarihi'], CinsiyetEnum.get_by_name(data['cinsiyet']),
-                         data['yas'], data['operasyon_tarihi'], data['cikis_tarihi'], KVCLabelEnum.get_by_name(data['etiket']))
-
         try:
+            islem = IslemDTO(None, data['islem_no'], data['kayit_tarihi'], CinsiyetEnum.get_by_name(data['cinsiyet']),
+                             data['yas'], data['operasyon_tarihi'], data['cikis_tarihi'],
+                             KVCLabelEnum.get_by_name(data['etiket']))
             self.islemDAO.save_to_db(islem)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return islem.serialize, 201
