@@ -12,11 +12,11 @@ class UnivariateTimeSeriesPreprocessor():
         print()
 
     def preprocess(self, sorted_dto_list, time_interval_in_hours=2):
-        differentiated_dict = self.differentiate_by_islem_id(sorted_dto_list, time_interval_in_hours)
+        differentiated_dict = self.differentiate_by_islem_no(sorted_dto_list, time_interval_in_hours)
         windowed_df = self.windowing(differentiated_dict, feature_name='vucut_sicakligi', window_size=3, column_list=list("ABC"))
         return windowed_df
 
-    def differentiate_by_islem_id(self, sorted_dto_list, time_interval_in_hours):
+    def differentiate_by_islem_no(self, sorted_dto_list, time_interval_in_hours):
         """ Gönderilen dto listesini işlem_id ye göre gruplayıp bir dict'e çeviren metot
             Buraya gelen listenin, ölçüm tarihine göre sıralanmış olması gerekmektedir
         """
@@ -24,9 +24,9 @@ class UnivariateTimeSeriesPreprocessor():
         differentiated_dict = {}
         for i in range(len(sorted_dto_list)):
             dto = sorted_dto_list[i]
-            if dto.islem_id not in differentiated_dict:
-                differentiated_dict[dto.islem_id] = []
-            inner_list = differentiated_dict[dto.islem_id]
+            if dto.islem_no not in differentiated_dict:
+                differentiated_dict[dto.islem_no] = []
+            inner_list = differentiated_dict[dto.islem_no]
 
             if len(inner_list) < 1:
                 inner_list.append([])

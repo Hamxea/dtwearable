@@ -18,7 +18,7 @@ class TestTemperaturePreprocessor(TestCase):
         li.append(HemsireGozlemDTO(1, 3, date - timedelta(hours=4), 37, None, None, None, None, None, None, None, None))
 
         temperature_preprocessor = UnivariateTimeSeriesPreprocessor()
-        my_dict = temperature_preprocessor.differentiate_by_islem_id(li)
+        my_dict = temperature_preprocessor.differentiate_by_islem_no(li)
 
         islem_id = 1
         self.assertEqual(3, len(my_dict))
@@ -47,7 +47,7 @@ class TestTemperaturePreprocessor(TestCase):
         li.append(HemsireGozlemDTO(1, 3, date - timedelta(hours=1), 40, None, None, None, None, None, None, None, None))
         li.sort(key=lambda x: x.olcum_tarihi)
         temperature_preprocessor = UnivariateTimeSeriesPreprocessor()
-        my_dict = temperature_preprocessor.differentiate_by_islem_id(li, 2)
+        my_dict = temperature_preprocessor.differentiate_by_islem_no(li, 2)
 
         df = temperature_preprocessor.windowing(my_dict, feature_name='vucut_sicakligi', window_size=3, column_list=list("123"))
 
