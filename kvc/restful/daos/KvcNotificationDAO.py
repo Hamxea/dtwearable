@@ -16,7 +16,7 @@ class KvcNotificationDAO(AbstractDAO):
 
         sql_text = text("select * from kvc_notification "
                         "inner join rule_violation on kvc_notification.rule_violation_id = rule_violation.id "
-                        "inner join islem on rule_violation.islem_id = islem.id "
+                        "inner join islem on rule_violation.islem_no = islem_no "
                         "where islem.islem_no = ANY(:ids)")
         list = db.session.query(KvcNotificationDTO).from_statement(sql_text).params(ids=islem_no_list).all()
 

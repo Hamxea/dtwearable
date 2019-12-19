@@ -17,7 +17,7 @@ class HemsireGozlemRegisterResource(Resource):
                                             type=int,
                                             required=False,
                                             )
-    hemsire_gozlem_post_parser.add_argument('islem_id',
+    hemsire_gozlem_post_parser.add_argument('islem_no',
                                             type=int,
                                             required=False,
                                             )
@@ -88,7 +88,7 @@ class HemsireGozlemRegisterResource(Resource):
         hemsire_gozlem = self.hemsireGozlemDAO.find_by_id(data['id'])
 
         if hemsire_gozlem:
-            hemsire_gozlem.islem_id = data['islem_id']
+            hemsire_gozlem.islem_no = data['islem_no']
             hemsire_gozlem.olcum_tarihi = data['olcum_tarihi']
             hemsire_gozlem.vucut_sicakligi = data['vucut_sicakligi']
             hemsire_gozlem.nabiz = data['nabiz']

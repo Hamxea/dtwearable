@@ -10,18 +10,18 @@ class IslemTaniResource(Resource):
 
     islemTaniDAO = IslemTaniDAO()
 
-    def get(self, islem_id: int):
-        """ islem_id parametresine karsılık Islem Tani bilgisi donen metod """
+    def get(self, id: int):
+        """ id parametresine karsılık Islem Tani bilgisi donen metod """
 
-        islemTani = self.islemTaniDAO.find_by_id(islem_id)
+        islemTani = self.islemTaniDAO.find_by_id(id)
         if not islemTani:
             return {'message': 'Islem Tani Not Found'}, 404
         return islemTani.serialize, 200
 
-    def delete(self, islem_id: int):
-        """ islem_id parametresine göre Islem Tani nesnesini donen metod """
+    def delete(self, id: int):
+        """ id parametresine göre Islem Tani nesnesini donen metod """
 
-        islemTani = self.islemTaniDAO.find_by_id(islem_id)
+        islemTani = self.islemTaniDAO.find_by_id(id)
         if not islemTani:
             return {'message': 'Islem Tani Not Found'}, 404
         self.islemTaniDAO.delete_from_db(islemTani)

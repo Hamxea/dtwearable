@@ -139,7 +139,7 @@ api.add_resource(AIModelActivateResource, '/ai/activatemodel')
 
 
 # KVK resources
-api.add_resource(IslemResource, '/kvc/islem/<int:islem_id>')
+api.add_resource(IslemResource, '/kvc/islem/<int:islem_no>')
 api.add_resource(IslemRegisterResource, '/kvc/islem')
 
 api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
@@ -159,7 +159,7 @@ api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
 api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
 api.add_resource(LabSonucBatchRegisterResource, '/kvc/labsonuc/batch')
 
-api.add_resource(IslemTaniResource, '/islemtani/<int:islem_id>')
+api.add_resource(IslemTaniResource, '/islemtani/<int:islem_no>')
 api.add_resource(IslemTaniRegisterResource, '/islemtani')
 
 api.add_resource(IslemOperasyonResource, '/islemoperasyon/<int:islem_operasyon_id>')

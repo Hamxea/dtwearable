@@ -10,8 +10,7 @@ class IslemDTO(db.Model):
 
     __tablename__ = "islem"
 
-    id = db.Column(db.Integer, primary_key=True)
-    islem_no = db.Column(db.Integer)
+    islem_no = db.Column(db.Integer, primary_key=True)
     kayit_tarihi = db.Column(db.DateTime)
     # cinsiyet = db.Column(IntEnum(CinsiyetEnum))
     cinsiyet = db.Column(db.Integer)
@@ -24,9 +23,8 @@ class IslemDTO(db.Model):
     # islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
     # hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')
 
-    def __init__(self, id:int, islem_no: int, kayit_tarihi: datetime, cinsiyet: int,
+    def __init__(self, islem_no: int, kayit_tarihi: datetime, cinsiyet: int,
                  yas: int, operasyon_tarihi: datetime, cikis_tarihi: datetime, etiket: int):
-        self.id = id
         self.islem_no = islem_no
         self.kayit_tarihi = kayit_tarihi
         self.cinsiyet = cinsiyet
@@ -40,7 +38,6 @@ class IslemDTO(db.Model):
         """ Nesneyi json'a çeviren metod """
 
         return {
-            'id': self.id,
             'islem_no': self.islem_no,
             'kayit_tarihi': self.kayit_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
             'cinsiyet': self.cinsiyet,

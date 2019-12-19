@@ -13,10 +13,6 @@ class IslemRegisterResource(Resource):
 
     """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     islem_post_parser = reqparse.RequestParser()
-    islem_post_parser.add_argument('id',
-                                   type=int,
-                                   required=False,
-                                   )
     islem_post_parser.add_argument('islem_no',
                                    type=int,
                                    required=True,

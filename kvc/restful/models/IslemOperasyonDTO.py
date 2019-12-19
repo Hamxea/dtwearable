@@ -1,5 +1,3 @@
-import datetime
-
 from db import db
 
 class IslemOperasyonDTO(db.Model):
@@ -9,13 +7,13 @@ class IslemOperasyonDTO(db.Model):
 
     __tablename__ = "islem_operasyon"
     id = db.Column(db.BigInteger, primary_key=True)
-    islem_id = db.Column(db.BigInteger)
+    islem_no = db.Column(db.BigInteger)
     operasyon_sut = db.Column(db.String)
     operasyon_tipi = db.Column(db.Integer)
 
-    def __init__(self, id: int, islem_id: int,operasyon_sut:str,operasyon_tipi:int):
+    def __init__(self, id: int, islem_no: int,operasyon_sut:str,operasyon_tipi:int):
         self.id = id
-        self.islem_id  = islem_id
+        self.islem_no  = islem_no
         self.operasyon_sut  = operasyon_sut
         self.operasyon_tipi = operasyon_tipi
 
@@ -25,7 +23,7 @@ class IslemOperasyonDTO(db.Model):
 
         return {
             'id': self.id,
-            'islem_id': self.islem_id,
+            'islem_no': self.islem_no,
             'operasyon_sut' :self.operasyon_sut,
             'operasyon_tipi' : self.operasyon_tipi
         }

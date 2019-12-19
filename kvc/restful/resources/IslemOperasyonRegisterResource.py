@@ -17,7 +17,7 @@ class IslemOperasyonRegisterResource(Resource) :
                                             type=int,
                                             required=False,
                                             )
-    islem_operasyon_post_parser.add_argument('islem_id',
+    islem_operasyon_post_parser.add_argument('islem_no',
                                             type=int,
                                             required=False,
                                             )
@@ -51,7 +51,7 @@ class IslemOperasyonRegisterResource(Resource) :
 
         islem_operasyon = self.islemOperasyonDAO.find_by_id(data['id'])
         if islem_operasyon:
-            islem_operasyon.islem_id = data['islem_id']
+            islem_operasyon.islem_no = data['islem_no']
             islem_operasyon.operasyon_sut = data['operasyon_sut']
             islem_operasyon.operasyon_tipi = data['operasyon_tipi']
         else:
