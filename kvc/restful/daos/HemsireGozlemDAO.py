@@ -15,7 +15,7 @@ class HemsireGozlemDAO(AbstractDAO):
 
         return HemsireGozlemDTO.query.filter_by(islem_no=islem_no).first()
 
-    def get_fever_in_date_range(self, start_date: datetime, end_date: datetime):
+    def get_temperature_in_date_range(self, start_date: datetime, end_date: datetime):
         """ Belirli tarihler arasındaki ates bilgilerini dönen metod"""
 
         if end_date <= start_date:
