@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"islem_id\": 1,\n\t\"prediction_value\": 0,\n\t\"prediction_date\": \"01.01.2019 00:00:00\",\n\t\"ai_model_id\":12\n}",
+					"raw": "{\n\t\"ai_model_class\": \"ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel\",\n\t\"reference_table\": \"HemsireGozlem\",\n\t\"reference_id\": 1,\n\t\"prediction_input\":{\n            \"ates\": [35, 36]\n        }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
