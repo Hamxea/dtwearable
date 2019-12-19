@@ -4,6 +4,8 @@ from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.IslemTaniDAO import IslemTaniDAO
 from kvc.restful.models.IslemTaniDTO import IslemTaniDTO
+from kvc.restful.models.enums.TaniTipiEnum import TaniTipiEnum
+
 
 class IslemTaniRegisterResource(Resource):
     """
@@ -26,10 +28,9 @@ class IslemTaniRegisterResource(Resource):
                                    required=True,
                                    )
     islemTani_post_parser.add_argument('tani_tipi',
-                                   type=int,
+                                   type=str,
                                    required=True,
                                    )
-
 
     islemTaniDAO = IslemTaniDAO()
 
@@ -41,10 +42,12 @@ class IslemTaniRegisterResource(Resource):
         islem_tani = IslemTaniDTO(**data)
 
         try:
+            islem_tani = IslemTaniDTO(None, data['islem_id'], data['tani_kodu'],
+                                      TaniTipiEnum.get_by_name(data['tani_tipi']))
             self.islemTaniDAO.save_to_db(islem_tani)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return islem_tani.serialize, 201

@@ -27,6 +27,13 @@ class PredictionService():
                                        prediction_error=None, prediction_date=datetime.now(),
                                        ai_model_id=ai_model_dto.id)
         try:
+            from sklearn.preprocessing import MinMaxScaler
+            import numpy as np
+
+            scaler = MinMaxScaler(feature_range=(0, 1))
+
+            scaler.fit_transform(np.array(prediction_input['ates']).reshape(1, -1))
+
             new_prediction = self.predict(model, prediction_input)
             prediction_dto.prediction_value = new_prediction[0]
             self.prediction_dao.save_to_db(prediction_dto)

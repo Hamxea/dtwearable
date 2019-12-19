@@ -1,4 +1,8 @@
 from db import db
+from kvc.restful.models.enums.IntEnum import IntEnum
+
+from kvc.restful.models.enums.OperasyonTipiEnum import OperasyonTipiEnum
+
 
 class IslemOperasyonDTO(db.Model):
     """
@@ -6,10 +10,11 @@ class IslemOperasyonDTO(db.Model):
     """
 
     __tablename__ = "islem_operasyon"
+
     id = db.Column(db.BigInteger, primary_key=True)
     islem_no = db.Column(db.BigInteger)
     operasyon_sut = db.Column(db.String)
-    operasyon_tipi = db.Column(db.Integer)
+    operasyon_tipi = db.Column(IntEnum(OperasyonTipiEnum))
 
     def __init__(self, id: int, islem_no: int,operasyon_sut:str,operasyon_tipi:int):
         self.id = id
@@ -25,5 +30,5 @@ class IslemOperasyonDTO(db.Model):
             'id': self.id,
             'islem_no': self.islem_no,
             'operasyon_sut' :self.operasyon_sut,
-            'operasyon_tipi' : self.operasyon_tipi
+            'operasyon_tipi' : self.operasyon_tipi.name
         }

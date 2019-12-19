@@ -1,10 +1,11 @@
 import pandas as pd
 
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
+from kvc.preprocessing.UnivariateTimeSeriesPreprocessor import UnivariateTimeSeriesPreprocessor
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
-class FeverPrediction(AbstractUnivariateTimeSeriesSvr):
+class TemperaturePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
     """ Ateş değerleri üzerinden tahmin üreten sınıf. AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
 
     hemsire_gozlem_dao = HemsireGozlemDAO()
@@ -18,9 +19,7 @@ class FeverPrediction(AbstractUnivariateTimeSeriesSvr):
         dataset_start_time = dataset_parameters['dataset_start_time']
         dataset_end_time = dataset_parameters['dataset_end_time']
 
-        hemsire_gozlem_list = self.hemsire_gozlem_dao.get_fever_in_date_range(dataset_start_time, dataset_end_time)
-        vucut_sicakligi_list = []
-        for hemsire_gozlem in hemsire_gozlem_list:
-            vucut_sicakligi_list.append(hemsire_gozlem.vucut_sicakligi)
+        hemsire_gozlem_dto_list = self.hemsire_gozlem_dao.get_temperature_in_date_range(dataset_start_time, dataset_end_time)
+        hemsire_gozlem_dto_list.sort(key=lambda x: x.olcum_tarihi)
 
-        return pd.DataFrame({'col': vucut_sicakligi_list})
+        return UnivariateTimeSeriesPreprocessor().preprocess(hemsire_gozlem_dto_list, 12)
