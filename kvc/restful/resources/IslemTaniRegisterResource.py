@@ -42,7 +42,7 @@ class IslemTaniRegisterResource(Resource):
         islem_tani = IslemTaniDTO(**data)
 
         try:
-            islem_tani = IslemTaniDTO(None, data['islem_id'], data['tani_kodu'],
+            islem_tani = IslemTaniDTO(None, data['islem_no'], data['tani_kodu'],
                                       TaniTipiEnum.get_by_name(data['tani_tipi']))
             self.islemTaniDAO.save_to_db(islem_tani)
         except Exception as e:
@@ -63,7 +63,7 @@ class IslemTaniRegisterResource(Resource):
         if islem_tani:
             islem_tani.islem_no = data['islem_no']
             islem_tani.tani_kodu = data['tani_kodu']
-            islem_tani.tani_tipi = data['tani_tipi']
+            islem_tani.tani_tipi = TaniTipiEnum.get_by_name(data['tani_tipi'])
         else:
             islem_tani = IslemTaniDTO(**data)
 

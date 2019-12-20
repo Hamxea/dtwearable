@@ -8,12 +8,9 @@ class UnivariateTimeSeriesPreprocessor():
         Sonuç bir dataframe olarak döner
     """
 
-    def __init__(self):
-        print()
-
-    def preprocess(self, sorted_dto_list, time_interval_in_hours=2):
+    def preprocess(self, sorted_dto_list, feature_name, time_interval_in_hours, window_size, column_list):
         differentiated_dict = self.differentiate_by_islem_no(sorted_dto_list, time_interval_in_hours)
-        windowed_df = self.windowing(differentiated_dict, feature_name='vucut_sicakligi', window_size=3, column_list=list("ABC"))
+        windowed_df = self.windowing(differentiated_dict, feature_name=feature_name, window_size=window_size, column_list=column_list)
         return windowed_df
 
     def differentiate_by_islem_no(self, sorted_dto_list, time_interval_in_hours):

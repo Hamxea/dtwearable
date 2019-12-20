@@ -11,14 +11,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/kvc/islem/3",
+					"raw": "{{url}}/ai/ruleviolation/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"kvc",
-						"islem",
-						"3"
+						"ai",
+						"ruleviolation",
+						"1"
 					]
 				}
 			},
@@ -30,13 +30,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/kvc/islem/1",
+					"raw": "{{url}}/ai/ruleviolation/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"kvc",
-						"islem",
+						"ai",
+						"ruleviolation",
 						"1"
 					]
 				}
@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"islem_no\": 101,\n\t\"kayit_tarihi\": \"01.01.2019 00:00:00\",\n\t\"cinsiyet\": 0,\n\t\"yas\":12,\n\t\"operasyon_tarihi\": \"01.01.2019 00:00:00\",\n\t\"cikis_tarihi\": \"01.01.2019 00:00:00\"\n}",
+					"raw": "{\n\t\"reference_table\": \"islem\",\n\t\"reference_id\": 1,\n\t\"prediction_id\": 1,\n\t\"rule\": \"Rule_1\",\n\t\"value_source\": \"Source_1\",\n\t\"value\": 12,\n\t\"violation_date\": \"01.01.2019 00:00:00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,13 +65,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/kvc/islem",
+					"raw": "{{url}}/ai/ruleviolation",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"kvc",
-						"islem"
+						"ai",
+						"ruleviolation"
 					]
 				}
 			},
@@ -91,7 +91,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"islem_no\": 102,\r\n    \"kayit_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"cinsiyet\": 0,\r\n    \"yas\": 12,\r\n    \"operasyon_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"cikis_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"etiket\": null\r\n}",
+					"raw": "{\n\t\"reference_table\": \"islem\",\n\t\"reference_id\": 1,\n\t\"prediction_id\": 1,\n\t\"rule\": \"Rule_1\",\n\t\"value_source\": \"Source_2\",\n\t\"value\": 24,\n\t\"violation_date\": \"01.01.2019 00:00:00\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,12 +99,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/islem",
+					"raw": "{{url}}/ai/ruleviolation",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"islem"
+						"ai",
+						"ruleviolation"
 					]
 				}
 			},

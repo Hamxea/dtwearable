@@ -19,7 +19,7 @@ class HemsireGozlemRegisterResource(Resource):
                                             )
     hemsire_gozlem_post_parser.add_argument('islem_no',
                                             type=int,
-                                            required=False,
+                                            required=True,
                                             )
     hemsire_gozlem_post_parser.add_argument('olcum_tarihi',
                                             type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
@@ -27,39 +27,39 @@ class HemsireGozlemRegisterResource(Resource):
                                             )
     hemsire_gozlem_post_parser.add_argument('vucut_sicakligi',
                                             type=float,
-                                            required=True,
+                                            required=False,
                                             )
     hemsire_gozlem_post_parser.add_argument('nabiz',
                                             type=int,
-                                            required=True,
+                                            required=False,
                                             )
     hemsire_gozlem_post_parser.add_argument('tansiyon_sistolik',
                                             type=int,
-                                            required=True
+                                            required=False
                                             )
     hemsire_gozlem_post_parser.add_argument('tansiyon_diastolik',
                                             type=int,
-                                            required=True
+                                            required=False
                                             )
     hemsire_gozlem_post_parser.add_argument('spo',
                                             type=int,
-                                            required=True
+                                            required=False
                                             )
     hemsire_gozlem_post_parser.add_argument('o2',
                                             type=int,
-                                            required=True
+                                            required=False
                                             )
     hemsire_gozlem_post_parser.add_argument('aspirasyon',
                                             type=int,
-                                            required=True
+                                            required=False
                                    )
     hemsire_gozlem_post_parser.add_argument('kan_transfuzyonu',
                                             type=int,
-                                            required=True
+                                            required=False
                                    )
     hemsire_gozlem_post_parser.add_argument('diren_takibi',
                                             type=int,
-                                            required=True
+                                            required=False
                                    )
 
     hemsireGozlemDAO = HemsireGozlemDAO()

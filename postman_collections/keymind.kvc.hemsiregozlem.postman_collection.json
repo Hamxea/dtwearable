@@ -1,48 +1,50 @@
 {
 	"info": {
-		"_postman_id": "7087ebd5-a4fc-4d79-9a6d-928c20c2d04c",
+		"_postman_id": "7680ab6e-b210-4ba3-806a-4f56a6d61957",
 		"name": "keymind.kvc.hemsiregozlem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "/hemsiregozlem/<id>",
+			"name": "/kvc/hemsiregozlem/<id>",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/hemsiregozlem/10",
+					"raw": "{{url}}/kvc/hemsiregozlem/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"hemsiregozlem",
-						"10"
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/hemsiregozlem/<id>",
+			"name": "/kvc/hemsiregozlem/<id>",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/hemsiregozlem/9",
+					"raw": "{{url}}/kvc/hemsiregozlem/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"hemsiregozlem",
-						"9"
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/hemsiregozlem",
+			"name": "/kvc/hemsiregozlem",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -63,11 +65,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/hemsiregozlem",
+					"raw": "{{url}}/kvc/hemsiregozlem",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"hemsiregozlem"
 					]
 				}
@@ -75,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "/hemsiregozlem",
+			"name": "/kvc/hemsiregozlem",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -88,7 +91,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 10,\r\n    \"islem_no\": 103,\r\n    \"islem_id\": 1,\r\n    \"olcum_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"vucut_sicakligi\": 35.7,\r\n    \"nabiz\": 75,\r\n    \"tansiyon_sistolik\": 90,\r\n    \"tansiyon_diastolik\": 45,\r\n    \"spo\": 30,\r\n    \"o2\": 40,\r\n    \"aspirasyon\": true,\r\n    \"kan_transfuzyonu\": false,\r\n    \"diren_takibi\": true\r\n}",
+					"raw": "{\n\t\"id\": 1,\n\t\"islem_no\": 133,\n\t\"olcum_tarihi\": \"01.01.2019 00:10:20\",\n\t\"vucut_sicakligi\": 35.7,\n\t\"nabiz\":65,\n\t\"tansiyon_sistolik\": 90,\n\t\"tansiyon_diastolik\": 45,\n\t\"spo\": 30,\n\t\"o2\": 40,\n\t\"aspirasyon\": true,\n\t\"kan_transfuzyonu\": false,\n\t\"diren_takibi\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,11 +99,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/hemsiregozlem",
+					"raw": "{{url}}/kvc/hemsiregozlem",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"hemsiregozlem"
 					]
 				}

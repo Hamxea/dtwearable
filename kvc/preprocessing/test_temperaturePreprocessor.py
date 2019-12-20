@@ -7,7 +7,7 @@ from kvc.restful.models.HemsireGozlemDTO import HemsireGozlemDTO
 
 class TestTemperaturePreprocessor(TestCase):
 
-    def test_differentiate_by_islem_id(self):
+    def test_differentiate_by_islem_no(self):
         li = []
         date = datetime.today()
         li.append(HemsireGozlemDTO(1, 1, date - timedelta(hours=3), 36, None, None, None, None, None, None, None, None))
@@ -20,17 +20,17 @@ class TestTemperaturePreprocessor(TestCase):
         temperature_preprocessor = UnivariateTimeSeriesPreprocessor()
         my_dict = temperature_preprocessor.differentiate_by_islem_no(li)
 
-        islem_id = 1
+        islem_no = 1
         self.assertEqual(3, len(my_dict))
-        self.assertTrue(islem_id in my_dict)
-        self.assertEqual(4, len(my_dict[islem_id][-1]))
+        self.assertTrue(islem_no in my_dict)
+        self.assertEqual(4, len(my_dict[islem_no][-1]))
 
-        islem_id = 2
-        self.assertTrue(islem_id in my_dict)
-        self.assertEqual(1, len(my_dict[islem_id][-1]))
+        islem_no = 2
+        self.assertTrue(islem_no in my_dict)
+        self.assertEqual(1, len(my_dict[islem_no][-1]))
 
-        islem_id = 4
-        self.assertTrue(islem_id not in my_dict)
+        islem_no = 4
+        self.assertTrue(islem_no not in my_dict)
 
     def test_windowing(self):
         li = []
@@ -49,7 +49,7 @@ class TestTemperaturePreprocessor(TestCase):
         temperature_preprocessor = UnivariateTimeSeriesPreprocessor()
         my_dict = temperature_preprocessor.differentiate_by_islem_no(li, 2)
 
-        df = temperature_preprocessor.windowing(my_dict, feature_name='vucut_sicakligi', window_size=3, column_list=list("123"))
+        df = temperature_preprocessor.windowing(my_dict, feature_name='vucut_sicakligi', window_size=3, column_list=list("ABC"))
 
         self.assertEqual(5, len(df))
         self.assertEqual(5, df.shape[0])

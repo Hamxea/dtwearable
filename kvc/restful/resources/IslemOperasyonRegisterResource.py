@@ -21,15 +21,15 @@ class IslemOperasyonRegisterResource(Resource) :
                                             )
     islem_operasyon_post_parser.add_argument('islem_no',
                                             type=int,
-                                            required=False,
+                                            required=True,
                                             )
     islem_operasyon_post_parser.add_argument('operasyon_sut',
                                              type=str,
-                                             required=False,
+                                             required=True,
                                              )
     islem_operasyon_post_parser.add_argument('operasyon_tipi',
                                              type=str,
-                                             required=False,
+                                             required=True,
                                              )
     islemOperasyonDAO = IslemOperasyonDAO()
 
@@ -39,7 +39,7 @@ class IslemOperasyonRegisterResource(Resource) :
         data = self.islem_operasyon_post_parser.parse_args()
 
         try:
-            islem_operasyon = IslemOperasyonDTO(None, data['islem_id'], data['operasyon_sut'],
+            islem_operasyon = IslemOperasyonDTO(None, data['islem_no'], data['operasyon_sut'],
                                                 OperasyonTipiEnum.get_by_name(data['operasyon_tipi']))
             self.islemOperasyonDAO.save_to_db(islem_operasyon)
         except Exception as e:

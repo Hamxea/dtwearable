@@ -8,23 +8,23 @@ class IslemTaniResource(Resource):
     Restful istek tiplerine karşılık metodlar oluşturulur
     """
 
-    islemTaniDAO = IslemTaniDAO()
+    islem_tani_DAO = IslemTaniDAO()
 
     def get(self, id: int):
         """ id parametresine karsılık Islem Tani bilgisi donen metod """
 
-        islemTani = self.islemTaniDAO.find_by_id(id)
-        if not islemTani:
+        islem_tani = self.islem_tani_DAO.find_by_id(id)
+        if not islem_tani:
             return {'message': 'Islem Tani Not Found'}, 404
-        return islemTani.serialize, 200
+        return islem_tani.serialize, 200
 
     def delete(self, id: int):
         """ id parametresine göre Islem Tani nesnesini donen metod """
 
-        islemTani = self.islemTaniDAO.find_by_id(id)
-        if not islemTani:
+        islem_tani = self.islem_tani_DAO.find_by_id(id)
+        if not islem_tani:
             return {'message': 'Islem Tani Not Found'}, 404
-        self.islemTaniDAO.delete_from_db(islemTani)
+        self.islem_tani_DAO.delete_from_db(islem_tani)
         return {'message': 'Islem Tani deleted.'}, 200
 
 
