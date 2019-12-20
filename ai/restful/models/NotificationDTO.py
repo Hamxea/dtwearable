@@ -1,14 +1,13 @@
 from datetime import datetime
-
 from db import db
-from kvc.restful.models.enums.IntEnum import IntEnum
-from kvc.restful.models.enums.PriorityEnum import PriorityEnum
+from ai.enums.IntEnum import IntEnum
+from ai.enums.PriorityEnum import PriorityEnum
 
 
-class KvcNotificationDTO(db.Model):
-    """ KvcNotification tablosu için veritabanı eşleştirmelerinin yapıldığı model sınıfı """
+class NotificationDTO(db.Model):
+    """ Notification tablosu için veritabanı eşleştirmelerinin yapıldığı model sınıfı """
 
-    __tablename__ = "kvc_notification"
+    __tablename__ = "notification"
 
     id = db.Column(db.BigInteger, primary_key=True)
     rule_violation_id = db.Column(db.BigInteger)
@@ -29,7 +28,7 @@ class KvcNotificationDTO(db.Model):
 
     @property
     def serialize(self):
-        """ LabSonuc nesnesini json'a çeviren metod """
+        """ Notification nesnesini json'a çeviren metod """
 
         return {
             'id': self.id,

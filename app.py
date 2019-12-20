@@ -6,8 +6,13 @@ from flask_restful import Api
 
 from ai.restful.resources.AIModelActivateResource import AIModelActivateResource
 from ai.restful.resources.AIModelTrainerResource import AIModelTrainerResource
+from ai.restful.resources.NotificationListResource import NotificationListResource
+from ai.restful.resources.NotificationRegisterResource import NotificationRegisterResource
+from ai.restful.resources.NotificationResource import NotificationResource
 from ai.restful.resources.PredictionRegisterResource import PredictionRegisterResource
 from ai.restful.resources.PredictionResource import PredictionResource
+from ai.restful.resources.RuleViolationRegisterResource import RuleViolationRegisterResource
+from ai.restful.resources.RuleViolationResource import RuleViolationResource
 from ai.restful.resources.security.TokenRefreshResource import TokenRefreshResource
 from ai.restful.resources.security.UserLoginResource import UserLoginResource
 from ai.restful.resources.security.UserLogoutResource import UserLogoutResource
@@ -15,7 +20,6 @@ from ai.restful.resources.security.UserRegisterResource import UserRegisterResou
 from ai.restful.resources.security.UserResource import UserResource
 from ai.security.blacklist import BLACKLIST
 from db import db
-from kvc.restful.resources.KvcNotificationListResource import KvcNotificationListResource
 from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
 from kvc.restful.resources.HemsireGozlemResource import HemsireGozlemResource
 from kvc.restful.resources.IslemOperasyonRegisterResource import IslemOperasyonRegisterResource
@@ -24,8 +28,6 @@ from kvc.restful.resources.IslemRegisterResource import IslemRegisterResource
 from kvc.restful.resources.IslemResource import IslemResource
 from kvc.restful.resources.IslemTaniRegisterResource import IslemTaniRegisterResource
 from kvc.restful.resources.IslemTaniResource import IslemTaniResource
-from kvc.restful.resources.KvcNotificationRegisterResource import KvcNotificationRegisterResource
-from kvc.restful.resources.KvcNotificationResource import KvcNotificationResource
 from kvc.restful.resources.LabSonucBatchRegisterResource import LabSonucBatchRegisterResource
 from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
 from kvc.restful.resources.LabSonucResource import LabSonucResource
@@ -39,7 +41,8 @@ api = Api(app)
 SqlAlchemy ayarları
 """
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://arge05:arge05@10.0.0.59:5432/keymind')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL',
+                                                       'postgresql://arge05:arge05@10.0.0.59:5432/keymind')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 db.init_app(app)
@@ -48,10 +51,12 @@ db.init_app(app)
 """
 JWT ayarları
 """
-app.config['JWT_SECRET_KEY'] = 'k@ym1nd'  # we can also use app.secret like before, Flask-JWT-Extended can recognize both
+app.config[
+    'JWT_SECRET_KEY'] = 'k@ym1nd'  # we can also use app.secret like before, Flask-JWT-Extended can recognize both
 app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']  # allow blacklisting for access and refresh tokens
 jwt = JWTManager(app)
+
 
 @jwt.user_claims_loader
 def add_claims_to_jwt(identity):
@@ -60,7 +65,7 @@ def add_claims_to_jwt(identity):
     admin bilgisini donen metod. Her istek öncesi bu metod çağırılır.
     """
 
-    if identity == 1:   # TODO static id yerine veritabanından admin bilgisi alınmalı
+    if identity == 1:  # TODO static id yerine veritabanından admin bilgisi alınmalı
         return {'is_admin': True}
     return {'is_admin': False}
 
@@ -71,6 +76,7 @@ def check_if_token_in_blacklist(decrypted_token):
 
     return decrypted_token['jti'] in BLACKLIST
 
+
 @jwt.expired_token_loader
 def expired_token_callback():
     """ JWT için token süresi dolduğun da geri dönülecek mesajı üreten metod """
@@ -79,6 +85,7 @@ def expired_token_callback():
         'message': 'The token has expired.',
         'error': 'token_expired'
     }), 401
+
 
 @jwt.invalid_token_loader
 def invalid_token_callback(error):
@@ -89,6 +96,7 @@ def invalid_token_callback(error):
         'error': 'invalid_token'
     }), 401
 
+
 @jwt.unauthorized_loader
 def missing_token_callback(error):
     """ JWT için yetkisiz işlem yapılması durumunda geri dönülecek mesajı üreten metod """
@@ -97,6 +105,7 @@ def missing_token_callback(error):
         "description": "Request does not contain an access token.",
         'error': 'authorization_required'
     }), 401
+
 
 @jwt.needs_fresh_token_loader
 def token_not_fresh_callback():
@@ -116,6 +125,8 @@ def revoked_token_callback():
         "description": "The token has been revoked.",
         'error': 'token_revoked'
     }), 401
+
+
 # JWT configuration ends
 
 @app.before_first_request
@@ -124,46 +135,49 @@ def create_tables():
 
     db.create_all()
 
+
 # Uygulamaya restful endpoint olarak tanımlanacak tüm sınıflar aşağıda belirtilir
 # Keymind
 # Security resources
-api.add_resource(UserRegisterResource, '/register')
-api.add_resource(UserLoginResource, '/login')
-api.add_resource(UserResource, '/user/<int:user_id>')
-api.add_resource(TokenRefreshResource, '/refresh')
-api.add_resource(UserLogoutResource, '/logout')
+api.add_resource(UserRegisterResource, '/ai/security/register')
+api.add_resource(UserLoginResource, '/ai/security/login')
+api.add_resource(UserResource, '/ai/security/user/<int:user_id>')
+api.add_resource(TokenRefreshResource, '/ai/security/refresh')
+api.add_resource(UserLogoutResource, '/ai/security/logout')
 
 # AI
+api.add_resource(RuleViolationResource, '/ai/ruleviolation/<int:rule_violation_id>')
+api.add_resource(RuleViolationRegisterResource, '/ai/ruleviolation')
+
 api.add_resource(AIModelTrainerResource, '/ai/trainmodel')
 api.add_resource(AIModelActivateResource, '/ai/activatemodel')
 
+api.add_resource(PredictionRegisterResource, '/ai/prediction')
+api.add_resource(PredictionResource, '/ai/prediction/<int:prediction_id>')
 
-# KVK resources
-api.add_resource(IslemResource, '/kvc/islem/<int:islem_id>')
+api.add_resource(NotificationResource, '/ai/notification/<int:notification_id>')
+api.add_resource(NotificationRegisterResource, '/ai/notification')
+api.add_resource(NotificationListResource, '/ai/notification/list')
+
+# KVC resources
+api.add_resource(IslemResource, '/kvc/islem/<int:islem_no>')
 api.add_resource(IslemRegisterResource, '/kvc/islem')
 
-api.add_resource(SiviAlimiResource, '/sivialimi/<int:sivi_alimi_id>')
-api.add_resource(SiviAlimiRegisterResource, '/sivialimi')
+api.add_resource(SiviAlimiResource, '/kvc/sivialimi/<int:sivi_alimi_id>')
+api.add_resource(SiviAlimiRegisterResource, '/kvc/sivialimi')
 
-api.add_resource(PredictionRegisterResource, '/prediction')
-api.add_resource(PredictionResource, '/prediction/<int:prediction_id>')
-
-api.add_resource(HemsireGozlemResource, '/hemsiregozlem/<int:hemsire_gozlem_id>')
-api.add_resource(HemsireGozlemRegisterResource, '/hemsiregozlem')
-
-api.add_resource(KvcNotificationResource, '/kvc/kvcnotification/<int:kvc_notification_id>')
-api.add_resource(KvcNotificationRegisterResource, '/kvc/kvcnotification')
-api.add_resource(KvcNotificationListResource, '/kvc/kvcnotification/list')
+api.add_resource(HemsireGozlemResource, '/kvc/hemsiregozlem/<int:hemsire_gozlem_id>')
+api.add_resource(HemsireGozlemRegisterResource, '/kvc/hemsiregozlem')
 
 api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
 api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
 api.add_resource(LabSonucBatchRegisterResource, '/kvc/labsonuc/batch')
 
-api.add_resource(IslemTaniResource, '/islemtani/<int:islem_id>')
-api.add_resource(IslemTaniRegisterResource, '/islemtani')
+api.add_resource(IslemTaniResource, '/kvc/islemtani/<int:id>')
+api.add_resource(IslemTaniRegisterResource, '/kvc/islemtani')
 
-api.add_resource(IslemOperasyonResource, '/islemoperasyon/<int:islem_operasyon_id>')
-api.add_resource(IslemOperasyonRegisterResource, '/islemoperasyon')
+api.add_resource(IslemOperasyonResource, '/kvc/islemoperasyon/<int:islem_operasyon_id>')
+api.add_resource(IslemOperasyonRegisterResource, '/kvc/islemoperasyon')
 
 db.init_app(app)
 

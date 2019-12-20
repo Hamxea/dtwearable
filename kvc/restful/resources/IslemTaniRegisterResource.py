@@ -19,7 +19,7 @@ class IslemTaniRegisterResource(Resource):
                                    type=int,
                                    required=False,
                                    )
-    islemTani_post_parser.add_argument('islem_id',
+    islemTani_post_parser.add_argument('islem_no',
                                    type=int,
                                    required=True,
                                    )
@@ -39,8 +39,10 @@ class IslemTaniRegisterResource(Resource):
 
         data = self.islemTani_post_parser.parse_args()
 
+        islem_tani = IslemTaniDTO(**data)
+
         try:
-            islem_tani = IslemTaniDTO(None, data['islem_id'], data['tani_kodu'],
+            islem_tani = IslemTaniDTO(None, data['islem_no'], data['tani_kodu'],
                                       TaniTipiEnum.get_by_name(data['tani_tipi']))
             self.islemTaniDAO.save_to_db(islem_tani)
         except Exception as e:
@@ -59,7 +61,7 @@ class IslemTaniRegisterResource(Resource):
         islem_tani = self.islemTaniDAO.find_by_id(data['id'])
 
         if islem_tani:
-            islem_tani.islem_id = data['islem_id']
+            islem_tani.islem_no = data['islem_no']
             islem_tani.tani_kodu = data['tani_kodu']
             islem_tani.tani_tipi = TaniTipiEnum.get_by_name(data['tani_tipi'])
         else:

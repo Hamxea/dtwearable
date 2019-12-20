@@ -6,43 +6,45 @@
 	},
 	"item": [
 		{
-			"name": "/islemtani/<id>",
+			"name": "/kvc/islemtani/<id>",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/islemtani/15",
+					"raw": "{{url}}/kvc/islemtani/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islemtani",
-						"15"
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/islemtani/<id>",
+			"name": "/kvc/islemtani/<id>",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/islemtani/18",
+					"raw": "{{url}}/kvc/islemtani/2",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islemtani",
-						"18"
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/islemtani",
+			"name": "/kvc/islemtani",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -55,14 +57,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n\t\"id\": 16,\n\t\"islem_id\": 111,\n\t\"tani_kodu\": \"iso tani kodu 22\",\n\t\"tani_tipi\": \"ANA_TANI\"\n}"
+					"raw": "{   \n\t\"id\": 1,\n\t\"islem_no\": 111,\n\t\"tani_kodu\": \"Tanı kodu 22\",\n\t\"tani_tipi\": \"ANA_TANI\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/islemtani",
+					"raw": "{{url}}/kvc/islemtani",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islemtani"
 					]
 				}
@@ -70,7 +73,7 @@
 			"response": []
 		},
 		{
-			"name": "/islemtani",
+			"name": "/kvc/islemtani",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -81,14 +84,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{   \n\t\"islem_id\": 333,\n\t\"tani_kodu\": \"iso tani kodu 3\",\n\t\"tani_tipi\": \"ESLIK_EDEN_TANI\"\n}"
+					"raw": "{   \n\t\"islem_no\": 5,\n\t\"tani_kodu\": \"yeni tani kodu 5\",\n\t\"tani_tipi\": \"ESLIK_EDEN_TANI\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/islemtani",
+					"raw": "{{url}}/kvc/islemtani",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islemtani"
 					]
 				}

@@ -14,7 +14,7 @@ class IslemTaniDAO(AbstractDAO):
 
         return IslemTaniDTO.query.filter_by(id=_id).first()
 
-    def find_by_islem_no(self, islem_id:int) -> IslemTaniDTO:
-        """ islem_id değerine göre IslemTani nesnesini veritabanından getiren metod """
+    def get_all_by_islem_no(self, islem_no:int):
+        """ islem_no değerine göre IslemTani nesnelerini liste olarak veritabanından getiren metod """
 
-        return IslemTaniDTO.query.filter_by(islem_id=islem_id).first()
+        return IslemTaniDTO.query.filter_by(islem_no=islem_no).all()

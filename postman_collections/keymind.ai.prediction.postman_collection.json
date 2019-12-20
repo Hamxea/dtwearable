@@ -6,20 +6,20 @@
 	},
 	"item": [
 		{
-			"name": "/prediction",
+			"name": "/ai/prediction",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"ai_model_class\": \"ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel\",\n\t\"reference_table\": \"HemsireGozlem\",\n\t\"reference_id\": 1,\n\t\"prediction_input\":{\n            \"ates\": [35, 36]\n        }\n}",
+					"raw": "{\n\t\"ai_model_class\": \"ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel\",\n\t\"reference_table\": \"HemsireGozlem\",\n\t\"reference_id\": 1,\n\t\"prediction_input\":{\n            \"ates\": [37, 39]\n        }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,11 +27,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/prediction",
+					"raw": "{{url}}/ai/prediction",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
 						"prediction"
 					]
 				}
@@ -39,16 +40,17 @@
 			"response": []
 		},
 		{
-			"name": "/prediction/<id>",
+			"name": "/ai/prediction/<id>",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/prediction/1",
+					"raw": "{{url}}/ai/prediction/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
 						"prediction",
 						"1"
 					]

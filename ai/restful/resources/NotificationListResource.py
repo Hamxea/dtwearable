@@ -1,19 +1,19 @@
 from flask_restful import reqparse, Resource
 
-from kvc.restful.daos.KvcNotificationDAO import KvcNotificationDAO
+from ai.restful.daos.NotificationDAO import NotificationDAO
 
 
-class KvcNotificationListResource(Resource):
-    """ KvcNotificationDTO nesnesi için islem_no'ya gore liste dönen metod """
+class NotificationListResource(Resource):
+    """ NotificationDTO nesnesi için islem_no'ya gore liste dönen metod """
 
     """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('islem_no_list', type=int, required=True, action='append')
 
-    dao = KvcNotificationDAO()
+    dao = NotificationDAO()
 
     def get(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore KvcNotificationDTO nesnesini liste olarak donmek icin kullanan metod """
+        """ Restful isteğinin body kısmında bulunan veriye gore cNotificationDTO nesnesini liste olarak donmek icin kullanan metod """
 
         data = self.post_parser.parse_args()
 

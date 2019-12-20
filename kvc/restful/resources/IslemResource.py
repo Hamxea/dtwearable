@@ -10,18 +10,18 @@ class IslemResource(Resource):
 
     islemDAO = IslemDAO()
 
-    def get(self, islem_id: int):
-        """ islem_id parametresine karsılık Islem bilgisi donen metod """
+    def get(self, islem_no: int):
+        """ islem_no parametresine karsılık Islem bilgisi donen metod """
 
-        islem = self.islemDAO.find_by_id(islem_id)
+        islem = self.islemDAO.find_by_id(islem_no)
         if not islem:
             return {'message': 'Islem Not Found'}, 404
         return islem.serialize, 200
 
-    def delete(self, islem_id: int):
-        """ islem_id parametresine göre Islem nesnesini donen metod """
+    def delete(self, islem_no: int):
+        """ islem_no parametresine göre Islem nesnesini donen metod """
 
-        islem = self.islemDAO.find_by_id(islem_id)
+        islem = self.islemDAO.find_by_id(islem_no)
         if not islem:
             return {'message': 'Islem Not Found'}, 404
         self.islemDAO.delete_from_db(islem)
