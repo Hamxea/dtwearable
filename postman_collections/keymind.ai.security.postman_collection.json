@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "dbea5d3f-4310-4860-9b1f-bd746a99ed20",
+		"_postman_id": "44fc63d4-ceeb-4ca3-a9ca-2afd026d6dfe",
 		"name": "keymind.ai.security",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "/register (register a new user)",
+			"name": "/ai/security/register (register a new user)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -17,14 +17,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"umit\",\n\t\"password\": \"1234\"\n}"
+					"raw": "{\n\t\"username\": \"umit\",\n\t\"password\": \"1234\",\n\t\"role\": 0\n}"
 				},
 				"url": {
-					"raw": "{{url}}/register",
+					"raw": "{{url}}/ai/security/register",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
+						"security",
 						"register"
 					]
 				}
@@ -32,16 +34,18 @@
 			"response": []
 		},
 		{
-			"name": "/user/<id> (get user by id)",
+			"name": "/ai/security/user/<id> (get user by id)",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/user/1",
+					"raw": "{{url}}/ai/security/user/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
+						"security",
 						"user",
 						"1"
 					]
@@ -50,7 +54,7 @@
 			"response": []
 		},
 		{
-			"name": "/user/<id> (delete user by id)",
+			"name": "/ai/security/user/<id> (delete user by id)",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -59,11 +63,13 @@
 					"raw": "{\n\t\"username\": \"jose\",\n\t\"password\": \"1234\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/user/1",
+					"raw": "{{url}}/ai/security/user/1",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
+						"security",
 						"user",
 						"1"
 					]
@@ -72,7 +78,7 @@
 			"response": []
 		},
 		{
-			"name": "/login (user login)",
+			"name": "/ai/security/login (user login)",
 			"event": [
 				{
 					"listen": "test",
@@ -117,11 +123,13 @@
 					"raw": "{\n  \"username\" : \"umit\",\n  \"password\" : \"1234\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/login",
+					"raw": "{{url}}/ai/security/login",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
+						"security",
 						"login"
 					]
 				}
@@ -129,16 +137,16 @@
 			"response": []
 		},
 		{
-			"name": "/logout (user logout)",
+			"name": "/ai/security/logout (user logout)",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "dc763e9b-e6c7-4ff3-9766-637976a5c64b",
-						"type": "text/javascript",
 						"exec": [
 							""
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -155,11 +163,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{server_address}}/logout",
+					"raw": "{{server_address}}/ai/security/logout",
 					"host": [
 						"{{server_address}}"
 					],
 					"path": [
+						"ai",
+						"security",
 						"logout"
 					]
 				}
@@ -167,7 +177,7 @@
 			"response": []
 		},
 		{
-			"name": "/refresh (refresh token)",
+			"name": "/ai/security/refresh (refresh token)",
 			"event": [
 				{
 					"listen": "test",
@@ -206,11 +216,13 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{url}}/refresh",
+					"raw": "{{url}}/ai/security/refresh",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"ai",
+						"security",
 						"refresh"
 					]
 				}

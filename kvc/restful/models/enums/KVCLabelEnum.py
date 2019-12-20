@@ -7,8 +7,9 @@ from kvc.restful.models.enums.AbstractIntEnum import AbstractIntEnum
 class KVCLabelEnum(AbstractIntEnum):
     """ KVC etiket tipleri için enum sınıfı """
 
-    TABURCU = 0
-    ENFEKTE = 1
-    AMELIYAT = 2
-    YOGUN_BAKIM = 3
-    OLUM = 4
+    BELIRSIZ = 0
+    TABURCU = 1
+    ENFEKTE = 2
+    AMELIYAT = 3
+    YOGUN_BAKIM = 4
+    OLUM = 5

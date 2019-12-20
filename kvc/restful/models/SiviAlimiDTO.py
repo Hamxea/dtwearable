@@ -13,7 +13,7 @@ class SiviAlimiDTO(db.Model):
     __tablename__ = "sivi_alimi"
 
     id = db.Column(db.BigInteger, primary_key=True)
-    islem_id = db.Column(db.BigInteger) #, ForeignKey('islem.id', ondelete='CASCADE'), nullable=False)
+    islem_no = db.Column(db.BigInteger) #, ForeignKey('islem.id', ondelete='CASCADE'), nullable=False)
     olcum_tarihi = db.Column(db.DateTime)
     kilo = db.Column(db.Float)
     aldigi_sivi_miktari_oral = db.Column(db.Float)
@@ -28,11 +28,11 @@ class SiviAlimiDTO(db.Model):
 
     # sivi_alimi_list = db.relationship('SiviAlimi', backref="sivi_alimi", lazy='dynamic')
 
-    def __init__(self, id: int, islem_id: int, olcum_tarihi: datetime, kilo: float, aldigi_sivi_miktari_oral: float, aldigi_sivi_miktari_intravanoz: float,
+    def __init__(self, id: int, islem_no: int, olcum_tarihi: datetime, kilo: float, aldigi_sivi_miktari_oral: float, aldigi_sivi_miktari_intravanoz: float,
                  aldigi_sivi_miktari_nazogastrik: float, cikardigi_sivi_miktari_idrar: float, cikardigi_sivi_miktari_nazogastrik: float, cikardigi_sivi_diren: float, sivi_farki: float):
 
         self.id = id
-        self.islem_id = islem_id
+        self.islem_no = islem_no
         self.olcum_tarihi = olcum_tarihi
         self.kilo = kilo
         self.aldigi_sivi_miktari_oral = aldigi_sivi_miktari_oral
@@ -49,7 +49,7 @@ class SiviAlimiDTO(db.Model):
 
         return {
             'id': self.id,
-            'islem_id': self.islem_id,
+            'islem_no': self.islem_no,
             'olcum_tarihi': self.olcum_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
             'kilo': self.kilo,
             'aldigi_sivi_miktari_oral': self.aldigi_sivi_miktari_oral,

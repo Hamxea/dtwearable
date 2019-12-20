@@ -16,7 +16,7 @@ class LabSonucBatchRegisterResource(Resource):
     """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('id', type=int, required=False, action='append')
-    post_parser.add_argument('islem_id', type=int, required=True, action='append')
+    post_parser.add_argument('islem_no', type=int, required=True, action='append')
     post_parser.add_argument('lis_kabul_id', type=int, required=True, action='append')
     post_parser.add_argument('numune_tarihi', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(), required=True, action='append')
     post_parser.add_argument('tahlil_kodu', type=str, required=True, action='append')
@@ -37,7 +37,7 @@ class LabSonucBatchRegisterResource(Resource):
         for lab_sonuc_dto in lab_sonuc_list:
             try:
                 dto = LabSonucDTO(id=None,
-                                  islem_id=lab_sonuc_dto['islem_id'],
+                                  islem_no=lab_sonuc_dto['islem_no'],
                                   lis_kabul_id=lab_sonuc_dto['lis_kabul_id'],
                                   numune_tarihi=lab_sonuc_dto['numune_tarihi'],
                                   tahlil_kodu=lab_sonuc_dto['tahlil_kodu'],

@@ -6,25 +6,26 @@
 	},
 	"item": [
 		{
-			"name": "/islemoperasyon/<id>",
+			"name": "/kvc/islemoperasyon/<id>",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/hemsiregozlem/10",
+					"raw": "{{url}}/kvc/islemoperasyon/2",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"hemsiregozlem",
-						"10"
+						"kvc",
+						"islemoperasyon",
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/islemoperasyon/<id>",
+			"name": "/kvc/islemoperasyon/<id>",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -33,20 +34,21 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{url}}/hemsiregozlem/9",
+					"raw": "{{url}}/kvc/islemoperasyon/2",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"hemsiregozlem",
-						"9"
+						"kvc",
+						"islemoperasyon",
+						"2"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "/islemoperasyon",
+			"name": "/kvc/islemoperasyon",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -59,14 +61,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"islem_id\":8,\n\t\"operasyon_sut\" : \"m23.0\",\n\t\"operasyon_tipi\":0\n}"
+					"raw": "{\n\t\"islem_no\":2,\n\t\"operasyon_sut\" : \"m23.0\",\n\t\"operasyon_tipi\": \"EK_ISLEM\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/islemoperasyon",
+					"raw": "{{url}}/kvc/islemoperasyon",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
+						"kvc",
 						"islemoperasyon"
 					]
 				}
@@ -74,7 +77,7 @@
 			"response": []
 		},
 		{
-			"name": "/islemoperasyon",
+			"name": "/kvc/islemoperasyon",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -87,15 +90,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 10,\r\n    \"islem_no\": 103,\r\n    \"islem_id\": 1,\r\n    \"olcum_tarihi\": \"01.01.2019 00:00:00\",\r\n    \"vucut_sicakligi\": 35.7,\r\n    \"nabiz\": 75,\r\n    \"tansiyon_sistolik\": 90,\r\n    \"tansiyon_diastolik\": 45,\r\n    \"spo\": 30,\r\n    \"o2\": 40,\r\n    \"aspirasyon\": true,\r\n    \"kan_transfuzyonu\": false,\r\n    \"diren_takibi\": true\r\n}"
+					"raw": "{\n\t\"id\": 1, \n\t\"islem_no\":11,\n\t\"operasyon_sut\" : \"Yeni Kod\",\n\t\"operasyon_tipi\": \"EK_ISLEM\"\n}"
 				},
 				"url": {
-					"raw": "{{url}}/hemsiregozlem",
+					"raw": "{{url}}/kvc/islemoperasyon",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"hemsiregozlem"
+						"kvc",
+						"islemoperasyon"
 					]
 				}
 			},

@@ -8,7 +8,7 @@ class LabSonucDAO(AbstractDAO):
     def __init__(self):
         super().__init__(LabSonucDTO)
 
-    def get_by_islem_id(self, islem_id: int):
+    def get_by_islem_no(self, islem_no: int):
         """ islem_no değerine göre LabSonuc nesnesini veritabanından getiren metod """
 
-        return LabSonucDTO.query.filter_by(islem_id=islem_id).all()
+        return LabSonucDTO.query.filter_by(islem_no=islem_no).all()

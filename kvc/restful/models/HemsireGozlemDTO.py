@@ -8,7 +8,7 @@ class HemsireGozlemDTO(db.Model):
     __tablename__ = "hemsire_gozlem"
 
     id = db.Column(db.BigInteger, primary_key=True)
-    islem_id = db.Column(db.BigInteger)
+    islem_no = db.Column(db.BigInteger)
     olcum_tarihi = db.Column(db.DateTime)
     vucut_sicakligi = db.Column(db.Float)
     nabiz = db.Column(db.Integer)
@@ -20,12 +20,12 @@ class HemsireGozlemDTO(db.Model):
     kan_transfuzyonu = db.Column(db.Integer)
     diren_takibi = db.Column(db.Boolean)
 
-    def __init__(self, id: int, islem_id: int, olcum_tarihi: datetime, vucut_sicakligi: float, nabiz: int,
+    def __init__(self, id: int, islem_no: int, olcum_tarihi: datetime, vucut_sicakligi: float, nabiz: int,
                  tansiyon_sistolik: int, tansiyon_diastolik: int, spo: int, o2: int, aspirasyon: bool,
                  kan_transfuzyonu: int, diren_takibi: bool):
 
         self.id = id
-        self.islem_id = islem_id
+        self.islem_no = islem_no
         self.olcum_tarihi = olcum_tarihi
         self.vucut_sicakligi = vucut_sicakligi
         self.nabiz = nabiz
@@ -44,7 +44,7 @@ class HemsireGozlemDTO(db.Model):
 
         return {
             'id': self.id,
-            'islem_id': self.islem_id,
+            'islem_no': self.islem_no,
             'olcum_tarihi': self.olcum_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
             'vucut_sicakligi': self.vucut_sicakligi,
             'nabiz': self.nabiz,

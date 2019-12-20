@@ -16,10 +16,6 @@ class IslemRegisterResource(Resource):
 
     """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     islem_post_parser = reqparse.RequestParser()
-    islem_post_parser.add_argument('id',
-                                   type=int,
-                                   required=False,
-                                   )
     islem_post_parser.add_argument('islem_no',
                                    type=int,
                                    required=True,
@@ -46,7 +42,7 @@ class IslemRegisterResource(Resource):
                                    )
     islem_post_parser.add_argument('etiket',
                                    type=str,
-                                   required=False
+                                   required=True
                                    )
     # islem_parser.add_argument('islem_operasyon_list',
     #                           action='append',
@@ -61,7 +57,7 @@ class IslemRegisterResource(Resource):
         data = self.islem_post_parser.parse_args()
 
         try:
-            islem = IslemDTO(None, data['islem_no'], data['kayit_tarihi'], CinsiyetEnum.get_by_name(data['cinsiyet']),
+            islem = IslemDTO(data['islem_no'], data['kayit_tarihi'], CinsiyetEnum.get_by_name(data['cinsiyet']),
                              data['yas'], data['operasyon_tarihi'], data['cikis_tarihi'],
                              KVCLabelEnum.get_by_name(data['etiket']))
             self.islemDAO.save_to_db(islem)
@@ -77,10 +73,9 @@ class IslemRegisterResource(Resource):
 
         data = self.islem_post_parser.parse_args()
 
-        islem = self.islemDAO.find_by_id(data['id'])
+        islem = self.islemDAO.find_by_id(data['islem_no'])
 
         if islem:
-            islem.islem_no = data['islem_no']
             islem.kayit_tarihi = data['kayit_tarihi']
             islem.cinsiyet = CinsiyetEnum.get_by_name(data['cinsiyet'])
             islem.yas = data['yas']

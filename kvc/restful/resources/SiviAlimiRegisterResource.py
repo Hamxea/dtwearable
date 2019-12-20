@@ -18,7 +18,7 @@ class SiviAlimiRegisterResource(Resource):
                              type=int,
                              required=False,
                              )
-    post_parser.add_argument('islem_id',
+    post_parser.add_argument('islem_no',
                              type=int,
                              required=True,
                              )
@@ -85,7 +85,7 @@ class SiviAlimiRegisterResource(Resource):
         sivi_alimi = self.siviAlimiDAO.find_by_id(data['id'])
 
         if sivi_alimi:
-            sivi_alimi.islem_id = data['islem_id']
+            sivi_alimi.islem_no = data['islem_no']
             sivi_alimi.olcum_tarihi = data['olcum_tarihi']
             sivi_alimi.kilo = data['kilo']
             sivi_alimi.aldigi_sivi_miktari_oral = data['aldigi_sivi_miktari_oral']
