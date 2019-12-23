@@ -9,5 +9,3 @@ pandas
 numpy
 pytest
 gunicorn
-matplotlib
-seaborn
