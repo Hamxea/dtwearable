@@ -21,7 +21,7 @@ ENV PYTHONUNBUFFERED 1
 ENV FLASK_APP app.py
 
 CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
-#CMD python3 app.py
+#CMD flask run --host=0.0.0.0
 
 #docker build -t umtkrdmn/keymind .
 #docker run -p 5000:5000 -v D:/source/keydata/keymind/:/app umtkrdmn/keymind
