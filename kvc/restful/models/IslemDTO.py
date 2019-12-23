@@ -22,7 +22,7 @@ class IslemDTO(db.Model):
     etiket = db.Column(IntEnum(KVCLabelEnum))
 
     # islem_operasyon_list = db.relationship('IslemOperasyon', backref="islem_operasyon", lazy='dynamic')
-    # hemsire_gozlem_list = db.relationship('HemsireGozlem', backref="hemsire_gozlem", lazy='dynamic')
+    hemsire_gozlem_list = db.relationship('HemsireGozlemDTO', back_populates="islem_dto", lazy='dynamic')
 
     def __init__(self, islem_no: int, kayit_tarihi: datetime, cinsiyet: int,
                  yas: int, operasyon_tarihi: datetime, cikis_tarihi: datetime, etiket: int):

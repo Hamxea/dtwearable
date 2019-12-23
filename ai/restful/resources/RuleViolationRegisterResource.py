@@ -19,7 +19,7 @@ class RuleViolationRegisterResource(Resource):
     post_parser.add_argument('reference_id', type=int, required=True)
     post_parser.add_argument('prediction_id', type=int, required=True)
     post_parser.add_argument('rule', type=str, required=True)
-    post_parser.add_argument('value_source', type=str, required=True)
+    post_parser.add_argument('value_source', type=str, required=False)
     post_parser.add_argument('value', type=int, required=True)
     post_parser.add_argument('violation_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(), required=True)
 
