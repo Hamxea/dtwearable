@@ -1,0 +1,4 @@
+node_modules/
+postman_collections/
+venv/
+__pycache__/
