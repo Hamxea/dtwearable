@@ -16,6 +16,7 @@ class HemsireGozlemService():
     islem_dao = IslemDAO()
     temperature_rule_engine = TemperatureRuleEngine()
     nabiz_rule_engine = NabizRuleEngine()
+    tansiyon_rule_engine = TansiyonRuleEngine()
     rule_violation_service = RuleViolationService()
 
     def create_hemsire_gozlem(self, hemsire_gozlem):
@@ -24,12 +25,17 @@ class HemsireGozlemService():
         try:
             self.hemsire_gozlem_dao.save_to_db(hemsire_gozlem)
             self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto,  hemsire_gozlem.vucut_sicakligi)
-            self.nabiz_rule_engine.execute(hemsire_gozlem.islem_dto, hemsire_gozlem.islem_dto.yas, hemsire_gozlem.nabiz)
+
         except RuleViolationException as e:
             """ TODO  rule_violation_service düzeltecek...tek db save_to olması lazım"""
             self.rule_violation_service.save_rule_violation_to_db(HemsireGozlemDTO.__tablename__, hemsire_gozlem.id,
                                                                   None, e.rule_enum, None,
                                                                   hemsire_gozlem.vucut_sicakligi, datetime.now())
+"""
+        try:
+            self.nabiz_rule_engine.execute(hemsire_gozlem.islem_dto.yas, hemsire_gozlem.nabiz)
+        except RuleViolationException as e2:
             self.rule_violation_service.save_rule_violation_to_db(HemsireGozlemDTO.__tablename__, hemsire_gozlem.id,
-                                                                  None, e.rule_enum, None,
+                                                                  None, e2.rule_enum.name, None,
                                                                   hemsire_gozlem.nabiz, datetime.now())
+"""
