@@ -6,7 +6,7 @@ class TansiyonRuleEngine():
     """ Reference: https://www.health.harvard.edu/heart-health/reading-the-new-blood-pressure-guidelines
     """
 
-    def execute(self, cisiyet, yas, tansiyon_sistolik, tansiyon_diastolik):
+    def execute(self,  tansiyon_sistolik, tansiyon_diastolik):
         """ """
 
         if (120 <= tansiyon_sistolik <= 129) and (tansiyon_diastolik < 80):
