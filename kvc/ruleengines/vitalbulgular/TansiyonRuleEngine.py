@@ -24,10 +24,8 @@ class TansiyonRuleEngine():
                                          "ve TANSİYON DİASTOLİK 90    ", TansiyonEnum.YUKSEK_TANSIYON_HIPERTENSIYON_ASAMA_2)
 
         if (tansiyon_sistolik >= 180) and (tansiyon_diastolik > 120):
-            raise RuleViolationException("Tansiyon YükseldiHİPERTENSİYON ASAMA-2. "
-                                         "TANSİYON SİSTOLİK 140 yükseldi ", TansiyonEnum.HİPERTENSİF_KRİZLER)
+            raise RuleViolationException("Tansiyon Çök Yükseldi. HİPERTENSİF KRİZLER ", TansiyonEnum.HIPERTENSIF_KRIZLER)
 
         if (tansiyon_sistolik >= 180) or (tansiyon_diastolik > 120):
-            raise RuleViolationException("Tansiyon YükseldiHİPERTENSİYON ASAMA-2. "
-                                         "TANSİYON SİSTOLİK 140 yükseldi ", TansiyonEnum.HİPERTENSİF_KRİZLER)
+            raise RuleViolationException("Tansiyon Çök Yükseldi. HİPERTENSİF KRİZLER ", TansiyonEnum.HIPERTENSIF_KRIZLER)
 

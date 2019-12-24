@@ -30,7 +30,7 @@ class HemsireGozlemService():
         except RuleViolationException as e:
             """ TODO  rule_violation_service düzeltecek...tek db save_to olması lazım"""
             self.rule_violation_service.save_rule_violation_to_db(HemsireGozlemDTO.__tablename__, hemsire_gozlem.id,
-                                                                  None, e.rule_enum, None,
+                                                                  None, e.rule_enum.name, None,
                                                                   hemsire_gozlem.vucut_sicakligi, datetime.now())
 """
         try:
