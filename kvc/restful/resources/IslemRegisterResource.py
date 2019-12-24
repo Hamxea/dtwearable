@@ -55,7 +55,7 @@ class IslemRegisterResource(Resource):
         """ Restful isteğinin body kısmında bulunan veriye gore Islem nesnesini olusturan ve veritabanına yazan metod """
 
         data = self.islem_post_parser.parse_args()
-
+        # test
         try:
             islem = IslemDTO(data['islem_no'], data['kayit_tarihi'], CinsiyetEnum.get_by_name(data['cinsiyet']),
                              data['yas'], data['operasyon_tarihi'], data['cikis_tarihi'],
