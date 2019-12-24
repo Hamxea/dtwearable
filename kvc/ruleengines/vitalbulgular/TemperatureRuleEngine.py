@@ -11,7 +11,7 @@ class TemperatureRuleEngine(AbstractRuleEngine):
         if temperature < 36:
             raise RuleViolationException("Vucut sıcakliği 36 derecenın altına düştü", TemperatureEnum.DUSUK_ATES)
 
-        if temperature > 38 or temperature <= 40:
+        if 38 < temperature <= 40:
             raise RuleViolationException("Vucut sıcakliği 37.5 derecenın üstüne çikti", TemperatureEnum.YUKSEK_ATES)
 
         if temperature > 40:

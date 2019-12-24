@@ -44,7 +44,7 @@ class NabizRuleEngine(AbstractRuleEngine):
                 raise RuleViolationException("Nabiz 120 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ)
 
         """ 5 < yaş <= 12 """
-        if (yas > 5) and (yas <= 12):
+        if 5 < yas <= 12:
             if nabiz < 75:
                 raise RuleViolationException("Nabiz 75 derecenın altına düştü", NabizEnum.DUSUK_NABIZ)
 
@@ -55,7 +55,7 @@ class NabizRuleEngine(AbstractRuleEngine):
                 raise RuleViolationException("Nabiz 110 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ)
 
         """ 12 < yaş <= 18 """
-        if (yas > 12) and (yas <= 18):
+        if 12 < yas <= 18:
             if nabiz < 60:
                 raise RuleViolationException("Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ)
 
