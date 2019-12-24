@@ -4,9 +4,10 @@ from ai.restful.services.RuleViolationService import RuleViolationService
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 from kvc.restful.daos.IslemDAO import IslemDAO
 from kvc.restful.models.HemsireGozlemDTO import HemsireGozlemDTO
-from kvc.ruleengines.NabizRuleEngine import NabizRuleEngine
+from kvc.ruleengines.vitalbulgular.NabizRuleEngine import NabizRuleEngine
 from kvc.ruleengines.RuleViolationException import RuleViolationException
-from kvc.ruleengines.TemperatureRuleEngine import TemperatureRuleEngine
+from kvc.ruleengines.vitalbulgular.TansiyonRuleEngine import TansiyonRuleEngine
+from kvc.ruleengines.vitalbulgular.TemperatureRuleEngine import TemperatureRuleEngine
 
 
 class HemsireGozlemService():
