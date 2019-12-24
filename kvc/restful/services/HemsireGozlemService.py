@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from ai.aimodels.TemperaturePredictionAIModel import TemperaturePredictionAIModel
+from ai.restful.services.PredictionService import PredictionService
 from ai.restful.services.RuleViolationService import RuleViolationService
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 from kvc.restful.daos.IslemDAO import IslemDAO
@@ -19,6 +21,7 @@ class HemsireGozlemService():
     nabiz_rule_engine = NabizRuleEngine()
     tansiyon_rule_engine = TansiyonRuleEngine()
     rule_violation_service = RuleViolationService()
+    prediction_service = PredictionService()
 
     def create_hemsire_gozlem(self, hemsire_gozlem):
         """  """
@@ -26,6 +29,10 @@ class HemsireGozlemService():
         try:
             self.hemsire_gozlem_dao.save_to_db(hemsire_gozlem)
             self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto,  hemsire_gozlem.vucut_sicakligi)
+
+            # TemperaturePredictionAIModel.__name__
+            prediction_value = self.prediction_service.make_prediction("ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel", HemsireGozlemDTO.__tablename__, hemsire_gozlem.id, )
+            self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, prediction_value)
 
         except RuleViolationException as e:
             """ TODO  rule_violation_service düzeltecek...tek db save_to olması lazım"""
