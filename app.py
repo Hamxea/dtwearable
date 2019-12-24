@@ -1,3 +1,4 @@
+import logging
 import os
 
 from flask import Flask, jsonify
@@ -36,6 +37,18 @@ from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 
 app = Flask(__name__)
 api = Api(app)
+
+""" Gunicor ve app logging ayarları """
+gunicorn_logger = logging.getLogger('gunicorn.debug')
+app.logger.handlers = gunicorn_logger.handlers
+app.logger.setLevel(gunicorn_logger.level)
+# app.logger.setLevel(logging.WARNING)
+
+app.logger.debug("this is a DEBUG message for test")
+app.logger.info("this is an INFO message for test")
+app.logger.warning("this is a WARNING message for test")
+app.logger.error("this is an ERROR message for test")
+app.logger.critical("this is a CRITICAL message for test")
 
 """
 SqlAlchemy ayarları

@@ -3,7 +3,7 @@ version: '3.7'
 services:
   keymind:
     build: .
-    command: gunicorn --bind 0.0.0.0:5000 wsgi:app #flask run --host=0.0.0.0
+    command: gunicorn -w 2 --log-level INFO --access-gfile access.log --error-logfile error.log --bind 0.0.0.0:5000 wsgi:app
     volumes:
       - ./:/app
     ports:
