@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pandas as pd
 
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
@@ -27,3 +29,10 @@ class TemperaturePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
         return UnivariateTimeSeriesPreprocessor().preprocess(sorted_dto_list=hemsire_gozlem_dto_list,
                                                              feature_name='vucut_sicakligi', time_interval_in_hours=12,
                                                              window_size=dataset_window_size, column_list=dataset_column_names_list)
+
+    def get_statistics(self, start_date: datetime, end_date: datetime):
+        """ Modelin belirli tarih aralığındaki istatistiklerini getirmek için kullanılan metot
+            Bu model için şu aşamada istatistik üretilmediği için boş json dönüyor
+        """
+
+        return {"Sabit": 0}
