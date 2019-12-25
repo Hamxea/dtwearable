@@ -1,16 +1,12 @@
 from datetime import datetime
 
-import pandas as pd
-
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
 from kvc.preprocessing.UnivariateTimeSeriesPreprocessor import UnivariateTimeSeriesPreprocessor
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
-class TemperaturePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
+class PulsePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
     """ Ateş değerleri üzerinden tahmin üreten sınıf. AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
-
-    time_interval_in_hours = 12
 
     hemsire_gozlem_dao = HemsireGozlemDAO()
 
@@ -29,7 +25,7 @@ class TemperaturePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
         hemsire_gozlem_dto_list.sort(key=lambda x: x.olcum_tarihi)
 
         return UnivariateTimeSeriesPreprocessor().preprocess(sorted_dto_list=hemsire_gozlem_dto_list,
-                                                             feature_name='vucut_sicakligi', time_interval_in_hours=self.time_interval_in_hours,
+                                                             feature_name='nabiz', time_interval_in_hours=12,
                                                              window_size=dataset_window_size, column_list=dataset_column_names_list)
 
     def get_statistics(self, start_date: datetime, end_date: datetime):
@@ -38,16 +34,3 @@ class TemperaturePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
         """
 
         return {}
-
-    def predict(self, islem_no):
-
-        # TODO sil
-        feature_values_for_prediction = self.hemsire_gozlem_dao.get_feature_values_for_prediction()
-
-
-        pass
-    """
-     veriyi al
-     tahmine yolla
-     sonuç dön
-    """

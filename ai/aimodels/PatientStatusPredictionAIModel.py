@@ -26,11 +26,19 @@ class PatientStatusPredictionAIModel(AbstractAIModel):
                         "and p.ai_model_id = ai.id and p.prediction_date > TO_DATE(:start_date, 'DD.MM.YYYY')"
                         "and p.prediction_date < TO_DATE(:end_date, 'DD.MM.YYYY')")
 
+        # TODO : Genel durum kategorilerine (labellar) göre istatistiklerin detaylandırılması
+        # Label'lar bir döngüye alınarak, her bir label için sorguya and koşulu eklenmeli
+        # Her label için istatistik sonuçları hesaplanıp, json'a eklenmeli
+        # Örnek json TestAIModel.py sınıfında yer almaktadır
+
         result = db.session.execute(sql_text,
                                     {'start_date': formatted_start_date, 'end_date': formatted_end_date}).fetchall()
 
         total_count = result[0][0]
         true_count = result[0][1]
 
-        return {'total_count': total_count,
-                'true_count': true_count}
+        if true_count is None:
+            return {"true_count": None}
+        else:
+            return {'total_count': total_count,
+                    'true_count': true_count}
