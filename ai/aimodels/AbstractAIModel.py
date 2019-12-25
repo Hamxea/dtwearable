@@ -13,6 +13,6 @@ class AbstractAIModel(ABC):
 
     @abstractmethod
     def get_statistics(self, start_date: datetime, end_date: datetime):
-        """ Belirli tarih aralığındaki model istatistiklerini getirmek için kullanılan metot """
+        """ Modelin belirli tarih aralığındaki istatistiklerini getirmek için kullanılan abstract metot """
 
         pass

@@ -10,7 +10,6 @@ class StatisticsResource(Resource):
 
     """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     post_parser = reqparse.RequestParser()
-    # post_parser.add_argument('id', type=int, required=False)
     post_parser.add_argument('start_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y").date(), required=True)
     post_parser.add_argument('end_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y").date(), required=True)
 
