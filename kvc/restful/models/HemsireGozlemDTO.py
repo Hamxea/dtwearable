@@ -1,5 +1,8 @@
 import datetime
 
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
 from db import db
 
 class HemsireGozlemDTO(db.Model):
@@ -8,7 +11,7 @@ class HemsireGozlemDTO(db.Model):
     __tablename__ = "hemsire_gozlem"
 
     id = db.Column(db.BigInteger, primary_key=True)
-    islem_no = db.Column(db.BigInteger)
+    islem_no = db.Column(db.BigInteger, ForeignKey('islem.islem_no'))
     olcum_tarihi = db.Column(db.DateTime)
     vucut_sicakligi = db.Column(db.Float)
     nabiz = db.Column(db.Integer)
@@ -19,6 +22,8 @@ class HemsireGozlemDTO(db.Model):
     aspirasyon = db.Column(db.Boolean)
     kan_transfuzyonu = db.Column(db.Integer)
     diren_takibi = db.Column(db.Boolean)
+
+    islem_dto = relationship('IslemDTO', back_populates="hemsire_gozlem_list")
 
     def __init__(self, id: int, islem_no: int, olcum_tarihi: datetime, vucut_sicakligi: float, nabiz: int,
                  tansiyon_sistolik: int, tansiyon_diastolik: int, spo: int, o2: int, aspirasyon: bool,

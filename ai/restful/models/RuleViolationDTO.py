@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from db import db
+from kvc.ruleengines.enums.TemperatureEnum import TemperatureEnum
 
 
 class RuleViolationDTO(db.Model):
@@ -12,7 +13,7 @@ class RuleViolationDTO(db.Model):
     reference_table = db.Column(db.String)
     reference_id = db.Column(db.BigInteger)
     prediction_id = db.Column(db.BigInteger)
-    rule = db.Column(db.String)
+    rule = db.Column(db.Enum(TemperatureEnum))
     value_source = db.Column(db.String)
     value = db.Column(db.Float)
     violation_date = db.Column(db.DateTime)

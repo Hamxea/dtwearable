@@ -4,6 +4,8 @@ from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 from kvc.restful.models.HemsireGozlemDTO import HemsireGozlemDTO
+from kvc.restful.services.HemsireGozlemService import HemsireGozlemService
+
 
 class HemsireGozlemRegisterResource(Resource):
     """
@@ -63,19 +65,20 @@ class HemsireGozlemRegisterResource(Resource):
                                    )
 
     hemsireGozlemDAO = HemsireGozlemDAO()
+    hemsire_gozlem_service = HemsireGozlemService()
 
     def post(self):
         """ Restful isteğinin body kısmında bulunan veriye gore Hemsire Gözlem nesnesini olusturan ve veritabanına yazan metod """
 
         data = self.hemsire_gozlem_post_parser.parse_args()
 
-        hemsire_gozlem = HemsireGozlemDTO(**data)
-
         try:
-            self.hemsireGozlemDAO.save_to_db(hemsire_gozlem)
+            hemsire_gozlem = HemsireGozlemDTO(**data)
+            self.hemsire_gozlem_service.create_hemsire_gozlem(hemsire_gozlem)
         except Exception as e:
+            print(e)
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return hemsire_gozlem.serialize, 201
