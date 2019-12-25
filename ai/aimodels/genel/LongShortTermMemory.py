@@ -4,26 +4,24 @@ from keras.models import Sequential
 from  keras.layers import Dense
 from keras.layers import LSTM
 
-from ai.aimodels import AbstractAIModel
-from pandas import DataFrame
-from pandas import concat
-import numpy as np
+from ai.aimodels.AbstractAIModel import AbstractAIModel
+from numpy import array
+
 
 class LongShortTermMemory(AbstractAIModel):
-    """ Mutlilayer (LSTM) Perceptron with Multi-Step Output """
+    """ Long Short TermMemory (lstm) with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
 
         df = self.get_dataset(dataset_parameters)
-        df = self.windowing(df)
-        X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'])
+        # df = self.windowing(df)
+        X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
+                                                              hyperparameters['n_steps'],)
+        lstm_model = self.train_lstm(X_train, y_train, hyperparameters['n_steps'])
+        score, acc = self.test_lstm(lstm_model, X_test, y_test, hyperparameters['n_steps'])
 
-        lstm_model = self.train_lstm(X_train, y_train)
-
-        score = self.test_lstm(lstm_model, X_test, y_test)
-
-        return lstm_model, {"score": score}
+        return lstm_model, {"score": score, "accuracy": acc}
 
     @abstractmethod
     def get_dataset(self, dataset_parameters):
@@ -33,85 +31,71 @@ class LongShortTermMemory(AbstractAIModel):
         """
         pass
 
-    def create_synthetic_dataset(self):
-        """ İhtiyaca göre sentetik olarak dataset oluşturan metod """
-
-        df_size = 100
-        low = 35
-        high = 42
-
-        df = DataFrame(np.random.uniform(low=low, high=high, size=df_size + self.window_size))
-        df = round(df, 2)
-        return df
-
-    def windowing(self, df):
-        """ tek boyutlu  veriyi window size'ı kullanarak matrise çeviren metod """
-
-        agg_values = self.series_to_supervised(dataset=df, n_in=self.window_size)
-        df = DataFrame(agg_values)
-        self.rename_columns(df, 'Feat_')
-        return df
-
-    def split_dataset(self, df, test_ratio):
+    def split_dataset(self, df, test_ratio, n_steps):
         """ Dataseti train ve test için bölen metod """
 
-        label_index = df.columns.get_loc("Label")
+        X, y = self.split_sequences(df, n_steps)
 
-        X = df.iloc[:, :label_index].values
-        y = df.iloc[:, label_index:].values
+        return train_test_split(X, y, test_size=test_ratio, shuffle=False, stratify=None)
 
-        return train_test_split(X, y, test_size = test_ratio, shuffle=False, stratify=None)
+    def split_sequences(self, df, n_steps):
+        """ split a multivariate sequence into samples metod"""
+        """
+        #n_steps_in = 3
+        #n_steps_out = 1
+        """
+        sequences = df.to_numpy()
+        X, y = list(), list()
+        for i in range(len(sequences)):
+            # find the end of this pattern
+            end_ix = i + n_steps
+            # check if we are beyond the dataset
+            if end_ix > len(sequences) - 1:
+                break
+            # gather input and output parts of the pattern
+            seq_x, seq_y = sequences[i:end_ix, :], sequences[end_ix, :]
+            X.append(seq_x)
+            y.append(seq_y)
+        X, y = array(X), array(y)
+        return X, y
 
-    def train_lstm(self, X_train, y_train):
+    def train_lstm(self, X_train, y_train, n_steps):
         """ X_train ve y_train kullanarak lstm modeli oluşturan metod """
 
-        # flatten input
-        n_steps = 3
-
-        # the dataset knows the number of features, e.g. 2
+        # flatten input and choose the number of features
         n_features = X_train.shape[2]
+        #n_steps = 3
 
         # define model
         model = Sequential()
         model.add(LSTM(100, activation='relu', return_sequences=True, input_shape=(n_steps, n_features)))
         model.add(LSTM(100, activation='relu'))
         model.add(Dense(n_features))
-        model.compile(optimizer='adam', loss='mse')
+        model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
+
+        # fit model
+        model.fit(X_train, y_train, epochs=400, verbose=0)
 
         return model
 
-    def test_lstm(self, lstm_model, X_test, y_test):
+    def test_lstm(self, lstm_model, X_test, y_test, n_steps):
         """ Oluşturulmuş lstm modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        #n_steps = 3
+        # flatten input and choose the features
+        n_features = X_test.shape[2]
+        X_test = X_test.reshape(1, n_steps, n_features)
+        yha_predict = lstm_model.predict(X_test, verbose=0)
+        print(yha_predict)
 
-        for i in range(len(X_test)):
-            X_new = np.array([X_test[i]])
-            y_new = lstm_model.predict(X_new)
-            print("X=%s, Predicted=%s" % (X_new[0], y_new[0]))
-
-        score = lstm_model.score(X_test, y_test)
+        """ Score verilen bir girişin değerlendirme fonksiyonu """
+        (score, acc) = lstm_model.evaluate(X_test, yha_predict, verbose=0)
         print("Score:", score)
 
 
-        return score
-
-    def series_to_supervised(self, dataset, n_in=3, n_out=1):
-        """ Dataset formatını supervised öğrenme formatına çeviren metod """
-
-        cols = list()
-        # input sequence (t-n, ... t-1)
-        for i in range(n_in, 0, -1):
-            cols.append(dataset.shift(i))
-        # forecast sequence (t, t+1, ... t+n)
-        for i in range(0, n_out):
-            cols.append(dataset.shift(-i))
-        # put it all together
-        agg = concat(cols, axis=1)
-        # drop rows with NaN values
-        agg.dropna(inplace=True)
-        return agg.values
-
+        return (score, acc)
 
     def rename_columns(self, df, identifier='Feat_'):
+        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
         """ Df kolon isimlerini değiştiren metod """
 
         col_count = len(df.columns)
