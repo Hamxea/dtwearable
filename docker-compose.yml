@@ -3,7 +3,7 @@ version: '3.7'
 services:
   keymind:
     build: .
-    command: gunicorn wsgi:app -w 2 --bind 0.0.0.0:5000 server --error-logfile error.log --access-logfile access.log --capture-output --log-level debug
+    command: gunicorn wsgi:app -w 2 --bind 0.0.0.0:5000 server --log-file gunicorn.log --log-level debug
     volumes:
       - ./:/app
     ports:
