@@ -1,3 +1,4 @@
+import logging
 import os
 
 from flask import Flask, jsonify
@@ -13,6 +14,7 @@ from ai.restful.resources.PredictionRegisterResource import PredictionRegisterRe
 from ai.restful.resources.PredictionResource import PredictionResource
 from ai.restful.resources.RuleViolationRegisterResource import RuleViolationRegisterResource
 from ai.restful.resources.RuleViolationResource import RuleViolationResource
+from ai.restful.resources.StatisticsResource import StatisticsResource
 from ai.restful.resources.security.TokenRefreshResource import TokenRefreshResource
 from ai.restful.resources.security.UserLoginResource import UserLoginResource
 from ai.restful.resources.security.UserLogoutResource import UserLogoutResource
@@ -36,6 +38,18 @@ from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
 
 app = Flask(__name__)
 api = Api(app)
+
+""" Gunicor ve app logging ayarları """
+gunicorn_logger = logging.getLogger('gunicorn.debug')
+app.logger.handlers = gunicorn_logger.handlers
+# app.logger.setLevel(gunicorn_logger.level)
+app.logger.setLevel(logging.INFO)
+
+app.logger.debug("this is a DEBUG message for test")
+app.logger.info("this is an INFO message for test")
+app.logger.warning("this is a WARNING message for test")
+app.logger.error("this is an ERROR message for test")
+app.logger.critical("this is a CRITICAL message for test")
 
 """
 SqlAlchemy ayarları
@@ -158,6 +172,8 @@ api.add_resource(PredictionResource, '/ai/prediction/<int:prediction_id>')
 api.add_resource(NotificationResource, '/ai/notification/<int:notification_id>')
 api.add_resource(NotificationRegisterResource, '/ai/notification')
 api.add_resource(NotificationListResource, '/ai/notification/list')
+
+api.add_resource(StatisticsResource, '/ai/statistics')
 
 # KVC resources
 api.add_resource(IslemResource, '/kvc/islem/<int:islem_no>')

@@ -20,7 +20,7 @@ class AIModelTrainerService:
     def train(self, ai_model_class: str, dataset_parameters, hyper_parameters):
         """ Model sınıfı kullanılarak model dosyası oluşturulur ve kaydedilir"""
 
-        ai_model = self.__get_class(ai_model_class)()
+        ai_model = AIModelTrainerService.get_class(ai_model_class)()
         if not isinstance(ai_model, AbstractAIModel):
             raise Exception("{} class is not instance of AbstractAIModel!!!".format(ai_model_class))
         trained_model, performance_metrics = ai_model.train(dataset_parameters, hyper_parameters)
@@ -36,7 +36,8 @@ class AIModelTrainerService:
         print("ai_model_file_name:", ai_model_file_name)
         return ai_model_file_name
 
-    def __get_class(self, class_name):
+    @staticmethod
+    def get_class(class_name):
         parts = class_name.split('.')
         module = ".".join(parts[:-1])
         m = __import__(module)
