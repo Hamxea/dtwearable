@@ -14,6 +14,7 @@ from ai.restful.resources.PredictionRegisterResource import PredictionRegisterRe
 from ai.restful.resources.PredictionResource import PredictionResource
 from ai.restful.resources.RuleViolationRegisterResource import RuleViolationRegisterResource
 from ai.restful.resources.RuleViolationResource import RuleViolationResource
+from ai.restful.resources.StatisticsResource import StatisticsResource
 from ai.restful.resources.security.TokenRefreshResource import TokenRefreshResource
 from ai.restful.resources.security.UserLoginResource import UserLoginResource
 from ai.restful.resources.security.UserLogoutResource import UserLogoutResource
@@ -171,6 +172,8 @@ api.add_resource(PredictionResource, '/ai/prediction/<int:prediction_id>')
 api.add_resource(NotificationResource, '/ai/notification/<int:notification_id>')
 api.add_resource(NotificationRegisterResource, '/ai/notification')
 api.add_resource(NotificationListResource, '/ai/notification/list')
+
+api.add_resource(StatisticsResource, '/ai/statistics')
 
 # KVC resources
 api.add_resource(IslemResource, '/kvc/islem/<int:islem_no>')
