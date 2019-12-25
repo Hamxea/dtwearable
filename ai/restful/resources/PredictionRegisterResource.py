@@ -43,7 +43,7 @@ class PredictionRegisterResource(Resource):
                                                    data['prediction_input'])
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
-                    "exception": e
+                    "exception": str(e)
                     }, 500
 
         return prediction_dto.serialize, 201

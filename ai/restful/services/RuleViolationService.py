@@ -11,7 +11,7 @@ class RuleViolationService():
     rule_violation_dao = RuleViolationDAO()
 
 
-    def save_rule_violation_to_db(self, ai_model_class, reference_table, reference_id, prediction_id, rule, value_source, value, violation_date):
+    def save_rule_violation_to_db(self, reference_table, reference_id, prediction_id, rule, value_source, value, violation_date):
         """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına kaydını sağlayan metot """
         rule_violation_dto = RuleViolationDTO(id=None, reference_table=reference_table, reference_id=reference_id,
                                           prediction_id=prediction_id, rule=rule, value_source=value_source,
