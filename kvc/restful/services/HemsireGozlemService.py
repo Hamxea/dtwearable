@@ -30,17 +30,19 @@ class HemsireGozlemService():
         try:
             self.hemsire_gozlem_dao.save_to_db(hemsire_gozlem)
 
-            rule_violation_exception_list = []
-            rule_violation_exception_list.extend(self.get_temperature_rule_violations(hemsire_gozlem))
+            #rule_violation_exception_list = []
+            #self.get_temperature_rule_violations(hemsire_gozlem)
 
-            self.rule_violation_service.save_rule_violations(rule_violation_list=rule_violation_exception_list)
-
+            self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, hemsire_gozlem.vucut_sicakligi,
+                                                 choosen_type=ChoosenTypeEnum.REAL, reference_table=None,
+                                                 reference_id=hemsire_gozlem.id, prediction_id=None)
         except RuleViolationException as e:
             """ TODO  rule_violation_service düzeltecek...tek db save_to olması lazım"""
             self.rule_violation_service.save_rule_violation_to_db(HemsireGozlemDTO.__tablename__, hemsire_gozlem.id,
                                                                   None, e.rule_enum.name, None,
                                                                   hemsire_gozlem.vucut_sicakligi, datetime.now())
 
+    """
     def get_temperature_rule_violations(self, hemsire_gozlem):
         temp_rule_violation_exception_list = []
         temp_rule_violation_exception_list.extend(
@@ -63,9 +65,7 @@ class HemsireGozlemService():
                                                  ChoosenTypeEnum.PREDICT, reference_table=None, reference_id=hemsire_gozlem.id, prediction_id=None))
 
         return temp_rule_violation_exception_list
-
-
-
+        """
 """
         try:
             self.nabiz_rule_engine.execute(hemsire_gozlem.islem_dto.yas, hemsire_gozlem.nabiz)
