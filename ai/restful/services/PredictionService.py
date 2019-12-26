@@ -34,7 +34,7 @@ class PredictionService():
 
             scaler.fit_transform(np.array(prediction_input['ates']).reshape(1, -1))
 
-            new_prediction = self.predict(model, prediction_input)
+            new_prediction = self._predict(model, prediction_input)
             prediction_dto.prediction_value = new_prediction[0]
             self.prediction_dao.save_to_db(prediction_dto)
             return prediction_dto
@@ -43,7 +43,7 @@ class PredictionService():
             self.prediction_dao.save_to_db(prediction_dto)
             raise Exception("Error occured while predicting")
 
-    def predict(self, model, prediction_input):
+    def _predict(self, model, prediction_input):
         """
         Modeli kullanarak tahmin yapan metod
         """
@@ -64,7 +64,7 @@ class PredictionService():
         for key in prediction_input:
             input.append(prediction_input[key])
 
-        return model.predict(input)
+        return model._predict(input)
 
     def load_model(self, model_url):
         """ Modeli dosya sisteminden yükleyen metod """
