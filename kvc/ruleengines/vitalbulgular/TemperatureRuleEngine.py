@@ -7,28 +7,33 @@ from kvc.ruleengines.RuleViolationException import RuleViolationException
 class TemperatureRuleEngine(AbstractRuleEngine):
     """ """
 
-    def execute(self, islem_dto, temperature, choosen_type, reference_table, reference_id, prediction_id):
+    def execute(self, islem_dto, temperature, choosen_type):
         """ """
 
         exception_list = []
         if temperature < 36:
             if choosen_type == ChoosenTypeEnum.REAL:
-                exception_list.append(
-                    RuleViolationException("Vucut sıcakliği 36 derecenın altına düştü", TemperatureEnum.DUSUK_ATES,
-                                           temperature, reference_table, reference_id, prediction_id))
+                raise RuleViolationException("Vucut sıcakliği 36 derecenın altına düştü", TemperatureEnum.DUSUK_ATES,
+                       temperature)
             else:
-                exception_list.append(
-                    RuleViolationException("Tahmini vucut sıcakliği 36 derecenın altına düşebilir!",
-                                           temperature, TemperatureEnum.DUSUK_ATES, reference_table, reference_id, prediction_id))
+                raise RuleViolationException("Tahmini vucut sıcakliği 36 derecenın altına düşebilir!",
+                       temperature, TemperatureEnum.DUSUK_ATES)
 
         if 38 < temperature <= 40:
-            exception_list.append(
-                RuleViolationException("Vucut sıcakliği 37.5 derecenın üstüne çikti", TemperatureEnum.YUKSEK_ATES,
-                                       temperature, reference_table, reference_id, prediction_id))
+            if choosen_type == ChoosenTypeEnum.REAL:
+                raise RuleViolationException("Vucut sıcakliği 37.5 derecenın üstüne çıktı", TemperatureEnum.YUKSEK_ATES,
+                       temperature)
+            else:
+                raise RuleViolationException("Tahmin vucut sıcakliği 37.5 derecenın üstüne çıkabılır",
+                                              TemperatureEnum.YUKSEK_ATES,
+                                              temperature)
 
         if temperature > 40:
-            exception_list.append(
-                RuleViolationException("Vucut sıcakliği 40 derecenın üstüne çikti", TemperatureEnum.COK_YUKSEK_ATES,
-                                       temperature, reference_table, reference_id, prediction_id))
+            if choosen_type == ChoosenTypeEnum.REAL:
+                raise RuleViolationException("Vucut sıcakliği 40 derecenın üstüne çikti", TemperatureEnum.COK_YUKSEK_ATES,
+                       temperature)
+            else:
+                raise RuleViolationException("Tahnmin vucut sıcakliği 40 derecenın üstüne çıkabılır", TemperatureEnum.COK_YUKSEK_ATES,
+                       temperature)
 
         return exception_list
