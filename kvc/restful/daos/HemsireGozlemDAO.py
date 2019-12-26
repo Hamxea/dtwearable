@@ -43,5 +43,6 @@ class HemsireGozlemDAO(AbstractDAO):
                 raise Exception("Zaman aralığına uygun yeterli bulunmamaktadır. Window Size: {}, Time Interval: {}".format(window_size, time_interval_in_hours))
 
         return result
+
     """def delete_from_db(self, islem_no: int):
         return HemsireGozle."""
