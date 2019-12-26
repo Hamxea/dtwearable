@@ -5,5 +5,5 @@ class AbstractRuleEngine(ABC):
     """ """
 
     @abstractmethod
-    def execute(self, islem_dto, value):
+    def execute(self, islem_dto, temperature, choosen_type, reference_table, reference_id, prediction_id):
         pass

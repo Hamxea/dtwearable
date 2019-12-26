@@ -45,7 +45,7 @@ class HemsireGozlemService():
         temp_rule_violation_exception_list = []
         temp_rule_violation_exception_list.extend(
             self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, hemsire_gozlem.vucut_sicakligi,
-                                                 choosen_type=ChoosenTypeEnum.REAL))
+                                                 choosen_type=ChoosenTypeEnum.REAL, reference_table=None, reference_id=hemsire_gozlem.id, prediction_id=None))
 
         # TemperaturePredictionAIModel.__name__
         prediction_values = self.hemsire_gozlem_dao.get_feature_values_for_prediction(hemsire_gozlem.islem_no,
@@ -60,7 +60,7 @@ class HemsireGozlemService():
             prediction_input=prediction_values)
         temp_rule_violation_exception_list.append(
             self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, prediction_dto.prediction_value,
-                                                 ChoosenTypeEnum.PREDICT))
+                                                 ChoosenTypeEnum.PREDICT, reference_table=None, reference_id=hemsire_gozlem.id, prediction_id=None))
 
         return temp_rule_violation_exception_list
 
