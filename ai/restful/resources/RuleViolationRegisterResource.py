@@ -1,3 +1,4 @@
+from builtins import float
 from datetime import datetime
 
 from flask_restful import reqparse, Resource
@@ -20,7 +21,7 @@ class RuleViolationRegisterResource(Resource):
     post_parser.add_argument('prediction_id', type=int, required=True)
     post_parser.add_argument('rule', type=str, required=True)
     post_parser.add_argument('value_source', type=str, required=True)
-    post_parser.add_argument('value', type=int, required=True)
+    post_parser.add_argument('value', type=float, required=True)
     post_parser.add_argument('violation_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(), required=True)
 
 
