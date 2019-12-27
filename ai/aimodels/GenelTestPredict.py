@@ -1,3 +1,5 @@
+import datetime
+
 import pandas as pd
 
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
@@ -12,8 +14,9 @@ from kvc.preprocessing.UnivariateTimeSeriesPreprocessor import UnivariateTimeSer
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
-class GenelTestPredict(MutlilayerPerceptron):
-    """ Ateş değerleri üzerinden tahmin üreten sınıf. AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
+class GenelTestPredict(LongShortTermMemory):
+    """ Genel Tahmin üretin sınıfı..hangi ozellik belli olmadı için, hemşire gozlem veri testlendir.
+     AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
 
     hemsire_gozlem_dao = HemsireGozlemDAO()
     window_size = 3
@@ -60,6 +63,32 @@ class GenelTestPredict(MutlilayerPerceptron):
         df_hemsire_gozlem = pd.DataFrame(hemsire_gozlem_final_list).transpose()
         return df_hemsire_gozlem  # pd.DataFrame({'col': hemsire_gozlem_final_list})
 
-        """return UnivariateTimeSeriesPreprocessor().preprocess(sorted_dto_list=df_hemsire_gozlem,
+
+    def get_statistics(self, start_date: datetime, end_date: datetime):
+        """ Modelin belirli tarih aralığındaki istatistiklerini getirmek için kullanılan metot
+            Bu model için şu aşamada istatistik üretilmediği için boş json dönüyor
+        """
+
+        return {}
+
+    def predict(self, islem_no):
+
+        # TODO sil
+        feature_values_for_prediction = self.hemsire_gozlem_dao.get_feature_values_for_prediction()
+
+
+        pass
+    """
+     veriyi al
+     tahmine yolla
+     sonuç dön
+     """
+
+
+    """
+        return UnivariateTimeSeriesPreprocessor().preprocess(sorted_dto_list=df_hemsire_gozlem,
                                                              feature_name='vucut_sicakligi', time_interval_in_hours=12,
-                                                             window_size=dataset_window_size, column_list=dataset_column_names_list)"""
+                                                             window_size=dataset_window_size, column_list=dataset_column_names_list)
+                                                             
+                                                             
+                                                            """
