@@ -15,7 +15,7 @@ class RuleViolationService():
 
         for rule_violation_exception in rule_violation_list:
             try:
-                self.save_rule_violation_to_db(rule_violation_exception)
+                self.save_rule_violation(rule_violation_exception)
             except Exception as e:
                 print(e)
 
