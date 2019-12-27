@@ -35,7 +35,7 @@ class SiviAlimiService():
         """ sivi fark kural tabanlı"""
 
         sivi_alimi_rule_violation_list = []
-        sivi_alimi_rule_violation_list.extend(self.sivi_alimi_rule_engine.execute(sivi_alimi.islem_dto, sivi_farki=sivi_alimi.sivi_farki, yas=sivi_alimi.islem_dto.yas,
+        sivi_alimi_rule_violation_list.extend(self.sivi_alimi_rule_engine.execute(islem_dao=None, sivi_farki=sivi_alimi.sivi_farki, yas=None,
                                                 tansiyon_sistolik=None, tansiyon_diastolik=None, choosen_type=None, reference_table=SiviAlimiDTO.__tablename__ ,
                                                                                    reference_id= sivi_alimi.id, prediction_id=None))
 
