@@ -91,7 +91,6 @@ class LongShortTermMemory(AbstractAIModel):
         (score, acc) = lstm_model.evaluate(X_test, yha_predict, verbose=0)
         print("Score:", score)
 
-
         return (score, acc)
 
     def rename_columns(self, df, identifier='Feat_'):
