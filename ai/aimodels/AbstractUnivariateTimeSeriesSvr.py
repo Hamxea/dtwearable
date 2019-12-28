@@ -91,7 +91,7 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
 
         for i in range(len(X_test_scaled)):
             X_new = np.array([X_test_scaled[i]])
-            y_new = svr_model._predict(X_new)
+            y_new = svr_model.predict(X_new)
             print("X=%s, Predicted=%s" % (X_new[0], y_new[0]))
 
         score = svr_model.score(X_test_scaled, y_test)
