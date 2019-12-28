@@ -98,6 +98,6 @@ class SiviAlimiRegisterResource(Resource):
         else:
             sivi_alimi = SiviAlimiDTO(**data)
 
-        self.siviAlimiDAO.save_to_db(sivi_alimi)
+        self.sivi_alimi_service.create_sivi_alimi(sivi_alimi)
 
         return sivi_alimi.serialize

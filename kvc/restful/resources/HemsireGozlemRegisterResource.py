@@ -104,6 +104,7 @@ class HemsireGozlemRegisterResource(Resource):
         else:
             hemsire_gozlem = HemsireGozlemDTO(**data)
 
-        self.hemsireGozlemDAO.save_to_db(hemsire_gozlem)
+        #self.hemsireGozlemDAO.save_to_db(hemsire_gozlem)
+        self.hemsire_gozlem_service.create_hemsire_gozlem(hemsire_gozlem)
 
         return hemsire_gozlem.serialize

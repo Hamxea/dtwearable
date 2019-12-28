@@ -23,7 +23,7 @@ class RuleViolationService():
         self.save_rule_violation_to_db(rule_violation_exception.reference_table,
                                        rule_violation_exception.reference_id,
                                        rule_violation_exception.prediction_id,
-                                       rule_violation_exception.rule_enum,
+                                       rule_violation_exception.rule_enum.name,
                                        None,
                                        rule_violation_exception.value,
                                        datetime.now())
