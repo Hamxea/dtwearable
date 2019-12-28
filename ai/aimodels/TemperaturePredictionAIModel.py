@@ -11,6 +11,7 @@ class TemperaturePredictionAIModel(AbstractUnivariateTimeSeriesSvr):
     """ Ateş değerleri üzerinden tahmin üreten sınıf. AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
 
     time_interval_in_hours = 12
+    window_size = 3
 
     hemsire_gozlem_dao = HemsireGozlemDAO()
 
