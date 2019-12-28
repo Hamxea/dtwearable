@@ -5,12 +5,12 @@ from pandas import DataFrame
 from pandas import concat
 from sklearn.model_selection import train_test_split
 from statsmodels.tsa.vector_ar.var_model import VAR
-
+from statsmodels.tsa.statespace.varmax import VARMAX
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 
 
-class VectorAutoRegression(AbstractAIModel):
-    """ Vector Auto Regression (VAR) with 1-Step Output """
+class VectorAutoregressionMovingAverageExogenousRegressors(AbstractAIModel):
+    """ Vector Autoregression Moving-Average with Exogenous Regressors (VARMAX)with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
@@ -42,15 +42,15 @@ class VectorAutoRegression(AbstractAIModel):
     def train_mlp(self, train_data, n_steps):
         """ X_train ve y_train kullanarak mlp modeli oluşturan metod """
 
-        model = VAR(endog=train_data)
-        model_fit = model.fit()
+        model = VARMAX(train_data,  exog=train_data, order=(1, 1))
+        model_fit = model.fit(disp=False)
         return model_fit
 
     def test_mlp(self, mlp_model, test_data):
         """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
         #make prediction of test validation data
-        prediction = mlp_model.forcast(mlp_model.y, steps=len(test_data))
+        prediction = mlp_model.forecast(exog=test_data)
         print(prediction)
 
         return 0, 0

@@ -15,8 +15,8 @@ from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
 class GenelTestPredict(LongShortTermMemory):
-    """ Genel Tahmin üretin sınıfı..hangi ozellik belli olmadı için, hemşire gozlem veri testlendir.
-     AbstractUnivariateTimeSeriesSvr sınıfından üretilir """
+    """ Genel Tahmin üretin TEST sınıfı..hangi ozellik belli olmadı için, hemşire gozlem veri testlendir.
+     TODO....PatientStatusPredictionAIModel sınıfından üretilir """
 
     hemsire_gozlem_dao = HemsireGozlemDAO()
     window_size = 3
@@ -72,23 +72,5 @@ class GenelTestPredict(LongShortTermMemory):
         return {}
 
     def predict(self, islem_no):
-
-        # TODO sil
-        feature_values_for_prediction = self.hemsire_gozlem_dao.get_feature_values_for_prediction()
-
-
         pass
-    """
-     veriyi al
-     tahmine yolla
-     sonuç dön
-     """
-
-
-    """
-        return UnivariateTimeSeriesPreprocessor().preprocess(sorted_dto_list=df_hemsire_gozlem,
-                                                             feature_name='vucut_sicakligi', time_interval_in_hours=12,
-                                                             window_size=dataset_window_size, column_list=dataset_column_names_list)
-                                                             
-                                                             
-                                                            """
+        return 
