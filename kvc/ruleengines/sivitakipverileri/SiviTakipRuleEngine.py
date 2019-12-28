@@ -8,15 +8,18 @@ class SiviTakipRuleEngine(AbstractRuleEngine):
     Bilgi yer: Oral rehydration therapy Bölum
     """
 
-    def execute(self, islem_dao, sivi_farki, yas, tansiyon_sistolik, tansiyon_diastolik, choosen_type, reference_table, reference_id, prediction_id):
-        """ """
+    def execute(self, islem_dto, sivi_farki, yas, tansiyon_sistolik, tansiyon_diastolik, choosen_type, reference_table,
+                reference_id, prediction_id):
+        """Sivi Alimi Kural tabanı"""
 
         exception_list = []
         if sivi_farki > 0:
             exception_list.append(RuleViolationException("Sıvı kaybı alınan sıvıdan daha fazla",
-                                                         SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki, sivi_farki, reference_table, reference_id, prediction_id))
+                                                         SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki, reference_table,
+                                                         reference_id, prediction_id))
         if sivi_farki < 0:
             exception_list.append(RuleViolationException("Alınan sıvı, sıvı kaybından daha büyüktür",
-                                                         SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki, sivi_farki, reference_table, reference_id, prediction_id))
+                                                         SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki, reference_table,
+                                                         reference_id, prediction_id))
 
         return exception_list
