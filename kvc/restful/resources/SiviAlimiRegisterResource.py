@@ -4,6 +4,7 @@ from flask_restful import reqparse, Resource
 
 from kvc.restful.daos.SiviAlimiDAO import SiviAlimiDAO
 from kvc.restful.models.SiviAlimiDTO import SiviAlimiDTO
+from kvc.restful.services.SiviAlimiService import SiviAlimiService
 
 
 class SiviAlimiRegisterResource(Resource):
@@ -60,16 +61,15 @@ class SiviAlimiRegisterResource(Resource):
                              )
 
     siviAlimiDAO = SiviAlimiDAO()
-
+    sivi_alimi_service = SiviAlimiService()
     def post(self):
         """ Restful isteğinin body kısmındaki veriye gore Sıvı Alımı nesnesini olusturan ve veritabanına yazan metod """
 
         data = self.post_parser.parse_args()
 
-        sivi_alimi = SiviAlimiDTO(**data)
-
         try:
-            self.siviAlimiDAO.save_to_db(sivi_alimi)
+            sivi_alimi = SiviAlimiDTO(**data)
+            self.sivi_alimi_service.create_sivi_alimi(sivi_alimi)
         except Exception as e:
             return {"message": "An error occurred while inserting the item. ",
                     "exception": e
