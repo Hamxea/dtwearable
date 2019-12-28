@@ -17,7 +17,7 @@ class NabizRuleEngine(AbstractRuleEngine):
             if nabiz < 120:
                 exception_list.append(RuleViolationException("Nabiz 120 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
-            if nabiz > 160 <= 170:
+            if 160 < nabiz <= 170:
                 exception_list.append(RuleViolationException("Nabiz 160 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
             if nabiz > 170:
@@ -28,7 +28,7 @@ class NabizRuleEngine(AbstractRuleEngine):
             if nabiz < 90:
                 exception_list.append(RuleViolationException("Nabiz 90 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
-            if nabiz > 140 or nabiz <= 150:
+            if 140 < nabiz <= 150:
                 exception_list.append(RuleViolationException("Nabiz 140 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
             if nabiz > 150:
@@ -39,7 +39,7 @@ class NabizRuleEngine(AbstractRuleEngine):
             if nabiz < 80:
                 exception_list.append(RuleViolationException("Nabiz 80 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
-            if nabiz > 110 or nabiz <= 120:
+            if 110 < nabiz <= 120:
                 exception_list.append(RuleViolationException("Nabiz 110 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
             if nabiz > 120:
@@ -50,7 +50,7 @@ class NabizRuleEngine(AbstractRuleEngine):
             if nabiz < 75:
                 exception_list.append(RuleViolationException("Nabiz 75 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
-            if nabiz > 100 or nabiz <= 110:
+            if 100 < nabiz <= 110:
                 exception_list.append(RuleViolationException("Nabiz 100 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
             if nabiz > 110:
@@ -61,7 +61,7 @@ class NabizRuleEngine(AbstractRuleEngine):
             if nabiz < 60:
                 exception_list.append(RuleViolationException("Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
-            if nabiz > 80 or nabiz <= 90:
+            if 80 < nabiz <= 90:
                 exception_list.append(RuleViolationException("Nabiz 80 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
             if nabiz > 90:
@@ -72,7 +72,7 @@ class NabizRuleEngine(AbstractRuleEngine):
             if nabiz < 60:
                 exception_list.append(RuleViolationException("Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
-            if nabiz > 90 or nabiz <=100:
+            if 90 < nabiz <=100:
                 exception_list.append(RuleViolationException("Nabiz 90 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id, prediction_id))
 
             if nabiz > 100:
