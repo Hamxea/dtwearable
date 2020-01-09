@@ -3,7 +3,11 @@ import datetime
 import pandas as pd
 
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
+from ai.aimodels.genel.BidirectionalGatedRecurrentNeuralNetwork import BidirectionalGatedRecurrentNeuralNetwork
+from ai.aimodels.genel.BidirectionalLongShortTermMemory import BidirectionalLongShortTermMemory
+from ai.aimodels.genel.GatedRecurrentNeuralNetwork import GatedRecurrentNeuralNetwork
 from ai.aimodels.genel.LongShortTermMemory import LongShortTermMemory
+from ai.aimodels.genel.RecurrentNeuralNetwork import RecurrentNeuralNetwork
 from ai.aimodels.genel.MultilayerPerceptronMultiStepOutput import MutlilayerPerceptronMultiStepOutput
 from ai.aimodels.genel.MultilayerPerceptron import MutlilayerPerceptron
 from ai.aimodels.genel.VectorAutoRegression import VectorAutoRegression
@@ -14,7 +18,7 @@ from kvc.preprocessing.UnivariateTimeSeriesPreprocessor import UnivariateTimeSer
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
-class GenelTestPredict(LongShortTermMemory):
+class GenelTestPredict(BidirectionalGatedRecurrentNeuralNetwork):
     """ Genel Tahmin üretin TEST sınıfı..hangi ozellik belli olmadı için, hemşire gozlem veri testlendir.
      TODO....PatientStatusPredictionAIModel sınıfından üretilir """
 
@@ -30,7 +34,6 @@ class GenelTestPredict(LongShortTermMemory):
         dataset_column_names_list = []
         for i in range(dataset_window_size):
             dataset_column_names_list.append('F' + str(i))
-
 
         hemsire_gozlem_dto_list = self.hemsire_gozlem_dao.\
             get_temperature_in_date_range(dataset_start_time, dataset_end_time)
@@ -73,4 +76,4 @@ class GenelTestPredict(LongShortTermMemory):
 
     def predict(self, islem_no):
         pass
-        return 
+        return

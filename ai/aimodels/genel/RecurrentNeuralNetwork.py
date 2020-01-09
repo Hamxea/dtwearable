@@ -6,9 +6,10 @@ from keras.layers import SimpleRNN
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
+import numpy as np
 
 
-class LongShortTermMemory(AbstractAIModel):
+class RecurrentNeuralNetwork(AbstractAIModel):
     """ Recurrent Neural Network with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
@@ -79,6 +80,7 @@ class LongShortTermMemory(AbstractAIModel):
 
     def test_rnn(self, rnn_model, X_test, y_test, n_steps):
         """ Oluşturulmuş rnn modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        X_test = X_test[np.size(X_test, 0) - 1:, :]
         #n_steps = 3
         # flatten input and choose the features
         n_features = X_test.shape[2]
