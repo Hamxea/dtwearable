@@ -5,7 +5,7 @@ from keras.layers import Dense
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
-
+import numpy as np
 
 class MutlilayerPerceptron(AbstractAIModel):
     """ Mutlilayer (MLP) Perceptron with 1-Step Output """
@@ -80,6 +80,7 @@ class MutlilayerPerceptron(AbstractAIModel):
     def test_mlp(self, mlp_model, X_test, y_test):
         """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
+        X_test = X_test[np.size(X_test, 0) - 1:, :]
         # flatten input
         n_input = X_test.shape[1] * X_test.shape[2]
         X_test = X_test.reshape(1, n_input)

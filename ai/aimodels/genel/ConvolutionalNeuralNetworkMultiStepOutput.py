@@ -8,6 +8,7 @@ from keras.layers.convolutional import MaxPooling1D
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
+import numpy as np
 
 class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
     """ Convolutional Neural Network (CNN) with Multi-Step Output """
@@ -82,6 +83,7 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
     def test_cnn(self, cnn_model, X_test, y_test, n_steps_in):
         """ Oluşturulmuş cnn modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
+        X_test = X_test[np.size(X_test, 0) - 1:, :]
         # the dataset knows the number of features, e.g. 2
         n_features = X_test.shape[2]
         #n_steps_in = 3

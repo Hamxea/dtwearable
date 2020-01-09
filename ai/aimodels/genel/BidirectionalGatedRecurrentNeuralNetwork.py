@@ -2,11 +2,11 @@ from abc import abstractmethod
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from  keras.layers import Dense
-from keras.layers import Bidirectional, bil_gru
+from keras.layers import Bidirectional, GRU
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
-
+import numpy as np
 
 class BidirectionalGatedRecurrentNeuralNetwork(AbstractAIModel):
     """ Bidirectional Gated Recurrent Neural Network (bil_gru) with 1-Step Output """
@@ -68,8 +68,8 @@ class BidirectionalGatedRecurrentNeuralNetwork(AbstractAIModel):
 
         # define model
         model = Sequential()
-        model.add(Bidirectional(bil_gru(100, activation='relu', return_sequences=True, input_shape=(n_steps, n_features))))
-        #model.add(bil_gru(100, activation='relu'))
+        model.add(Bidirectional(GRU(100, activation='relu', return_sequences=True, input_shape=(n_steps, n_features))))
+        model.add(Bidirectional(GRU(100, activation='relu')))
         model.add(Dense(n_features))
         model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
 
@@ -80,6 +80,7 @@ class BidirectionalGatedRecurrentNeuralNetwork(AbstractAIModel):
 
     def test_bil_gru(self, bil_gru_model, X_test, y_test, n_steps):
         """ Oluşturulmuş bil_gru modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        X_test = X_test[np.size(X_test, 0) - 1:, :]
         #n_steps = 3
         # flatten input and choose the features
         n_features = X_test.shape[2]

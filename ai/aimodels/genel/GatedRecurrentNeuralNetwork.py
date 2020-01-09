@@ -6,6 +6,7 @@ from keras.layers import GRU
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
+import numpy as np
 
 
 class GatedRecurrentNeuralNetwork(AbstractAIModel):
@@ -81,6 +82,7 @@ class GatedRecurrentNeuralNetwork(AbstractAIModel):
     def test_gru(self, gru_model, X_test, y_test, n_steps):
         """ Oluşturulmuş gru modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
         #n_steps = 3
+        X_test = X_test[np.size(X_test, 0) - 1:, :]
         # flatten input and choose the features
         n_features = X_test.shape[2]
         X_test = X_test.reshape(1, n_steps, n_features)

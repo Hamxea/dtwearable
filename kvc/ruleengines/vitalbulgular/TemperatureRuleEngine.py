@@ -20,7 +20,7 @@ class TemperatureRuleEngine(AbstractRuleEngine):
                     RuleViolationException("Tahmini vucut sıcakliği 36 derecenın altına düşebilir!",
                                            temperature, TemperatureEnum.DUSUK_ATES, reference_table, reference_id, prediction_id))
 
-        elif 38 < temperature <= 40:
+        if 38 < temperature <= 40:
             if choosen_type == ChoosenTypeEnum.REAL:
                 exception_list.append(
                     RuleViolationException("Vucut sıcakliği 37.5 derecenın üstüne çıktı", TemperatureEnum.YUKSEK_ATES,
