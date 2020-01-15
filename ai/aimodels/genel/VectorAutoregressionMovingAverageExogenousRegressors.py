@@ -42,7 +42,7 @@ class VectorAutoregressionMovingAverageExogenousRegressors(AbstractAIModel):
     def train_mlp(self, train_data, n_steps):
         """ X_train ve y_train kullanarak mlp modeli oluşturan metod """
 
-        model = VARMAX(train_data,  exog=train_data, order=(1, 1))
+        model = VARMAX(extrain_data, order=(1, 1))
         model_fit = model.fit(disp=False)
         return model_fit
 

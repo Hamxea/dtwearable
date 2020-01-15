@@ -83,7 +83,7 @@ class LongShortTermMemory(AbstractAIModel):
         """ Oluşturulmuş lstm modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
         #n_steps = 3
         # flatten input and choose the features
-        """
+
         X_test = X_test[np.size(X_test, 0)-1:, :]
         print(X_test)
         print(type(X_test))
@@ -107,8 +107,7 @@ class LongShortTermMemory(AbstractAIModel):
             print(X_test.shape)
             #yha_predict = lstm_model.predict(X_test[i], verbose=0)
             #print(yha_predict)
-
-
+            """
 
         """ 
         print(np.size(X_test, 0) - 1)
@@ -125,10 +124,11 @@ class LongShortTermMemory(AbstractAIModel):
 
 
         """ Score verilen bir girişin değerlendirme fonksiyonu """
-        #(score, acc) = lstm_model.evaluate(X_test, yha_predict, verbose=0)
+        (score, acc) = lstm_model.evaluate(X_test, yha_predict, verbose=0)
         #print("Score:", score)
 
-        return 1, 1
+        #return 1, 1
+        return (score, acc)
 
     def rename_columns(self, df, identifier='Feat_'):
         """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
