@@ -1,15 +1,17 @@
 from abc import abstractmethod
 
-from ai.aimodels.AbstractAIModel import AbstractAIModel
+from keras import Sequential
+from keras.layers import TimeDistributed, Dense
 from sklearn.model_selection import train_test_split
-from keras.models import Sequential
-from keras.layers import Dense, LSTM, Bidirectional
+
+from ai.aimodels.AbstractAIModel import AbstractAIModel
 
 from numpy import array
 import numpy as np
 
-class BidirectionalLongShortTermMemory(AbstractAIModel):
-    """ Bidirectional Long Short TermMemory (bil_lstm) with 1-Step Output """
+
+class TimeDistributedNeuralNetwork(AbstractAIModel):
+    """ Time Distributed Layer with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
@@ -17,11 +19,11 @@ class BidirectionalLongShortTermMemory(AbstractAIModel):
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
-                                                              hyperparameters['n_steps'],)
-        bil_lstm_model = self.train_bil_lstm(X_train, y_train, hyperparameters['n_steps'])
-        score, acc = self.test_bil_lstm(bil_lstm_model, X_test, y_test, hyperparameters['n_steps'])
+                                                              hyperparameters['n_steps'], )
+        time_distributed_model = self.train_time_distributed(X_train, y_train, hyperparameters['n_steps'])
+        score, acc = self.test_time_distributed(time_distributed_model, X_test, y_test, hyperparameters['n_steps'])
 
-        return bil_lstm_model, {"score": score, "accuracy": acc}
+        return time_distributed_model, {"score": score, "accuracy": acc}
 
     @abstractmethod
     def get_dataset(self, dataset_parameters):
@@ -59,17 +61,17 @@ class BidirectionalLongShortTermMemory(AbstractAIModel):
         X, y = array(X), array(y)
         return X, y
 
-    def train_bil_lstm(self, X_train, y_train, n_steps):
-        """ X_train ve y_train kullanarak bil_lstm modeli oluşturan metod """
+    def train_time_distributed(self, X_train, y_train, n_steps):
+        """ X_train ve y_train kullanarak time_distributed modeli oluşturan metod """
 
         # flatten input and choose the number of features
         n_features = X_train.shape[2]
-        #n_steps = 3
+        # n_steps = 3
 
         # define model
         model = Sequential()
-        model.add(Bidirectional(LSTM(100, activation='relu', return_sequences=True, input_shape=(n_steps, n_features))))
-        model.add(Bidirectional(LSTM(100, activation='relu')))
+        model.add(TimeDistributed(Dense(100), input_shape=(n_steps, n_features)))
+        model.add(TimeDistributed(Dense(100)))
         model.add(Dense(n_features))
         model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
 
@@ -78,31 +80,32 @@ class BidirectionalLongShortTermMemory(AbstractAIModel):
 
         return model
 
-    def test_bil_lstm(self, bil_lstm_model, X_test, y_test, n_steps):
-        """ Oluşturulmuş bil_lstm modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+    def test_time_distributed(self, time_distributed_model, X_test, y_test, n_steps):
+        """ Oluşturulmuş time_distributed modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
         # n_steps = 3
         X_test = X_test[np.size(X_test, 0) - 1:, :]
         # flatten input and choose the features
         n_features = X_test.shape[2]
         X_test = X_test.reshape(1, n_steps, n_features)
-        yha_predict = bil_lstm_model.predict(X_test, verbose=0)
+        yha_predict = time_distributed_model.predict(X_test, verbose=0)
         print(yha_predict)
 
         """ Score verilen bir girişin değerlendirme fonksiyonu """
-        (score, acc) = bil_lstm_model.evaluate(X_test, yha_predict, verbose=0)
+        (score, acc) = time_distributed_model.evaluate(X_test, yha_predict, verbose=0)
         print("Score:", score)
 
         return (score, acc)
 
 
 def rename_columns(self, df, identifier='Feat_'):
-        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
-        """ Df kolon isimlerini değiştiren metod """
+    """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
+    """ Df kolon isimlerini değiştiren metod """
 
-        col_count = len(df.columns)
-        column_names = []
-        for i in range(col_count - 1):
-            column_names.append(identifier + str(i))
-        column_names.append('Label')
-        df.columns = column_names
+    col_count = len(df.columns)
+    column_names = []
+    for i in range(col_count - 1):
+        column_names.append(identifier + str(i))
+    column_names.append('Label')
+    df.columns = column_names
+
 

@@ -18,10 +18,10 @@ class VectorAutoRegression(AbstractAIModel):
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
         train_data, test_data = self.split_dataset(df, dataset_parameters['test_ratio'], hyperparameters['n_steps'])
-        mlp_model = self.train_mlp(train_data, hyperparameters['n_steps'])
-        score, acc = self.test_mlp(mlp_model, test_data)
+        var_model = self.train_var(train_data, hyperparameters['n_steps'])
+        score, acc = self.test_var(var_model, test_data)
 
-        return mlp_model, {"score": score, "accuracy": acc}
+        return var_model, {"score": score, "accuracy": acc}
 
     @abstractmethod
     def get_dataset(self, dataset_parameters):
@@ -39,21 +39,21 @@ class VectorAutoRegression(AbstractAIModel):
 
         return train_data, test_data
 
-    def train_mlp(self, train_data, n_steps):
-        """ X_train ve y_train kullanarak mlp modeli oluşturan metod """
+    def train_var(self, train_data, n_steps):
+        """ X_train ve y_train kullanarak var modeli oluşturan metod """
 
         model = VAR(endog=train_data)
         model_fit = model.fit()
         return model_fit
 
-    def test_mlp(self, mlp_model, test_data):
-        """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+    def test_var(self, var_model, test_data):
+        """ Oluşturulmuş var modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
-        #make prediction of test validation data
-        prediction = mlp_model.forcast(mlp_model.y, steps=len(test_data))
+        #make prediction of test validation data with 1 step_out
+        prediction = var_model.forecast(var_model.y, steps=1)
         print(prediction)
 
-        return 0, 0
+        return 0, 1
 
     def rename_columns(self, df, identifier='Feat_'):
         """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
