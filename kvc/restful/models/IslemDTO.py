@@ -13,7 +13,7 @@ class IslemDTO(db.Model):
 
     __tablename__ = "islem"
 
-    islem_no = db.Column(db.Integer, primary_key=True)
+    islem_no = db.Column(db.BigInteger, primary_key=True)
     kayit_tarihi = db.Column(db.DateTime)
     cinsiyet = db.Column(IntEnum(CinsiyetEnum))
     yas = db.Column(db.SmallInteger)
