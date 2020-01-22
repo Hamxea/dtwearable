@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense
 
@@ -7,8 +8,12 @@ from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
 import numpy as np
 
+
 class MutlilayerPerceptron(AbstractAIModel):
     """ Mutlilayer (MLP) Perceptron with 1-Step Output """
+
+    global mlp_model
+    global graph
 
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
@@ -18,7 +23,10 @@ class MutlilayerPerceptron(AbstractAIModel):
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'],)
         mlp_model = self.train_mlp(X_train, y_train)
-        score, acc = self.test_mlp(mlp_model, X_test, y_test)
+        graph = tf.get_default_graph()
+
+        with graph.as_default():
+            score, acc = self.test_mlp(mlp_model, X_test, y_test)
 
         return mlp_model, {"score": score, "accuracy": acc}
 

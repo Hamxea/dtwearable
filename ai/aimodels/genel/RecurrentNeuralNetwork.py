@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 from keras.models import Sequential
 from  keras.layers import Dense
 from keras.layers import SimpleRNN
@@ -12,6 +13,9 @@ import numpy as np
 class RecurrentNeuralNetwork(AbstractAIModel):
     """ Recurrent Neural Network with 1-Step Output """
 
+    global lstm_model
+    global graph
+
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
 
@@ -20,7 +24,10 @@ class RecurrentNeuralNetwork(AbstractAIModel):
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'],)
         rnn_model = self.train_rnn(X_train, y_train, hyperparameters['n_steps'])
-        score, acc = self.test_rnn(rnn_model, X_test, y_test, hyperparameters['n_steps'])
+        graph = tf.get_default_graph()
+
+        with graph.as_default():
+            score, acc = self.test_rnn(rnn_model, X_test, y_test, hyperparameters['n_steps'])
 
         return rnn_model, {"score": score, "accuracy": acc}
 

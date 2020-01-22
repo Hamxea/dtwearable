@@ -2,14 +2,19 @@ from abc import abstractmethod
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Bidirectional
 
 from numpy import array
 import numpy as np
 
+
 class BidirectionalLongShortTermMemory(AbstractAIModel):
     """ Bidirectional Long Short TermMemory (bil_lstm) with 1-Step Output """
+
+    global lstm_model
+    global graph
 
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
@@ -19,7 +24,10 @@ class BidirectionalLongShortTermMemory(AbstractAIModel):
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'],)
         bil_lstm_model = self.train_bil_lstm(X_train, y_train, hyperparameters['n_steps'])
-        score, acc = self.test_bil_lstm(bil_lstm_model, X_test, y_test, hyperparameters['n_steps'])
+        graph = tf.get_default_graph()
+
+        with graph.as_default():
+            score, acc = self.test_bil_lstm(bil_lstm_model, X_test, y_test, hyperparameters['n_steps'])
 
         return bil_lstm_model, {"score": score, "accuracy": acc}
 
