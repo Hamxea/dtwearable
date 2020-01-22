@@ -1,6 +1,8 @@
 from datetime import datetime
 
+from ai.restful.daos.NotificationDAO import NotificationDAO
 from ai.restful.daos.RuleViolationDAO import RuleViolationDAO
+from ai.restful.models.NotificationDTO import NotificationDTO
 from ai.restful.models.RuleViolationDTO import RuleViolationDTO
 from kvc.ruleengines.RuleViolationException import RuleViolationException
 
@@ -9,6 +11,7 @@ class RuleViolationService():
     """ Kural motorundan çıkan kural ihlallerinin veri tabanına kaydının yapıldığı sınıf """
 
     rule_violation_dao = RuleViolationDAO()
+    notification_dao = NotificationDAO()
 
     def save_rule_violations(self, rule_violation_list):
         """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına kaydını sağlayan metot """
@@ -41,7 +44,26 @@ class RuleViolationService():
                                               violation_date=violation_date)
         try:
             self.rule_violation_dao.save_to_db(rule_violation_dto)
+            self.save_notfication_to_db(rule_violation_id=00, staff_id=1, priority="HIGH", message= "hazsta uyarı",
+                                        notification_date="01.01.2019 00:00:00", error_message= "uyarı hata test")
             return rule_violation_dto
+        except Exception as e:
+            print(e)
+            raise Exception("Error occured while inserting.")
+    """   
+    def save_notification(self, rule_violation_id, staff_id, priority, message, notification_date, error_message):
+        rule_violation = self.save_rule_violation_to_db()
+        self.save_notfication_to_db(rule_violation_dto.id, None, None, None, datetime.now(),
+                                    rule_violation_dto.rule.value)
+    """
+    def save_notfication_to_db(self, rule_violation_id, staff_id, priority, message, notification_date, error_message):
+        """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına kaydını sağlayan metot """
+        notification_dto = NotificationDTO(id=None, rule_violation_id=rule_violation_id, staff_id=staff_id,
+                                           priority=priority, message=message, notification_date=notification_date,
+                                              error_message=error_message)
+        try:
+            self.notification_dao.save_to_db(notification_dto)
+            return notification_dto
         except Exception as e:
             print(e)
             raise Exception("Error occured while inserting.")

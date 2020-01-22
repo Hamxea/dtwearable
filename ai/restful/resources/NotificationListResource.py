@@ -13,7 +13,7 @@ class NotificationListResource(Resource):
     dao = NotificationDAO()
 
     def get(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore cNotificationDTO nesnesini liste olarak donmek icin kullanan metod """
+        """ Restful isteğinin body kısmında bulunan veriye gore NotificationDTO nesnesini liste olarak donmek icin kullanan metod """
 
         data = self.post_parser.parse_args()
 

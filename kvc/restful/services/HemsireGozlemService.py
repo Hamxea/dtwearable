@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from ai.aimodels.TemperaturePredictionAIModel import TemperaturePredictionAIModel
+from ai.restful.models.RuleViolationDTO import RuleViolationDTO
+from ai.restful.services.NotificationService import NotificationService
 from ai.restful.services.PredictionService import PredictionService
 from ai.restful.services.RuleViolationService import RuleViolationService
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
@@ -72,9 +74,13 @@ class HemsireGozlemService():
 
         temp_rule_violation_exception_list = []
         temp_rule_violation_exception_list.extend(
-            self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, temperature=hemsire_gozlem.vucut_sicakligi, yas=hemsire_gozlem.islem_dto.yas,
-                                                                        tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik, tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
-                                                                        choosen_type=ChoosenTypeEnum.REAL, reference_table=HemsireGozlemDTO.__tablename__, reference_id=hemsire_gozlem.id, prediction_id=None))
+            self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, temperature=hemsire_gozlem.vucut_sicakligi,
+                                                 yas=hemsire_gozlem.islem_dto.yas,
+                                                 tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik,
+                                                 tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
+                                                 choosen_type=ChoosenTypeEnum.REAL,
+                                                 reference_table=HemsireGozlemDTO.__tablename__,
+                                                 reference_id=hemsire_gozlem.id, prediction_id=None))
 
 
         """TODO....modeli yerel makinemde eğit ve yerel kaydetme modeli ile tahmin et 
