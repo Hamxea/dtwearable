@@ -1,36 +1,27 @@
 from abc import abstractmethod
-from sklearn.model_selection import train_test_split
-from keras.models import Sequential
-from  keras.layers import Dense, Flatten
 
-from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
 import numpy as np
+from sklearn.model_selection import train_test_split
+
+from ai.aimodels.AbstractAIModel import AbstractAIModel
+# Load the statsmodels api
+import statsmodels.api as sm
 
 
-class MutlilayerPerceptronMultiStepOutput(AbstractAIModel):
-    """ Mutlilayer (MLP) Perceptron with Multi-Step Output... """
 
-    #window_size = 3
-
+class AlgorithmTest(AbstractAIModel):
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
 
         df = self.get_dataset(dataset_parameters)
-        #df = self.windowing(df)
+        # df = self.windowing(df)
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
-                                                              hyperparameters['n_steps_in'], hyperparameters['n_steps_out'])
+                                                              hyperparameters['n_steps'],)
         mlp_model = self.train_mlp(X_train, y_train)
         score, acc = self.test_mlp(mlp_model, X_test, y_test)
 
         return mlp_model, {"score": score, "accuracy": acc}
-
-    def split_dataset(self, df, test_ratio, n_steps_in, n_steps_out):
-        """ Dataseti train ve test için bölen metod """
-
-        X, y = self.split_sequences(df, n_steps_in, n_steps_out)
-
-        return train_test_split(X, y, test_size=test_ratio, shuffle=False, stratify=None)
 
     @abstractmethod
     def get_dataset(self, dataset_parameters):
@@ -40,7 +31,14 @@ class MutlilayerPerceptronMultiStepOutput(AbstractAIModel):
         """
         pass
 
-    def split_sequences(self, df, n_steps_in, n_steps_out):
+    def split_dataset(self, df, test_ratio, n_steps):
+        """ Dataseti train ve test için bölen metod """
+
+        X, y = self.split_sequences(df, n_steps)
+
+        return train_test_split(X, y, test_size=test_ratio, shuffle=False, stratify=None)
+
+    def split_sequences(self, df, n_steps):
         """ split a multivariate sequence into samples metod"""
         """
         #n_steps_in = 3
@@ -50,18 +48,16 @@ class MutlilayerPerceptronMultiStepOutput(AbstractAIModel):
         X, y = list(), list()
         for i in range(len(sequences)):
             # find the end of this pattern
-            end_ix = i + n_steps_in
-            out_end_ix = end_ix + n_steps_out
+            end_ix = i + n_steps
             # check if we are beyond the dataset
-            if out_end_ix > len(sequences):
+            if end_ix > len(sequences) - 1:
                 break
             # gather input and output parts of the pattern
-            seq_x, seq_y = sequences[i:end_ix, :], sequences[end_ix:out_end_ix, :]
+            seq_x, seq_y = sequences[i:end_ix, :], sequences[end_ix, :]
             X.append(seq_x)
             y.append(seq_y)
-
         X, y = array(X), array(y)
-        return  X, y
+        return X, y
 
     def train_mlp(self, X_train, y_train):
         """ X_train ve y_train kullanarak mlp modeli oluşturan metod """
@@ -70,34 +66,24 @@ class MutlilayerPerceptronMultiStepOutput(AbstractAIModel):
         n_input = X_train.shape[1] * X_train.shape[2]
         X_train = X_train.reshape((X_train.shape[0], n_input))
         # flatten output
-        n_output = y_train.shape[1] * y_train.shape[2]
-        y_train = y_train.reshape((y_train.shape[0], n_output))
+        n_output = y_train.shape[1]
 
-        # define model
-        model = Sequential()
-        model.add(Dense(100, activation='relu', input_dim=n_input))
-        model.add(Dense(n_output))
-        model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
-        # fit model
-        model.fit(X_train, y_train, epochs=2000, verbose=0)
+        # Fit a local level model
+        model = sm.tsa.VARMAX(X_train, order=(1, 0))
+        # Note that mod_var1 is an instance of the VARMAX class
+        # Fit the model via maximum likelihood
+        model = model.fit()
+        # Note that res_var1 is an instance of the VARMAXResults class
+        print(model.summary())
 
         return model
 
     def test_mlp(self, mlp_model, X_test, y_test):
         """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
-        X_test = X_test[np.size(X_test, 0) - 1:, :]
-        # flatten input
-        n_input = X_test.shape[1] * X_test.shape[2]
-        X_test = X_test.reshape(1, n_input)
-        yha_predict = mlp_model.predict(X_test, verbose=0)
-        print(yha_predict)
 
-        """ Score verilen bir girişin değerlendirme fonksiyonu """
-        score, acc = mlp_model.evaluate(X_test, yha_predict,  verbose = 0)
-        print("Score:", score)
-        print(("Accuracy", acc))
+        pass
 
-        return score, acc
+        return 0, 1
 
     def rename_columns(self, df, identifier='Feat_'):
         """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """

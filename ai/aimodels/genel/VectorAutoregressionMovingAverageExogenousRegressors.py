@@ -5,12 +5,12 @@ from pandas import DataFrame
 from pandas import concat
 from sklearn.model_selection import train_test_split
 from statsmodels.tsa.vector_ar.var_model import VAR
-
+from statsmodels.tsa.statespace.varmax import VARMAX
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 
 
-class VectorAutoRegression(AbstractAIModel):
-    """ Vector Auto Regression (VAR) with 1-Step Output """
+class VectorAutoregressionMovingAverageExogenousRegressors(AbstractAIModel):
+    """ Vector Autoregression Moving-Average with Exogenous Regressors (VARMAX)with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
@@ -18,10 +18,10 @@ class VectorAutoRegression(AbstractAIModel):
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
         train_data, test_data = self.split_dataset(df, dataset_parameters['test_ratio'], hyperparameters['n_steps'])
-        var_model = self.train_var(train_data, hyperparameters['n_steps'])
-        score, acc = self.test_var(var_model, test_data)
+        mlp_model = self.train_mlp(train_data, hyperparameters['n_steps'])
+        score, acc = self.test_mlp(mlp_model, test_data)
 
-        return var_model, {"score": score, "accuracy": acc}
+        return mlp_model, {"score": score, "accuracy": acc}
 
     @abstractmethod
     def get_dataset(self, dataset_parameters):
@@ -39,21 +39,21 @@ class VectorAutoRegression(AbstractAIModel):
 
         return train_data, test_data
 
-    def train_var(self, train_data, n_steps):
-        """ X_train ve y_train kullanarak var modeli oluşturan metod """
+    def train_mlp(self, train_data, n_steps):
+        """ X_train ve y_train kullanarak mlp modeli oluşturan metod """
 
-        model = VAR(endog=train_data)
-        model_fit = model.fit()
+        model = VARMAX(extrain_data, order=(1, 1))
+        model_fit = model.fit(disp=False)
         return model_fit
 
-    def test_var(self, var_model, test_data):
-        """ Oluşturulmuş var modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+    def test_mlp(self, mlp_model, test_data):
+        """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
-        #make prediction of test validation data with 1 step_out
-        prediction = var_model.forecast(var_model.y, steps=1)
+        #make prediction of test validation data
+        prediction = mlp_model.forecast(exog=test_data)
         print(prediction)
 
-        return 0, 1
+        return 0, 0
 
     def rename_columns(self, df, identifier='Feat_'):
         """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """

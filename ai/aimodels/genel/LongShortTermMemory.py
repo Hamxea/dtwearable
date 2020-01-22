@@ -7,6 +7,7 @@ import tensorflow as tf
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
+import numpy as np
 
 
 class LongShortTermMemory(AbstractAIModel):
@@ -90,16 +91,51 @@ class LongShortTermMemory(AbstractAIModel):
         """ Oluşturulmuş lstm modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
         #n_steps = 3
         # flatten input and choose the features
+
+        X_test = X_test[np.size(X_test, 0)-1:, :]
+        print(X_test)
+        print(type(X_test))
+        print(X_test.shape)
         n_features = X_test.shape[2]
+        print(n_features)
         X_test = X_test.reshape(1, n_steps, n_features)
+        print(X_test)
         yha_predict = lstm_model.predict(X_test, verbose=0)
         print(yha_predict)
+        print(type(X_test))
+        """
+        for i in range(0, np.size(X_test, 0) - 1):
+           # n_features = X_test[i].shape[1]
+            X_test = X_test [:,i]
+            n_features = X_test.shape[1]
+            print(n_features)
+            print(X_test)
+            X_test = X_test.reshape(1, n_steps, n_features)
+            print(X_test)
+            print(X_test.shape)
+            #yha_predict = lstm_model.predict(X_test[i], verbose=0)
+            #print(yha_predict)
+            """
+
+        """ 
+        print(np.size(X_test, 0) - 1)
+        for i in range(np.size(X_test, 0) - 1):
+            # flatten input and choose the features
+            print("next line \n")
+            X_test = X_test[i]
+            print(X_test[i])
+            print(X_test[i].shape)
+            # n_features = X_test.shape[1]
+            X_test[i] = X_test[i].reshape(1, n_steps, 6)
+            yha_predict = lstm_model.predict(X_test[i], verbose=0)"""
+
+
 
         """ Score verilen bir girişin değerlendirme fonksiyonu """
         (score, acc) = lstm_model.evaluate(X_test, yha_predict, verbose=0)
-        print("Score:", score)
+        #print("Score:", score)
 
-
+        #return 1, 1
         return (score, acc)
 
     def rename_columns(self, df, identifier='Feat_'):
