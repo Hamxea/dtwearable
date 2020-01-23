@@ -39,14 +39,7 @@ class NotificationRegisterResource(Resource):
                                                    PriorityEnum.get_by_name(data['priority']),
                                                    data['message'], data['notification_date'], data['error_message'])
             self.dao.save_to_db(notification_dto)
-            #self.rule_violation_service.save_rule_violation_to_db()
-            notification = '{ "rule_violation_id": 100, "staff_id": 1, "priority": "HIGH", "message": "Test message",' \
-                           '"notification_date": "01.01.2019 00:00:00", "error_message": "test notification error." }'
-            # parse notification:
-            notification = json.loads(notification)
-            print(notification)
-            print(json.dumps(notification_dto.serialize))
-            #emit('message', notification, broadcast=True, namespace='/')
+
             emit('message', notification_dto.serialize, broadcast=True, namespace='/')
             #emit('message', json.dumps(notification_dto.serialize), broadcast=True,namespace='/ai/notification')
         except Exception as e:
@@ -74,8 +67,8 @@ class NotificationRegisterResource(Resource):
             notification_dto.error_message = data['error_message']
         else:
             notification_dto = NotificationDTO(**data)
-        #emit('message', json.dumps(notification_dto.serialize), broadcast=True, namespace='/')
+
         emit('message', notification_dto.serialize, broadcast=True,  namespace='/')
         self.dao.save_to_db(notification_dto)
-        #self.rule_violation_service.save_rule_violation_to_db()
+
         return notification_dto.serialize

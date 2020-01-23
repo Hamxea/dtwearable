@@ -2,7 +2,6 @@ from datetime import datetime
 
 from ai.aimodels.TemperaturePredictionAIModel import TemperaturePredictionAIModel
 from ai.restful.models.RuleViolationDTO import RuleViolationDTO
-from ai.restful.services.NotificationService import NotificationService
 from ai.restful.services.PredictionService import PredictionService
 from ai.restful.services.RuleViolationService import RuleViolationService
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO

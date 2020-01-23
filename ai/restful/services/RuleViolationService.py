@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from flask_socketio import emit
+
+from ai.enums.PriorityEnum import PriorityEnum
 from ai.restful.daos.NotificationDAO import NotificationDAO
 from ai.restful.daos.RuleViolationDAO import RuleViolationDAO
 from ai.restful.models.NotificationDTO import NotificationDTO
@@ -42,10 +45,14 @@ class RuleViolationService():
                                               value_source=value_source,
                                               value=value,
                                               violation_date=violation_date)
+
+        self.save_notfication_to_db(rule_violation_id=rule_violation_dto.id, staff_id=None,
+                                    priority=PriorityEnum.HIGH, message="hasta uyarı",
+                                    notification_date=datetime.now(), error_message="uyarı hata test")
+
         try:
             self.rule_violation_dao.save_to_db(rule_violation_dto)
-            self.save_notfication_to_db(rule_violation_id=00, staff_id=1, priority="HIGH", message= "hazsta uyarı",
-                                        notification_date="01.01.2019 00:00:00", error_message= "uyarı hata test")
+
             return rule_violation_dto
         except Exception as e:
             print(e)
@@ -67,4 +74,4 @@ class RuleViolationService():
 
         except Exception as e:
             print(e)
-            raise Exception("Error occured while inserting.")
+            raise Exception("Error occurred while inserting.")
