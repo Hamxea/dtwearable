@@ -23,7 +23,7 @@ class SiviAlimiService():
             rule_violation_exception_list = []
             self.sivi_alimi_dao.save_to_db(sivi_alimi)
             rule_violation_exception_list.extend(self.get_sivi_alimi_rule_violation(sivi_alimi))
-            #rule_violation_exception_list.extend(self.get_tahmin_genel_hasta_durumu(sivi_alimi, hemsire_gozlem))
+            # rule_violation_exception_list.extend(self.get_tahmin_genel_hasta_durumu(sivi_alimi, hemsire_gozlem))
 
             self.rule_violation_service.save_rule_violations(rule_violation_exception_list)
         except RuleViolationException as e:
@@ -33,8 +33,10 @@ class SiviAlimiService():
         """ sivi fark kural tabanlı"""
 
         sivi_alimi_rule_violation_list = []
-        sivi_alimi_rule_violation_list.extend(self.sivi_takip_rule_engine.execute(islem_dto=None, sivi_farki=sivi_alimi.sivi_farki, yas=None,
-                                                tansiyon_sistolik=None, tansiyon_diastolik=None, choosen_type=None, reference_table=SiviAlimiDTO.__tablename__ ,
-                                                                                   reference_id= sivi_alimi.id, prediction_id=None))
+        sivi_alimi_rule_violation_list.extend(
+            self.sivi_takip_rule_engine.execute(islem_dto=None, sivi_farki=sivi_alimi.sivi_farki, yas=None,
+                                                tansiyon_sistolik=None, tansiyon_diastolik=None, choosen_type=None,
+                                                reference_table=SiviAlimiDTO.__tablename__,
+                                                reference_id=sivi_alimi.id, prediction_id=None))
 
         return sivi_alimi_rule_violation_list

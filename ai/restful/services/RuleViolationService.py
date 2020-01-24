@@ -22,6 +22,7 @@ class RuleViolationService():
         for rule_violation_exception in rule_violation_list:
             try:
                 self.save_rule_violation(rule_violation_exception)
+
             except Exception as e:
                 print(e)
 
@@ -30,7 +31,7 @@ class RuleViolationService():
                                        rule_violation_exception.reference_id,
                                        rule_violation_exception.prediction_id,
                                        rule_violation_exception.rule_enum.name,
-                                       None,
+                                       rule_violation_exception.message,
                                        rule_violation_exception.value,
                                        datetime.now())
 
@@ -47,8 +48,8 @@ class RuleViolationService():
                                               violation_date=violation_date)
 
         self.save_notfication_to_db(rule_violation_id=rule_violation_dto.id, staff_id=None,
-                                    priority=PriorityEnum.HIGH, message="hasta uyarı",
-                                    notification_date=datetime.now(), error_message="uyarı hata test")
+                                    priority=PriorityEnum.HIGH, message=rule_violation_dto.value_source,
+                                    notification_date=datetime.now(), error_message=rule_violation_dto.value_source)
 
         try:
             self.rule_violation_dao.save_to_db(rule_violation_dto)
@@ -56,10 +57,11 @@ class RuleViolationService():
             return rule_violation_dto
         except Exception as e:
             print(e)
-            raise Exception("Error occured while inserting.")
+            raise Exception("Error occurred while inserting.")
 
     def save_notfication_to_db(self, rule_violation_id, staff_id, priority, message, notification_date, error_message):
         """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına kaydını sağlayan metot """
+
         notification_dto = NotificationDTO(id=None,
                                            rule_violation_id=rule_violation_id,
                                            staff_id=staff_id,
@@ -69,9 +71,12 @@ class RuleViolationService():
                                            error_message=error_message)
         try:
             self.notification_dao.save_to_db(notification_dto)
-            emit('message', notification_dto.serialize, broadcast=True, namespace='/')
+            # emit('message', notification_dto.serialize, broadcast=True, namespace='/')
+            self.send_notification(notification_dto.serialize)
             return notification_dto
-
         except Exception as e:
             print(e)
             raise Exception("Error occurred while inserting.")
+
+    def send_notification(self, notification_message):
+        emit('message', notification_message, broadcast=True, namespace='/')
