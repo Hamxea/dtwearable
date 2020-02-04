@@ -2,7 +2,7 @@ import logging
 import os
 
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_socketio import SocketIO, emit, join_room, send
@@ -77,6 +77,16 @@ app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']  # allow blackl
 jwt = JWTManager(app)
 
 socket_clients = []
+
+
+@app.route('/test', methods=['GET', 'POST'])
+def test():
+    return "<h1 style='color: red;'>KVC!</h1>"
+
+
+@app.route('/home', methods=['GET', 'POST'])
+def index_home():
+    return render_template("index.html")
 
 
 @socketio.on('connect')
@@ -227,4 +237,4 @@ db.init_app(app)
 
 if __name__ == '__main__':
     #app.run(port=5000, debug=True, host='0.0.0.0')
-    socketio.run(app, host='0.0.0.0')
+    socketio.run(app, host='0.0.0.0', debug=True)

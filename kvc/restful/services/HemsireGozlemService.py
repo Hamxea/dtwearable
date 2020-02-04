@@ -2,7 +2,6 @@ from datetime import datetime
 
 from ai.aimodels.TemperaturePredictionAIModel import TemperaturePredictionAIModel
 from ai.restful.models.RuleViolationDTO import RuleViolationDTO
-from ai.restful.services.NotificationService import NotificationService
 from ai.restful.services.PredictionService import PredictionService
 from ai.restful.services.RuleViolationService import RuleViolationService
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
@@ -82,15 +81,12 @@ class HemsireGozlemService():
                                                  reference_table=HemsireGozlemDTO.__tablename__,
                                                  reference_id=hemsire_gozlem.id, prediction_id=None))
 
-
         """TODO....modeli yerel makinemde eğit ve yerel kaydetme modeli ile tahmin et 
             ve temperature prediction kural tabanı testlecek
         {
         "message": "An error occurred while inserting the item. ",
         "exception": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\ismet.bahadir\\\\ai_models\\\\ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel_1576829259.9437.pickle'"
         """
-
-
 
         """
         # TemperaturePredictionAIModel.__name__
@@ -109,4 +105,3 @@ class HemsireGozlemService():
                                                                         tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik, tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
                                                                         reference_table=HemsireGozlemDTO.__tablename__, reference_id=hemsire_gozlem.id, prediction_id=None))"""
         return temp_rule_violation_exception_list
-
