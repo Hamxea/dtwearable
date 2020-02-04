@@ -16,11 +16,13 @@ class SiviTakipRuleEngine(AbstractRuleEngine):
         if sivi_farki > 0:
             exception_list.append(RuleViolationException("Sıvı kaybı alınan sıvıdan daha fazla",
 
-                                                         SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki, reference_table,
+                                                         SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki,
+                                                         reference_table,
                                                          reference_id, prediction_id))
         if sivi_farki < 0:
             exception_list.append(RuleViolationException("Alınan sıvı, sıvı kaybından daha büyüktür",
-                                                         SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki, reference_table,
+                                                         SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki,
+                                                         reference_table,
                                                          reference_id, prediction_id))
 
         return exception_list
