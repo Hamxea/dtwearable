@@ -78,6 +78,11 @@ jwt = JWTManager(app)
 socket_clients = []
 
 
+@app.route('/home', methods=['GET', 'POST'])
+def test():
+    return "<h1 style='color: red;'>KVC!</h1>"
+
+
 @socketio.on('connect')
 def connected():
     print(request.namespace)
