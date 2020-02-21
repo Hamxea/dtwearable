@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask_restful import reqparse, Resource
 
+from ai.enums.PriorityEnum import PriorityEnum
 from ai.restful.daos.RuleViolationDAO import RuleViolationDAO
 from ai.restful.models.RuleViolationDTO import RuleViolationDTO
 
@@ -21,8 +22,10 @@ class RuleViolationRegisterResource(Resource):
     post_parser.add_argument('rule', type=str, required=True)
     post_parser.add_argument('value_source', type=str, required=False)
     post_parser.add_argument('value', type=int, required=True)
-    post_parser.add_argument('violation_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(), required=True)
-
+    post_parser.add_argument('violation_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
+                             required=True)
+    post_parser.add_argument('notification_id', type=int, required=False)
+    post_parser.add_argument('priority', type=int, required=False)
 
     rule_violation_dao = RuleViolationDAO()
 
@@ -57,6 +60,8 @@ class RuleViolationRegisterResource(Resource):
             rule_violation_dto.value_source = data['value_source']
             rule_violation_dto.value = data['value']
             rule_violation_dto.violation_date = data['violation_date']
+            rule_violation_dto.notification_id = data['notification_id']
+            rule_violation_dto.priority = PriorityEnum.get_by_name['priority']
 
         else:
             rule_violation_dto = RuleViolationDTO(**data)
