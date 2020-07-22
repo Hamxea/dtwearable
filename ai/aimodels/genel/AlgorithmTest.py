@@ -1,20 +1,16 @@
 from abc import abstractmethod
-from sklearn.model_selection import train_test_split
-import tensorflow as tf
-from keras.models import Sequential
-from keras.layers import Dense
 
-from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
 import numpy as np
+from sklearn.model_selection import train_test_split
+
+from ai.aimodels.AbstractAIModel import AbstractAIModel
+# Load the statsmodels api
+import statsmodels.api as sm
 
 
-class MutlilayerPerceptron(AbstractAIModel):
-    """ Mutlilayer (MLP) Perceptron with 1-Step Output """
 
-    global mlp_model
-    global graph
-
+class AlgorithmTest(AbstractAIModel):
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
 
@@ -23,10 +19,7 @@ class MutlilayerPerceptron(AbstractAIModel):
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'],)
         mlp_model = self.train_mlp(X_train, y_train)
-        graph = tf.get_default_graph()
-
-        with graph.as_default():
-            score, acc = self.test_mlp(mlp_model, X_test, y_test)
+        score, acc = self.test_mlp(mlp_model, X_test, y_test)
 
         return mlp_model, {"score": score, "accuracy": acc}
 
@@ -75,32 +68,22 @@ class MutlilayerPerceptron(AbstractAIModel):
         # flatten output
         n_output = y_train.shape[1]
 
-        # define model
-        model = Sequential()
-        model.add(Dense(100, activation='relu', input_dim=n_input))
-        model.add(Dense(n_output))
-        model.compile(optimizer='adam', loss='mse', metrics=['accuracy'])
-        # fit model
-        model.fit(X_train, y_train, epochs=2000, verbose=0)
+        # Fit a local level model
+        model = sm.tsa.VARMAX(X_train, order=(1, 0))
+        # Note that mod_var1 is an instance of the VARMAX class
+        # Fit the model via maximum likelihood
+        model = model.fit()
+        # Note that res_var1 is an instance of the VARMAXResults class
+        print(model.summary())
 
         return model
 
     def test_mlp(self, mlp_model, X_test, y_test):
         """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
-        X_test = X_test[np.size(X_test, 0) - 1:, :]
-        # flatten input
-        n_input = X_test.shape[1] * X_test.shape[2]
-        X_test = X_test.reshape(1, n_input)
-        yha_predict = mlp_model.predict(X_test, verbose=0)
-        print(yha_predict)
+        pass
 
-        """ Score verilen bir girişin değerlendirme fonksiyonu """
-        score, acc = mlp_model.evaluate(X_test, yha_predict, verbose=0)
-        print("Score:", score)
-        print(("Accuracy", acc))
-
-        return score, acc
+        return 0, 1
 
     def rename_columns(self, df, identifier='Feat_'):
         """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """

@@ -42,8 +42,10 @@ api = Api(app)
 """ Gunicor ve app logging ayarları """
 gunicorn_logger = logging.getLogger('gunicorn.debug')
 app.logger.handlers = gunicorn_logger.handlers
-# app.logger.setLevel(gunicorn_logger.level)
+app.logger.setLevel(gunicorn_logger.level)
 app.logger.setLevel(logging.INFO)
+
+logging.basicConfig(level=logging.DEBUG)
 
 app.logger.debug("this is a DEBUG message for test")
 app.logger.info("this is an INFO message for test")

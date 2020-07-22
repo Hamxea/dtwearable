@@ -13,7 +13,7 @@ class IslemDTO(db.Model):
 
     __tablename__ = "islem"
 
-    islem_no = db.Column(db.Integer, primary_key=True)
+    islem_no = db.Column(db.BigInteger, primary_key=True)
     kayit_tarihi = db.Column(db.DateTime)
     cinsiyet = db.Column(IntEnum(CinsiyetEnum))
     yas = db.Column(db.SmallInteger)
@@ -40,11 +40,11 @@ class IslemDTO(db.Model):
 
         return {
             'islem_no': self.islem_no,
-            'kayit_tarihi': self.kayit_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
+            'kayit_tarihi': self.kayit_tarihi.strftime('%d.%m.%Y %H:%M:%S') if self.kayit_tarihi else None,
             'cinsiyet': self.cinsiyet.name,
             'yas': self.yas,
-            'operasyon_tarihi': self.operasyon_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
-            'cikis_tarihi': self.cikis_tarihi.strftime('%d.%m.%Y %H:%M:%S'),
+            'operasyon_tarihi': self.operasyon_tarihi.strftime('%d.%m.%Y %H:%M:%S') if self.operasyon_tarihi else None,
+            'cikis_tarihi': self.cikis_tarihi.strftime('%d.%m.%Y %H:%M:%S') if self.cikis_tarihi else None,
             'etiket': self.etiket.name
             # 'islem_operrasyon_list': [islem_operasyon.json() for islem_operasyon in self.islem_operasyon_list.all()]
         }
