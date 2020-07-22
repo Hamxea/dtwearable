@@ -76,7 +76,7 @@ class HemsireGozlemRegisterResource(Resource):
             hemsire_gozlem = HemsireGozlemDTO(**data)
             self.hemsire_gozlem_service.create_hemsire_gozlem(hemsire_gozlem)
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             return {"message": "An error occurred while inserting the item. ",
                     "exception": str(e)
                     }, 500

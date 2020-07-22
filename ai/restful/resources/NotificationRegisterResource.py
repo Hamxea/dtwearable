@@ -1,10 +1,13 @@
+import json
 from datetime import datetime
 
 from flask_restful import reqparse, Resource
+from flask_socketio import emit, send
 
 from ai.restful.daos.NotificationDAO import NotificationDAO
 from ai.restful.models.NotificationDTO import NotificationDTO
 from ai.enums.PriorityEnum import PriorityEnum
+from ai.restful.services.RuleViolationService import RuleViolationService
 
 
 class NotificationRegisterResource(Resource):
@@ -16,14 +19,16 @@ class NotificationRegisterResource(Resource):
     """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('id', type=int, required=False)
-    post_parser.add_argument('rule_violation_id', type=int, required=True)
+    # post_parser.add_argument('rule_violation_id', type=int, required=True)
     post_parser.add_argument('staff_id', type=int, required=True)
     post_parser.add_argument('priority', type=str, required=True)
     post_parser.add_argument('message', type=str, required=True)
-    post_parser.add_argument('notification_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(), required=True)
+    post_parser.add_argument('notification_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y %H:%M:%S").date(),
+                             required=True)
     post_parser.add_argument('error_message', type=str, required=False)
 
     dao = NotificationDAO()
+    rule_violation_service = RuleViolationService()
 
     def post(self):
         """ Restful isteğinin body kısmında bulunan veriye gore NotificationDTO nesnesini olusturan ve veritabanına yazan metod """
@@ -31,10 +36,12 @@ class NotificationRegisterResource(Resource):
         data = self.post_parser.parse_args()
 
         try:
-            notification_dto = NotificationDTO(None, data['rule_violation_id'], data['staff_id'],
-                                                   PriorityEnum.get_by_name(data['priority']),
-                                                   data['message'], data['notification_date'], data['error_message'])
+            notification_dto = NotificationDTO(None, data['staff_id'], PriorityEnum.get_by_name(data['priority']),
+                                               data['message'], data['notification_date'], data['error_message'])
             self.dao.save_to_db(notification_dto)
+
+            emit('message', notification_dto.serialize, broadcast=True, namespace='/')
+            # emit('message', json.dumps(notification_dto.serialize), broadcast=True,namespace='/ai/notification')
         except Exception as e:
             print(str(e))
             return {"message": "An error occurred while inserting the item. ",
@@ -51,7 +58,7 @@ class NotificationRegisterResource(Resource):
         notification_dto = self.dao.find_by_id(data['id'])
 
         if notification_dto:
-            notification_dto.rule_violation_id = data['rule_violation_id']
+            # notification_dto.rule_violation_id = data['rule_violation_id']
             notification_dto.staff_id = data['staff_id']
             notification_dto.priority = PriorityEnum.get_by_name(data['priority'])
             notification_dto.message = data['message']
@@ -60,6 +67,7 @@ class NotificationRegisterResource(Resource):
         else:
             notification_dto = NotificationDTO(**data)
 
+        emit('message', notification_dto.serialize, broadcast=True, namespace='/')
         self.dao.save_to_db(notification_dto)
 
         return notification_dto.serialize

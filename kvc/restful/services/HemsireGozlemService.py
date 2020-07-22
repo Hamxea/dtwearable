@@ -1,6 +1,8 @@
+import logging
 from datetime import datetime
 
 from ai.aimodels.TemperaturePredictionAIModel import TemperaturePredictionAIModel
+from ai.restful.models.RuleViolationDTO import RuleViolationDTO
 from ai.restful.services.PredictionService import PredictionService
 from ai.restful.services.RuleViolationService import RuleViolationService
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
@@ -35,35 +37,43 @@ class HemsireGozlemService():
             rule_violation_exception_list.extend(self.get_tansiyon_rule_violations(hemsire_gozlem))
             rule_violation_exception_list.extend(self.get_nabiz__rule_violations(hemsire_gozlem))
 
-            self.rule_violation_service.save_rule_violations(rule_violation_exception_list)
+            self.rule_violation_service.save_rule_violation_and_notifications(rule_violation_exception_list)
 
         except RuleViolationException as e:
-            print(e)
-            self.rule_violation_service.save_rule_violation(rule_violation_exception_list)
+            logging.exception(e, exc_info=True)
+            self.rule_violation_service.save_rule_violations(rule_violation_exception_list)
+
+    """self.sivi_takip_rule_engine.execute(islem_dto=None, sivi_farki=sivi_alimi.sivi_farki, yas=None,
+                                                tansiyon_sistolik=None, tansiyon_diastolik=None, choosen_type=None,
+                                                reference_table=SiviAlimiDTO.__tablename__, reference_id=sivi_alimi.id,
+                                                prediction_id=None, notification_id=None)"""
 
     def get_nabiz__rule_violations(self, hemsire_gozlem):
         """nabiz kural ihlalleri"""
 
         nabiz_rule_violation_list = []
         nabiz_rule_violation_list.extend(
-            self.nabiz_rule_engine.execute(hemsire_gozlem.islem_dto, nabiz=hemsire_gozlem.nabiz,
+
+            self.nabiz_rule_engine.execute(hemsire_gozlem.islem_dto.islem_no, nabiz=hemsire_gozlem.nabiz,
                                            yas=hemsire_gozlem.islem_dto.yas,
                                            tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik,
                                            tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
                                            choosen_type=None, reference_table=HemsireGozlemDTO.__tablename__,
-                                           reference_id=hemsire_gozlem.id, prediction_id=None))
+                                           reference_id=hemsire_gozlem.id, prediction_id=None, notification_id=None,
+                                           priority=None))
         return nabiz_rule_violation_list
 
     def get_tansiyon_rule_violations(self, hemsire_gozlem):
         """ tansiyon diastolik ve sistolik özellikler kural ihlalleri"""
         tansiyon_rule_violation_list = []
         tansiyon_rule_violation_list.extend(
-            self.tansiyon_rule_engine.execute(hemsire_gozlem.islem_dto, nabiz=hemsire_gozlem.nabiz,
+            self.tansiyon_rule_engine.execute(hemsire_gozlem.islem_dto.islem_no, nabiz=hemsire_gozlem.nabiz,
                                               yas=hemsire_gozlem.islem_dto.yas,
                                               tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik,
                                               tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
                                               choosen_type=None, reference_table=HemsireGozlemDTO.__tablename__,
-                                              reference_id=hemsire_gozlem.id, prediction_id=None))
+                                              reference_id=hemsire_gozlem.id, prediction_id=None, notification_id=None,
+                                              priority=None))
 
         return tansiyon_rule_violation_list
 
@@ -72,10 +82,15 @@ class HemsireGozlemService():
 
         temp_rule_violation_exception_list = []
         temp_rule_violation_exception_list.extend(
-            self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto, temperature=hemsire_gozlem.vucut_sicakligi, yas=hemsire_gozlem.islem_dto.yas,
-                                                                        tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik, tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
-                                                                        choosen_type=ChoosenTypeEnum.REAL, reference_table=HemsireGozlemDTO.__tablename__, reference_id=hemsire_gozlem.id, prediction_id=None))
-
+            self.temperature_rule_engine.execute(hemsire_gozlem.islem_dto.islem_no,
+                                                 temperature=hemsire_gozlem.vucut_sicakligi,
+                                                 yas=hemsire_gozlem.islem_dto.yas,
+                                                 tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik,
+                                                 tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
+                                                 choosen_type=ChoosenTypeEnum.REAL,
+                                                 reference_table=HemsireGozlemDTO.__tablename__,
+                                                 reference_id=hemsire_gozlem.id, prediction_id=None,
+                                                 notification_id=None, priority=None))
 
         """TODO....modeli yerel makinemde eğit ve yerel kaydetme modeli ile tahmin et 
             ve temperature prediction kural tabanı testlecek
@@ -83,8 +98,6 @@ class HemsireGozlemService():
         "message": "An error occurred while inserting the item. ",
         "exception": "[Errno 2] No such file or directory: 'C:\\\\Users\\\\ismet.bahadir\\\\ai_models\\\\ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel_1576829259.9437.pickle'"
         """
-
-
 
         """
         # TemperaturePredictionAIModel.__name__
@@ -103,4 +116,3 @@ class HemsireGozlemService():
                                                                         tansiyon_sistolik=hemsire_gozlem.tansiyon_sistolik, tansiyon_diastolik=hemsire_gozlem.tansiyon_diastolik,
                                                                         reference_table=HemsireGozlemDTO.__tablename__, reference_id=hemsire_gozlem.id, prediction_id=None))"""
         return temp_rule_violation_exception_list
-

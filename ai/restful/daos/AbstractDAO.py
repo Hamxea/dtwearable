@@ -18,7 +18,7 @@ class AbstractDAO:
             db.session.add(model)
             db.session.commit()
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             raise Exception("Couldn't save into database! Object name is '{}'".format(type(model).__name__))
 
     def find_by_id(self, _id: int):
@@ -27,7 +27,7 @@ class AbstractDAO:
         try:
             return self.model.query.filter_by(id=_id).first()
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             raise Exception("Couldn't find in database! Id is '{}'".format(id))
 
     def delete_from_db(self, model):
@@ -36,5 +36,5 @@ class AbstractDAO:
             db.session.delete(model)
             db.session.commit()
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             raise Exception("Couldn't delete from database! Object name is '{}'".format(type(model).__name__))

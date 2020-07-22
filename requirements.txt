@@ -9,3 +9,6 @@ pandas
 numpy
 pytest
 gunicorn
+flask_socketio
+flask_cors
+requests
