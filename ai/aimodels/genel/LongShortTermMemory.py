@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from  keras.layers import Dense
 from keras.layers import LSTM
+import tensorflow as tf
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from numpy import array
@@ -12,15 +13,22 @@ import numpy as np
 class LongShortTermMemory(AbstractAIModel):
     """ Long Short TermMemory (lstm) with 1-Step Output """
 
+
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+
+        global lstm_model
+        global graph
 
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'],)
         lstm_model = self.train_lstm(X_train, y_train, hyperparameters['n_steps'])
-        score, acc = self.test_lstm(lstm_model, X_test, y_test, hyperparameters['n_steps'])
+        graph = tf.get_default_graph()
+
+        with graph.as_default():
+            score, acc = self.test_lstm(lstm_model, X_test, y_test, hyperparameters['n_steps'])
 
         return lstm_model, {"score": score, "accuracy": acc}
 
