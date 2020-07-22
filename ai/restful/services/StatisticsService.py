@@ -28,6 +28,6 @@ class StatisticsService():
                 """ Her model için get_statistics() metodunu çağırarak dönen dict nesneyi birleştir """
                 statistics_dict[model.class_name] = ai_model.get_statistics(start_date, end_date)
             except Exception as e:
-                print(e)
+                logging.exception(e, exc_info=True)
 
         return statistics_dict

@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 from ai.aimodels.TemperaturePredictionAIModel import TemperaturePredictionAIModel
@@ -39,7 +40,7 @@ class HemsireGozlemService():
             self.rule_violation_service.save_rule_violation_and_notifications(rule_violation_exception_list)
 
         except RuleViolationException as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             self.rule_violation_service.save_rule_violations(rule_violation_exception_list)
 
     """self.sivi_takip_rule_engine.execute(islem_dto=None, sivi_farki=sivi_alimi.sivi_farki, yas=None,

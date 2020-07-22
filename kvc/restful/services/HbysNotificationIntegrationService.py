@@ -1,3 +1,4 @@
+import logging
 import time
 
 import requests
@@ -15,7 +16,8 @@ class HbysNotificationIntegrationService():
     def send_notification_to_hbys(self, notification_dict):
         """HBYS bildirimlerin anlık gönderilmesi"""
 
-        url = 'https://hbyspreprod.keydata.com.tr/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification'
+        #https://hbyspreprod.keydata.com.tr/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification
+        url = 'http://10.6.0.48:8080/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification'
 
         # create session hbys login
         session, jwt_auth, hazelcast_session_id, j_session_id = self.hbys_login_auth()
@@ -44,7 +46,7 @@ class HbysNotificationIntegrationService():
 
         login_cred = {"kullaniciAdi": "ENTEGRASYON", "sifre": "keydata06", "locale": "tr-TR", "organizasyon": 21}
         headers_login = {'Content-Type': 'application/json'}
-        url = 'https://hbyspreprod.keydata.com.tr/hbys-rs/hbys/HBYSSistem/KullaniciGiris/login'
+        url = 'http://10.6.0.48:8080/hbys-rs/hbys/HBYSSistem/KullaniciGiris/login'
 
         try:
             with requests.Session() as session:
@@ -60,13 +62,17 @@ class HbysNotificationIntegrationService():
                 j_session_id = session.cookies['JSESSIONID']
 
         except requests.exceptions.HTTPError as e:
-            print("Http Error:", e)
+            #print("Http Error:", e)
+            logging.exception(e, exc_info=True)
         except requests.exceptions.ConnectionError as er:
-            print("Error Connecting:", er)
+            #print("Error Connecting:", er)
+            logging.exception(er, exc_info=True)
         except requests.exceptions.Timeout as err:
-            print("Timeout Error:", err)
+            #print("Timeout Error:", err)
+            logging.exception(err, exc_info=True)
         except requests.exceptions.RequestException as error:
-            print("OOps: Something Else", error)
+            #print("OOps: Something Else", error)
+            logging.exception(error, exc_info=True)
 
         return session, jwt_auth, hazelcast_session_id, j_session_id
 
@@ -74,7 +80,7 @@ class HbysNotificationIntegrationService():
         """Clear sessşon and Hbys logout"""
 
         headers = {'JWTAuth': jwt_auth}
-        url = 'https://hbyspreprod.keydata.com.tr/hbys-rs/hbys/Sistem/KullaniciGiris/logout'
+        url = 'http://10.6.0.48:8080/hbys-rs/hbys/Sistem/KullaniciGiris/logout'
 
         logout_resp = session.get(url, headers=headers)
 

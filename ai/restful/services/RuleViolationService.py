@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 
 from ai.restful.daos.NotificationDAO import NotificationDAO
@@ -33,7 +34,7 @@ class RuleViolationService():
                     notitication_dto = self.save_notification(new_rule_violation_list)
                     self.save_rule_violation(notitication_dto, new_rule_violation_list)
             except Exception as e:
-                print(e)
+                logging.exception(e, exc_info=True)
 
     def save_notification(self, new_violation_list):
         global violation
@@ -52,7 +53,7 @@ class RuleViolationService():
                                                            islem_no=violation.islem_no)
             return notitication_dto
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
 
     def save_rule_violation(self, notitication_dto, rule_violation_list):
 
@@ -86,7 +87,7 @@ class RuleViolationService():
 
             return rule_violation_dto
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             raise Exception("Error occurred while inserting.")
 
     def save_rule_violations(self, rule_violation_exception: RuleViolationException):
@@ -122,5 +123,5 @@ class RuleViolationService():
             return notification_dto
 
         except Exception as e:
-            print(e)
+            logging.exception(e, exc_info=True)
             raise Exception("Error occurred while inserting.")
