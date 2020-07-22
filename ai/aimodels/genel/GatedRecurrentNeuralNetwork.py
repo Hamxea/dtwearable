@@ -1,7 +1,8 @@
 from abc import abstractmethod
 from sklearn.model_selection import train_test_split
+import tensorflow as tf
 from keras.models import Sequential
-from  keras.layers import Dense
+from keras.layers import Dense
 from keras.layers import GRU
 
 from ai.aimodels.AbstractAIModel import AbstractAIModel
@@ -12,6 +13,9 @@ import numpy as np
 class GatedRecurrentNeuralNetwork(AbstractAIModel):
     """ Gated Recurrent Neural Network (gru) with 1-Step Output """
 
+    global gru_model
+    global graph
+
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
 
@@ -20,7 +24,10 @@ class GatedRecurrentNeuralNetwork(AbstractAIModel):
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'],)
         gru_model = self.train_gru(X_train, y_train, hyperparameters['n_steps'])
-        score, acc = self.test_gru(gru_model, X_test, y_test, hyperparameters['n_steps'])
+        graph = tf.get_default_graph()
+
+        with graph.as_default():
+            score, acc = self.test_gru(gru_model, X_test, y_test, hyperparameters['n_steps'])
 
         return gru_model, {"score": score, "accuracy": acc}
 

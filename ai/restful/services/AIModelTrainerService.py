@@ -25,6 +25,7 @@ class AIModelTrainerService:
             raise Exception("{} class is not instance of AbstractAIModel!!!".format(ai_model_class))
         trained_model, performance_metrics = ai_model.train(dataset_parameters, hyper_parameters)
         ai_model_file_name = self.save_model(ai_model_class, trained_model)
+
         return ai_model_file_name, performance_metrics
         
 

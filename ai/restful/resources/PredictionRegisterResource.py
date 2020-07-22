@@ -1,3 +1,5 @@
+import logging
+
 from flask_restful import reqparse, Resource
 
 from ai.restful.services.PredictionService import PredictionService
@@ -42,6 +44,7 @@ class PredictionRegisterResource(Resource):
                                                    data['reference_id'],
                                                    data['prediction_input'])
         except Exception as e:
+            logging.exception(e, exc_info=True)
             return {"message": "An error occurred while inserting the item. ",
                     "exception": str(e)
                     }, 500

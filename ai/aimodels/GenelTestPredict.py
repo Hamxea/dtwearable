@@ -1,6 +1,8 @@
 import datetime
 from itertools import chain
 
+from keras import backend as K
+
 import pandas as pd
 
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
@@ -71,6 +73,8 @@ class GenelTestPredict(GatedRecurrentNeuralNetwork):
                                                 hmg_spo_list, hmg_o2_list, hmg_kan_transfuzyonu_list]))
 
         df_hemsire_gozlem = pd.DataFrame(hemsire_gozlem_final_list).transpose()
+
+        K.clear_session()
         return df_hemsire_gozlem  # pd.DataFrame({'col': hemsire_gozlem_final_list})
 
     def get_statistics(self, start_date: datetime, end_date: datetime):

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-
+import tensorflow as tf
 from keras import Sequential
 from keras.layers import TimeDistributed, Dense
 from sklearn.model_selection import train_test_split
@@ -13,6 +13,9 @@ import numpy as np
 class TimeDistributedNeuralNetwork(AbstractAIModel):
     """ Time Distributed Layer with 1-Step Output """
 
+    global lstm_model
+    global graph
+
     def train(self, dataset_parameters, hyperparameters):
         """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
 
@@ -21,7 +24,10 @@ class TimeDistributedNeuralNetwork(AbstractAIModel):
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
                                                               hyperparameters['n_steps'], )
         time_distributed_model = self.train_time_distributed(X_train, y_train, hyperparameters['n_steps'])
-        score, acc = self.test_time_distributed(time_distributed_model, X_test, y_test, hyperparameters['n_steps'])
+        graph = tf.get_default_graph()
+
+        with graph.as_default():
+            score, acc = self.test_time_distributed(time_distributed_model, X_test, y_test, hyperparameters['n_steps'])
 
         return time_distributed_model, {"score": score, "accuracy": acc}
 
