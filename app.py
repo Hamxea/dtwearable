@@ -235,4 +235,4 @@ db.init_app(app)
 
 if __name__ == '__main__':
     # app.run(port=5000, debug=True, host='0.0.0.0')
-    socketio.run(app, host='0.0.0.0', debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
