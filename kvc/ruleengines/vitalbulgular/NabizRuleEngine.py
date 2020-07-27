@@ -24,13 +24,13 @@ class NabizRuleEngine(AbstractRuleEngine):
 
             if 160 < nabiz <= 170:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 160 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 160 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.MEDIUM))
 
             if nabiz > 170:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 170 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 170 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.HIGH))
 
@@ -44,13 +44,13 @@ class NabizRuleEngine(AbstractRuleEngine):
 
             if 140 < nabiz <= 150:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 140 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 140 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.MEDIUM))
 
             if nabiz > 150:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 150 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 150 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.HIGH))
 
@@ -64,13 +64,13 @@ class NabizRuleEngine(AbstractRuleEngine):
 
             if 110 < nabiz <= 120:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.MEDIUM))
 
             if nabiz > 120:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 120 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 120 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.HIGH))
 
@@ -84,13 +84,13 @@ class NabizRuleEngine(AbstractRuleEngine):
 
             if 100 < nabiz <= 110:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.MEDIUM))
 
             if nabiz > 110:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.HIGH))
 
@@ -104,13 +104,13 @@ class NabizRuleEngine(AbstractRuleEngine):
 
             if 80 < nabiz <= 90:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 80 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 80 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.MEDIUM))
 
             if nabiz > 90:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.HIGH))
 
@@ -124,13 +124,13 @@ class NabizRuleEngine(AbstractRuleEngine):
 
             if 90 < nabiz <= 100:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çikti", NabizEnum.YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.MEDIUM))
 
             if nabiz > 100:
                 exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çikti", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
+                    RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
                                            reference_table, reference_id, prediction_id, notification_id,
                                            priority=PriorityEnum.HIGH))
 

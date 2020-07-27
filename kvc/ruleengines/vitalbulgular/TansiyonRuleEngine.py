@@ -16,40 +16,49 @@ class TansiyonRuleEngine(AbstractRuleEngine):
 
         if 120 <= tansiyon_sistolik <= 129 and tansiyon_diastolik < 80:
             exception_list.append(
-                RuleViolationException(islem_no,
-                                       "Tansiyon Yükseldi. TANSIYON SİSTOLİK 120 ile 129 arasına çiktive TANSİYON DİASTOLİK 80 altına düstü",
+                RuleViolationException(islem_no, "Tansiyon Yükseldi: "
+                                                 "TANSIYON SİSTOLİK 120 ile 129 arasına çıktı "
+                                                 "ve TANSİYON DİASTOLİK 80 altına düstü",
                                        TansiyonEnum.YUKSEK_TANSIYON, tansiyon_sistolik, reference_table, reference_id,
                                        prediction_id,
                                        notification_id, priority=PriorityEnum.MEDIUM))
 
         if 130 <= tansiyon_sistolik <= 139 or (80 <= tansiyon_diastolik <= 89):
-            exception_list.append(RuleViolationException(islem_no, "Tansiyon Yükseldi. HİPERTENSİYON ASAMA-1. "
-                                                                   "TANSİYON SİSTOLİK 130 la 139 arasına çikti "
-                                                                   "ve TANSİYON DİASTOLİK 89 ile 80 arasına çikti",
+            exception_list.append(RuleViolationException(islem_no, "Tansiyon Yükseldi: "
+                                                                   "TANSİYON SİSTOLİK 130 la 139 arasına çıktı "
+                                                                   "veya TANSİYON DİASTOLİK 89 ile 80 arasına çıktı "
+                                                                   "(HİPERTENSİYON ASAMA-1)",
                                                          TansiyonEnum.YUKSEK_TANSIYON_HIPERTENSIYON_ASAMA_1,
                                                          tansiyon_sistolik, reference_table, reference_id,
                                                          prediction_id, notification_id, priority=PriorityEnum.MEDIUM))
 
         if tansiyon_sistolik >= 140 or tansiyon_diastolik > 90:
-            exception_list.append(RuleViolationException(islem_no, "Tansiyon Yükseldi. HİPERTENSİYON ASAMA-2. "
-                                                                   "TANSİYON SİSTOLİK 140 yükseldi "
-                                                                   "ve TANSİYON DİASTOLİK 90    ",
+            exception_list.append(RuleViolationException(islem_no, "Tansiyon Yükseldi: "
+                                                                   "TANSİYON SİSTOLİK 140 üstüne yükseldi "
+                                                                   "veya TANSİYON DİASTOLİK 90 üstüne yükseldi "
+                                                                   "(HİPERTENSİYON ASAMA-2).",
                                                          TansiyonEnum.YUKSEK_TANSIYON_HIPERTENSIYON_ASAMA_2,
                                                          tansiyon_sistolik, reference_table, reference_id,
                                                          prediction_id, notification_id, priority=PriorityEnum.HIGH))
 
         if tansiyon_sistolik >= 180 and tansiyon_diastolik > 120:
             exception_list.append(
-                RuleViolationException(islem_no, "Tansiyon Çök Yükseldi. HİPERTENSİF KRİZLER ",
-                                       TansiyonEnum.HIPERTENSIF_KRIZLER,
-                                       tansiyon_sistolik, reference_table, reference_id, prediction_id, notification_id,
-                                       priority=PriorityEnum.HIGH))
+                RuleViolationException(islem_no, "Tansiyon Çok Yükseldi: "
+                                                 "TANSİYON SİSTOLİK 180 üstüne yükseldi "
+                                                 "ve TANSİYON DİASTOLİK 120 üstüne yükseldi "
+                                                 "(HİPERTENSİF KRİZLER)",
+                                                 TansiyonEnum.HIPERTENSIF_KRIZLER,
+                                                 tansiyon_sistolik, reference_table, reference_id, prediction_id,
+                                                 notification_id, priority=PriorityEnum.HIGH))
 
         if tansiyon_sistolik >= 180 or tansiyon_diastolik > 120:
-            exception_list.append(
-                RuleViolationException(islem_no, "Tansiyon Çök Yükseldi. HİPERTENSİF KRİZLER ",
-                                       TansiyonEnum.HIPERTENSIF_KRIZLER,
-                                       tansiyon_sistolik, reference_table, reference_id, prediction_id,
-                                       notification_id, priority=PriorityEnum.HIGH))
+                exception_list.append(
+                    RuleViolationException(islem_no, "Tansiyon Çok Yükseldi: "
+                                                     "TANSİYON SİSTOLİK 180 üstüne yükseldi "
+                                                     "veya TANSİYON DİASTOLİK 120 üstüne yükseldi "
+                                                     "(HİPERTENSİF KRİZLER)",
+                                           TansiyonEnum.HIPERTENSIF_KRIZLER,
+                                           tansiyon_sistolik, reference_table, reference_id, prediction_id,
+                                           notification_id, priority=PriorityEnum.HIGH))
 
         return exception_list
