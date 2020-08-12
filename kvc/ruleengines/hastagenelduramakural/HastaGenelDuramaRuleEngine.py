@@ -3,7 +3,7 @@ from kvc.ruleengines.RuleViolationException import RuleViolationException
 from kvc.ruleengines.enums.SiviTakipEnum import SiviTakipEnum
 
 
-class HastaGenelDuramaRuleEngine(AbstractRuleEngine):
+class HastaGenelDuramRuleEngine(AbstractRuleEngine):
     """ TODO..Hasta genel durama gore kural tabanı"""
 
     def execute(self,  islem_no, nabiz, yas, tansiyon_sistolik, tansiyon_diastolik, choosen_type, reference_table,

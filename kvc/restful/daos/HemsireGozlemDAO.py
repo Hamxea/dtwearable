@@ -29,8 +29,19 @@ class HemsireGozlemDAO(AbstractDAO):
         return result
 
     def get_feature_values_for_prediction(self, islem_no, column_name, window_size, time_interval_in_hours):
-        sql_text = text(
-            "select :column_name from hemsire_gozlem where islem_no = :islem_no order by olcum_tarihi desc limit :window_size")
+        if column_name == "vucut_sicakligi":
+            sql_text = text(
+                "select olcum_tarihi, vucut_sicakligi from hemsire_gozlem "
+                "where islem_no = :islem_no order by olcum_tarihi desc limit :window_size")
+
+        elif column_name == "nabiz":  # nabiz
+            sql_text = text(
+                "select olcum_tarihi, nabiz from hemsire_gozlem "
+                "where islem_no = :islem_no order by olcum_tarihi desc limit :window_size")
+        else:  # Genel özellikleri
+            sql_text = text(
+                "select olcum_tarihi, nabiz, tansiyon_sistolik, tansiyon_diastolik, spo, o2, kan_transfuzyonu from hemsire_gozlem "
+                "where islem_no = :islem_no order by olcum_tarihi desc limit :window_size")
 
         result = db.session.execute(sql_text, {'column_name': column_name, 'islem_no': islem_no,
                                                'window_size': window_size}).fetchall()
@@ -39,8 +50,10 @@ class HemsireGozlemDAO(AbstractDAO):
             raise Exception("Tahmin için yeterli gözlem bulunmamaktadır")
 
         for i in range(1, window_size):
-            if result.olcum_tarihi[i] - result.olcum_tarihi[i-1] > timedelta(hours=time_interval_in_hours):
-                raise Exception("Zaman aralığına uygun yeterli bulunmamaktadır. Window Size: {}, Time Interval: {}".format(window_size, time_interval_in_hours))
+            if result[i][0] - result[i - 1][0] > timedelta(hours=time_interval_in_hours):
+                raise Exception(
+                    "Zaman aralığına uygun yeterli bulunmamaktadır. Window Size: {}, Time Interval: {}".format(
+                        window_size, time_interval_in_hours))
 
         return result
 

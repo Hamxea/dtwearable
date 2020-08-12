@@ -9,7 +9,7 @@ from numpy import array
 import numpy as np
 
 
-class MutlilayerPerceptron(AbstractAIModel):
+class MultilayerPerceptron(AbstractAIModel):
     """ Mutlilayer (MLP) Perceptron with 1-Step Output """
 
     global mlp_model
@@ -21,14 +21,14 @@ class MutlilayerPerceptron(AbstractAIModel):
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
         X_train, X_test, y_train, y_test = self.split_dataset(df, dataset_parameters['test_ratio'],
-                                                              hyperparameters['n_steps'],)
+                                                              hyperparameters['n_steps'], )
         mlp_model = self.train_mlp(X_train, y_train)
         graph = tf.get_default_graph()
 
         with graph.as_default():
-            score, acc = self.test_mlp(mlp_model, X_test, y_test)
+            score = self.test_mlp(mlp_model, X_test, y_test)
 
-        return mlp_model, {"score": score, "accuracy": acc}
+        return mlp_model, {"score": score}
 
     @abstractmethod
     def get_dataset(self, dataset_parameters):
@@ -88,6 +88,11 @@ class MutlilayerPerceptron(AbstractAIModel):
     def test_mlp(self, mlp_model, X_test, y_test):
         """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
 
+        """ Score verilen bir girişin değerlendirme fonksiyonu """
+        score = mlp_model.evaluate(X_test, y_test, verbose=0)
+        score = round(score[1], 3)
+        print("Score:", score)
+
         X_test = X_test[np.size(X_test, 0) - 1:, :]
         # flatten input
         n_input = X_test.shape[1] * X_test.shape[2]
@@ -95,12 +100,7 @@ class MutlilayerPerceptron(AbstractAIModel):
         yha_predict = mlp_model.predict(X_test, verbose=0)
         print(yha_predict)
 
-        """ Score verilen bir girişin değerlendirme fonksiyonu """
-        score, acc = mlp_model.evaluate(X_test, yha_predict, verbose=0)
-        print("Score:", score)
-        print(("Accuracy", acc))
-
-        return score, acc
+        return score
 
     def rename_columns(self, df, identifier='Feat_'):
         """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """

@@ -1,4 +1,5 @@
 from ai.enums.PriorityEnum import PriorityEnum
+from kvc.restful.services.ChoosenTypeEnum import ChoosenTypeEnum
 from kvc.ruleengines.enums.NabizEnum import NabizEnum
 from kvc.ruleengines.AbstractRuleEngine import AbstractRuleEngine
 from kvc.ruleengines.RuleViolationException import RuleViolationException
@@ -17,121 +18,259 @@ class NabizRuleEngine(AbstractRuleEngine):
         """yaş < 1 yıl için"""
         if yas < 1:
             if nabiz < 120:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 120 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 120 derecenın altına düştü", NabizEnum.DUSUK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 120 derecenın altına düşebilir",
+                                               NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id,
+                                               prediction_id, notification_id, priority=PriorityEnum.HIGH))
 
-            if 160 < nabiz <= 170:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 160 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.MEDIUM))
+            elif 160 < nabiz <= 170:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 160 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 160 derecenın üstüne çıktabılır",
+                                               NabizEnum.YUKSEK_NABIZ, nabiz, reference_table, reference_id,
+                                               prediction_id, notification_id, priority=PriorityEnum.MEDIUM))
 
-            if nabiz > 170:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 170 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+            elif nabiz > 170:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 170 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 170 derecenın üstüne çıktabılır",
+                                               NabizEnum.COK_YUKSEK_NABIZ, nabiz, reference_table, reference_id,
+                                               prediction_id, notification_id, priority=PriorityEnum.HIGH))
 
         """ 1 < yaş <= 2 """
         if 1 < yas <= 2:
             if nabiz < 90:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 90 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 90 derecenın altına düştü", NabizEnum.DUSUK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 90 derecenın altına düşebilir",
+                                               NabizEnum.DUSUK_NABIZ, nabiz, reference_table, reference_id,
+                                               prediction_id, notification_id, priority=PriorityEnum.HIGH))
 
-            if 140 < nabiz <= 150:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 140 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.MEDIUM))
+            elif 140 < nabiz <= 150:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 140 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 140 derecenın üstüne çıkabılır",
+                                               NabizEnum.YUKSEK_NABIZ, nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
 
-            if nabiz > 150:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 150 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+            elif nabiz > 150:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 150 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 150 derecenın üstüne çıkabılır",
+                                               NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
         """ 2 < yaş <= 5 """
         if 2 < yas <= 5:
             if nabiz < 80:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 80 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 80 derecenın altına düştü", NabizEnum.DUSUK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 80 derecenın altına düşebilir",
+                                               NabizEnum.DUSUK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
-            if 110 < nabiz <= 120:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.MEDIUM))
+            elif 110 < nabiz <= 120:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 110 derecenın üstüne çıktabılır",
+                                               NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
 
-            if nabiz > 120:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 120 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+            elif nabiz > 120:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 120 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 120 derecenın üstüne çıktabılır",
+                                               NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
         """ 5 < yaş <= 12 """
         if 5 < yas <= 12:
             if nabiz < 75:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 75 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 75 derecenın altına düştü", NabizEnum.DUSUK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 75 derecenın altına düşebilir",
+                                               NabizEnum.DUSUK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
-            if 100 < nabiz <= 110:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.MEDIUM))
+            elif 100 < nabiz <= 110:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 100 derecenın üstüne çıktabılır",
+                                               NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
 
-            if nabiz > 110:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+            elif nabiz > 110:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 110 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 110 derecenın üstüne çıktabılır",
+                                               NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
         """ 12 < yaş <= 18 """
         if 12 < yas <= 18:
             if nabiz < 60:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini sNabiz 60 derecenın altına düşebilir",
+                                               NabizEnum.DUSUK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
-            if 80 < nabiz <= 90:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 80 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.MEDIUM))
+            elif 80 < nabiz <= 90:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 80 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahnmin Nabiz 80 derecenın üstüne çıktabılır",
+                                               NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
 
-            if nabiz > 90:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+            elif nabiz > 90:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 90 derecenın üstüne çıkabılır",
+                                               NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
         """ yaş > 18 """
         if yas > 18:
             if nabiz < 60:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 60 derecenın altına düştü", NabizEnum.DUSUK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 60 derecenın altına düşebilir",
+                                               NabizEnum.DUSUK_NABIZ, nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
-            if 90 < nabiz <= 100:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.MEDIUM))
+            elif 90 < nabiz <= 100:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 90 derecenın üstüne çıktı", NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 90 derecenın üstüne çıkabılır",
+                                               NabizEnum.YUKSEK_NABIZ,
+                                               nabiz,
+                                               reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.MEDIUM))
 
-            if nabiz > 100:
-                exception_list.append(
-                    RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ, nabiz,
-                                           reference_table, reference_id, prediction_id, notification_id,
-                                           priority=PriorityEnum.HIGH))
+            elif nabiz > 100:
+                if choosen_type == ChoosenTypeEnum.REAL:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Nabiz 100 derecenın üstüne çıktı", NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
+                else:
+                    exception_list.append(
+                        RuleViolationException(islem_no, "Tahmini Nabiz 100 derecenın üstüne çıkabılır",
+                                               NabizEnum.COK_YUKSEK_NABIZ,
+                                               nabiz, reference_table, reference_id, prediction_id, notification_id,
+                                               priority=PriorityEnum.HIGH))
 
         return exception_list
