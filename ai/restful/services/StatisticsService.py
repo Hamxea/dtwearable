@@ -1,3 +1,5 @@
+import logging
+
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 from ai.restful.daos.AIModelDAO import AIModelDAO
 from ai.restful.services.AIModelTrainerService import AIModelTrainerService
