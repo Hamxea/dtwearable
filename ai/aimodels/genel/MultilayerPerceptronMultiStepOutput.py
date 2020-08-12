@@ -9,7 +9,7 @@ from numpy import array
 import numpy as np
 
 
-class MutlilayerPerceptronMultiStepOutput(AbstractAIModel):
+class MultilayerPerceptronMultiStepOutput(AbstractAIModel):
     """ Mutlilayer (MLP) Perceptron with Multi-Step Output... """
 
     global mlp_model

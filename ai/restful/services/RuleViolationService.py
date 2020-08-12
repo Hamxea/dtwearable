@@ -31,31 +31,31 @@ class RuleViolationService():
                 if not new_rule_violation_list:
                     pass
                 else:
-                    notitication_dto = self.save_notification(new_rule_violation_list)
-                    self.save_rule_violation(notitication_dto, new_rule_violation_list)
+                    notification_dto = self.save_notification(new_rule_violation_list)
+                    self.save_rule_violation(notification_dto, new_rule_violation_list)
             except Exception as e:
                 logging.exception(e, exc_info=True)
 
     def save_notification(self, new_violation_list):
         global violation
-        hasta_adi = " {HASTA_ADI} isimli hasta için uyarı uluştu. "
-        birim = " Birim no = {BIRIM_ADI},"
-        yatak = " yatak no = {YATAK_NO} "
-        notication_message = " "
+        hasta_adi = "{HASTA_ADI} isimli hasta için uyarı oluştu.\n"
+        birim = "Birim no = {BIRIM_ADI}\n"
+        yatak = "Yatak no = {YATAK_NO}\n"
+        notication_message = ""
 
         for violation in new_violation_list:
-            notication_message += violation.message + ". ve "
+            notication_message += "* " + violation.message + "\n"
         try:
-            notitication_dto = self.save_notfication_to_db(staff_id=None, priority=violation.priority,
-                                                           message=hasta_adi + notication_message + birim + yatak,
+            notification_dto = self.save_notfication_to_db(staff_id=None, priority=violation.priority,
+                                                           message=hasta_adi + notication_message,
                                                            notification_date=datetime.now(),
                                                            error_message=hasta_adi + notication_message + birim + yatak,
                                                            islem_no=violation.islem_no)
-            return notitication_dto
+            return notification_dto
         except Exception as e:
             logging.exception(e, exc_info=True)
 
-    def save_rule_violation(self, notitication_dto, rule_violation_list):
+    def save_rule_violation(self, notification_dto, rule_violation_list):
 
         for rule_violation_exception in rule_violation_list:
             self.save_rule_violation_to_db(rule_violation_exception.reference_table,
@@ -65,8 +65,8 @@ class RuleViolationService():
                                            rule_violation_exception.message,
                                            rule_violation_exception.value,
                                            datetime.now(),
-                                           notitication_dto.id,
-                                           notitication_dto.priority)
+                                           notification_dto.id,
+                                           notification_dto.priority)
 
     def save_rule_violation_to_db(self, reference_table, reference_id, prediction_id, rule, value_source, value,
                                   violation_date, notification_id, priority):

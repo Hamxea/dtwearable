@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask_restful import reqparse, Resource
+import logging
 
 from kvc.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 from kvc.restful.models.HemsireGozlemDTO import HemsireGozlemDTO

@@ -1,4 +1,5 @@
 from ai.enums.PriorityEnum import PriorityEnum
+from kvc.restful.services.ChoosenTypeEnum import ChoosenTypeEnum
 from kvc.ruleengines.AbstractRuleEngine import AbstractRuleEngine
 from kvc.ruleengines.RuleViolationException import RuleViolationException
 from kvc.ruleengines.enums.SiviTakipEnum import SiviTakipEnum
@@ -15,14 +16,30 @@ class SiviTakipRuleEngine(AbstractRuleEngine):
 
         exception_list = []
         if sivi_farki > 0:
-            exception_list.append(RuleViolationException(islem_no, "Sıvı kaybı alınan sıvıdan daha fazla",
-                                                         SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki,
-                                                         reference_table, reference_id, prediction_id, notification_id,
-                                                         priority=PriorityEnum.HIGH))
-        if sivi_farki < 0:
-            exception_list.append(RuleViolationException(islem_no, "Alınan sıvı, sıvı kaybından daha büyüktür",
-                                                         SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki,
-                                                         reference_table, reference_id, prediction_id, notification_id,
-                                                         priority=PriorityEnum.MEDIUM))
+            if choosen_type == ChoosenTypeEnum.REAL:
+                exception_list.append(RuleViolationException(islem_no, "Sıvı kaybı alınan sıvıdan daha fazla",
+                                                             SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki,
+                                                             reference_table, reference_id, prediction_id,
+                                                             notification_id,
+                                                             priority=PriorityEnum.HIGH))
+            else:
+                exception_list.append(RuleViolationException(islem_no, "Tahmini Sıvı kaybı alınan sıvıdan daha fazla",
+                                                             SiviTakipEnum.NEGATIF_SIVI_GENGESI, sivi_farki,
+                                                             reference_table, reference_id, prediction_id,
+                                                             notification_id,
+                                                             priority=PriorityEnum.HIGH))
+
+        elif sivi_farki < 0:
+            if choosen_type == ChoosenTypeEnum.REAL:
+                exception_list.append(RuleViolationException(islem_no, "Alınan sıvı, sıvı kaybından daha büyüktür",
+                                                             SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki,
+                                                             reference_table, reference_id, prediction_id,
+                                                             notification_id,
+                                                             priority=PriorityEnum.MEDIUM))
+            else:
+                exception_list.append(
+                    RuleViolationException(islem_no, "Tahmini Alınan sıvı, sıvı kaybından daha büyüktür",
+                                           SiviTakipEnum.POZITIF_SIVI_GENGESI, sivi_farki, reference_table,
+                                           reference_id, prediction_id, notification_id, priority=PriorityEnum.MEDIUM))
 
         return exception_list

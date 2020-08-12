@@ -9,7 +9,7 @@ from statsmodels.tsa.vector_ar.var_model import VAR
 from ai.aimodels.AbstractAIModel import AbstractAIModel
 
 
-class VectorAutoRegression(AbstractAIModel):
+class VectorAutoRegression_2(AbstractAIModel):
     """ Vector Auto Regression (VAR) with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):

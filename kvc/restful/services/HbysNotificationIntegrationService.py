@@ -17,7 +17,9 @@ class HbysNotificationIntegrationService():
         """HBYS bildirimlerin anlık gönderilmesi"""
 
         #https://hbyspreprod.keydata.com.tr/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification
-        url = 'http://10.6.0.48:8080/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification'
+        #http://10.6.0.51:8080/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification
+        #http://10.6.0.48:8080/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification
+        url = 'http://10.6.0.51:8080/hbys-rs/hbys/Interaktif/InteraktifMesaj/keyMindNotification'
 
         # create session hbys login
         session, jwt_auth, hazelcast_session_id, j_session_id = self.hbys_login_auth()
@@ -44,9 +46,10 @@ class HbysNotificationIntegrationService():
     def hbys_login_auth(self):
         """ hbys sunucusundan "cookies" ve "headers" alın ve hbys'e giriş yapın """
 
+        # DİLSADT/dilsad92
         login_cred = {"kullaniciAdi": "ENTEGRASYON", "sifre": "keydata06", "locale": "tr-TR", "organizasyon": 21}
         headers_login = {'Content-Type': 'application/json'}
-        url = 'http://10.6.0.48:8080/hbys-rs/hbys/HBYSSistem/KullaniciGiris/login'
+        url = 'http://10.6.0.51:8080/hbys-rs/hbys/HBYSSistem/KullaniciGiris/login'
 
         try:
             with requests.Session() as session:
@@ -73,6 +76,7 @@ class HbysNotificationIntegrationService():
         except requests.exceptions.RequestException as error:
             #print("OOps: Something Else", error)
             logging.exception(error, exc_info=True)
+            print("hbdh")
 
         return session, jwt_auth, hazelcast_session_id, j_session_id
 
@@ -80,7 +84,7 @@ class HbysNotificationIntegrationService():
         """Clear sessşon and Hbys logout"""
 
         headers = {'JWTAuth': jwt_auth}
-        url = 'http://10.6.0.48:8080/hbys-rs/hbys/Sistem/KullaniciGiris/logout'
+        url = 'http://10.6.0.51:8080/hbys-rs/hbys/Sistem/KullaniciGiris/logout'
 
         logout_resp = session.get(url, headers=headers)
 
