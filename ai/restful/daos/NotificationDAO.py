@@ -6,17 +6,17 @@ from ai.restful.models.NotificationDTO import NotificationDTO
 
 
 class NotificationDAO(AbstractDAO):
-    """ Notification nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir """
+    """ Contains methods by which database operations are performed for the Notification object """
 
     def __init__(self):
         super().__init__(NotificationDTO)
 
     def get_by_islem_no(self, islem_no_list):
-        """ islem_no değerlerine göre Notification nesnelerini dönen metod """
+        """ method that returns Notification objects based on transaction_id values"""
 
         sql_text = text("select * from notification "
                         "inner join rule_violation on notification.rule_violation_id = rule_violation.id "
-                        "where rule_violation.reference_table = 'islem' and rule_violation.reference_id = ANY(:ids)")
+                        "where rule_violation.reference_table = 'action' and rule_violation.reference_id = ANY(:ids)")
         list = db.session.query(NotificationDTO).from_statement(sql_text).params(ids=islem_no_list).all()
 
         result = []

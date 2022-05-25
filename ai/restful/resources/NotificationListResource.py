@@ -4,16 +4,17 @@ from ai.restful.daos.NotificationDAO import NotificationDAO
 
 
 class NotificationListResource(Resource):
-    """ NotificationDTO nesnesi için islem_no'ya gore liste dönen metod """
+    """ Method that returns list according to action_id for NotificationDTO object """
 
-    """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
+    """ created to define Restful requests, error returns in case of incompatibility. """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('islem_no_list', type=int, required=True, action='append')
 
     dao = NotificationDAO()
 
     def get(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore NotificationDTO nesnesini liste olarak donmek icin kullanan metod """
+        """ Method that uses the NotificationDTO object to return a list according
+         to the data in the body of the Restful request """
 
         data = self.post_parser.parse_args()
 

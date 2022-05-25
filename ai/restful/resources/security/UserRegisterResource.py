@@ -4,12 +4,12 @@ from ai.restful.resources.security.AbstractUserResource import AbstractUserResou
 
 
 class UserRegisterResource(AbstractUserResource):
-    """ Kullanıcı kaydı oluşturan restful servis sınıfı"""
+    """ Restful service class that creates user registration """
 
     userDAO = UserDAO()
 
     def post(self):
-        """ Yeni kullanıcı kaydı oluşturan restful metodu """
+        """ Restful method that creates a new user record """
 
         data = self._user_parser.parse_args()
 

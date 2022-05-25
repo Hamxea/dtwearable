@@ -1,1 +1,1 @@
-# KEYMIND Yapay ZekaPlatformu 
+# DTWearable AI

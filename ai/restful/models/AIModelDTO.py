@@ -3,7 +3,7 @@ from db import db
 
 class AIModelDTO(db.Model):
     """
-    AIModel tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
+   Model class for which database mappings are made for the AIModel table
     """
 
     __tablename__ = 'ai_model'
@@ -29,7 +29,7 @@ class AIModelDTO(db.Model):
 
     @property
     def serialize(self):
-        """ Nesneyi json'a çeviren metod """
+        """ Method that converts object to json """
 
         return {
             'id': self.id,

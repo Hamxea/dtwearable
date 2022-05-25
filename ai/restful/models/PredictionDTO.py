@@ -13,12 +13,12 @@ class PredictionDTO(db.Model):
     reference_table = db.Column(db.String(64), nullable=False)
     reference_id = db.Column(db.BigInteger, nullable=False)
     prediction_input = db.Column(db.String(512), nullable=False)
-    prediction_value = db.Column(db.Float)
+    prediction_value = db.Column(db.String(512), nullable=False)
     prediction_error = db.Column(db.String(512))
     prediction_date = db.Column(db.DateTime, nullable=False)
     ai_model_id = db.Column(db.BigInteger, nullable=False)
 
-    def __init__(self, id:int, reference_table: str, reference_id: int, prediction_input: str, prediction_value: float,
+    def __init__(self, id:int, reference_table: str, reference_id: int, prediction_input: str, prediction_value: str,
                  prediction_error:str, prediction_date: datetime, ai_model_id: int):
 
         self.id = id

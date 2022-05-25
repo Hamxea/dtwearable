@@ -19,7 +19,7 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
     global graph
 
     def train(self, dataset_parameters, hyperparameters):
-        """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+        """ The method that trains the model based on dataset parameters and hyperparameters """
 
         df = self.get_dataset(dataset_parameters)
         #df = self.windowing(df)
@@ -34,14 +34,14 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
         return cnn_model, {"score": score, "accuracy": acc}
 
     def split_dataset(self, df, test_ratio, n_steps_in, n_steps_out):
-        """ Dataseti train ve test için bölen metod """
+        """ Method that divides dataset for train and test """
 
         X, y = self.split_sequences(df, n_steps_in, n_steps_out)
 
         return train_test_split(X, y, test_size=test_ratio, shuffle=False, stratify=None)
 
     def split_sequences(self, df, n_steps_in, n_steps_out):
-        """ split a multivariate sequence into samples metod"""
+        """ split a multivariate sequence into samples method"""
         """
         #n_steps_in = 3
         #n_steps_out = 1
@@ -64,7 +64,7 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
         return  X, y
 
     def train_cnn(self, X_train, y_train, n_steps_in):
-        """ X_train ve y_train kullanarak cnn modeli oluşturan metod """
+        """ Method that creates cnn model using x_train and y_train """
 
         # choose a number of time steps
         #n_steps_in, n_steps_out = 3, 1
@@ -87,7 +87,7 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
         return model
 
     def test_cnn(self, cnn_model, X_test, y_test, n_steps_in):
-        """ Oluşturulmuş cnn modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        """ Method that calculates score using X_test and y_test on the created cnn model """
 
         X_test = X_test[np.size(X_test, 0) - 1:, :]
         # the dataset knows the number of features, e.g. 2
@@ -97,7 +97,7 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
         yha_predict = cnn_model.predict(X_test, verbose=0)
         print(yha_predict)
 
-        """ Score verilen bir girişin değerlendirme fonksiyonu """
+        """ Evaluation function of an input given a score """
         score, acc = cnn_model.evaluate(X_test, yha_predict,  verbose = 0)
         print("Score:", score)
         print(("Accuracy", acc))
@@ -107,14 +107,13 @@ class ConvolutionalNeuralNetworkMultiStepOutput(AbstractAIModel):
     @abstractmethod
     def get_dataset(self, dataset_parameters):
         """
-        Dataset parametlerine göre train ve test'te kullanılacak dataseti getiren metod
-        alt sınıflar tarafından implemente edilecektir
+        According to the dataset parameters, the method that brings the dataset to be used in train and test will be implemented by subclasses.
         """
         pass
 
     def rename_columns(self, df, identifier='Feat_'):
-        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
-        """ Df kolon isimlerini değiştiren metod """
+        """ TODO: General forecast will be written, especially the names of the columns """
+        """ Method to change df column names """
 
         col_count = len(df.columns)
         column_names = []

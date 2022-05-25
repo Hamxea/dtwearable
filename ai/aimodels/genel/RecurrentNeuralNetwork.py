@@ -17,7 +17,7 @@ class RecurrentNeuralNetwork(AbstractAIModel):
     global graph
 
     def train(self, dataset_parameters, hyperparameters):
-        """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+        """ The method that trains the model based on dataset parameters and hyperparameters """
 
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
@@ -34,20 +34,19 @@ class RecurrentNeuralNetwork(AbstractAIModel):
     @abstractmethod
     def get_dataset(self, dataset_parameters):
         """
-        Dataset parametlerine göre train ve test'te kullanılacak dataseti getiren metod
-        alt sınıflar tarafından implemente edilecektir
+        According to the dataset parameters, the method that brings the dataset to be used in train and test will be implemented by subclasses.
         """
         pass
 
     def split_dataset(self, df, test_ratio, n_steps):
-        """ Dataseti train ve test için bölen metod """
+        """ Method that divides dataset for train and test """
 
         X, y = self.split_sequences(df, n_steps)
 
         return train_test_split(X, y, test_size=test_ratio, shuffle=False, stratify=None)
 
     def split_sequences(self, df, n_steps):
-        """ split a multivariate sequence into samples metod"""
+        """ split a multivariate sequence into samples method"""
         """
         #n_steps_in = 3
         #n_steps_out = 1
@@ -68,7 +67,7 @@ class RecurrentNeuralNetwork(AbstractAIModel):
         return X, y
 
     def train_rnn(self, X_train, y_train, n_steps):
-        """ X_train ve y_train kullanarak rnn modeli oluşturan metod """
+        """ Method that creates rnn model using x_train and y_train """
 
         # flatten input and choose the number of features
         n_features = X_train.shape[2]
@@ -86,7 +85,7 @@ class RecurrentNeuralNetwork(AbstractAIModel):
         return model
 
     def test_rnn(self, rnn_model, X_test, y_test, n_steps):
-        """ Oluşturulmuş rnn modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        """ Method that calculates score using X_test and y_test on the created rnn model """
         X_test = X_test[np.size(X_test, 0) - 1:, :]
         #n_steps = 3
         # flatten input and choose the features
@@ -95,15 +94,15 @@ class RecurrentNeuralNetwork(AbstractAIModel):
         yha_predict = rnn_model.predict(X_test, verbose=0)
         print(yha_predict)
 
-        """ Score verilen bir girişin değerlendirme fonksiyonu """
+        """ Evaluation function of an input given a score """
         (score, acc) = rnn_model.evaluate(X_test, yha_predict, verbose=0)
         print("Score:", score)
 
         return (score, acc)
 
     def rename_columns(self, df, identifier='Feat_'):
-        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
-        """ Df kolon isimlerini değiştiren metod """
+        """ TODO: General forecast will be written, especially the names of the columns """
+        """ Method to change df column names """
 
         col_count = len(df.columns)
         column_names = []

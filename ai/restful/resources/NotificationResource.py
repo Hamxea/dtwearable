@@ -5,14 +5,14 @@ from ai.restful.daos.NotificationDAO import NotificationDAO
 
 class NotificationResource(Resource):
     """
-    NotificationResource nesnesi için int tipinde id parametre alan metodları barındıran Resource sınıfı
-    Restful istek tiplerine karşılık metodlar oluşturulur
+    Resource class that hosts methods that take int type id parameter for NotificationResource object
+     Methods are created to respond to Restful request types
     """
 
     dao = NotificationDAO()
 
     def get(self, notification_id: int):
-        """ notification_id parametresine karsılık NotificationDTO bilgisi donen metod """
+        """ Method that returns NotificationDTO information corresponding to notification_id parameter """
 
         notification_dto = self.dao.find_by_id(notification_id)
         if not notification_dto:
@@ -20,7 +20,7 @@ class NotificationResource(Resource):
         return notification_dto.serialize, 200
 
     def delete(self, notification_id: int):
-        """ notification_id parametresine göre NotificationDTO nesnesini silen metod """
+        """ Method that deletes NotificationDTO object based on notification_id parameter """
 
         notification_dto = self.dao.find_by_id(notification_id)
         if not notification_dto:

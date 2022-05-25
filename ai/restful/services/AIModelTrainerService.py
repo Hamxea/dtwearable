@@ -9,16 +9,16 @@ from ai.aimodels.AbstractAIModel import AbstractAIModel
 class AIModelTrainerService:
     """ """
 
-    # User home altında ai_models klasörünün path'i
-    file_path = str(Path.home()) + "\\ai_models"
+    # Path of ai_models folder under User home
+    file_path = str(Path.home()) + "/ai_models"
 
     def __init__(self):
-        # Eğer file_path klasörü dosya sisteminde yoksa oluştur
+        # If the file_path folder does not exist in the file system, create it
         if not os.path.exists(self.file_path):
             os.makedirs(self.file_path)
 
     def train(self, ai_model_class: str, dataset_parameters, hyper_parameters):
-        """ Model sınıfı kullanılarak model dosyası oluşturulur ve kaydedilir"""
+        """ Introduction to the model class and the new model"""
 
         ai_model = AIModelTrainerService.get_class(ai_model_class)()
         if not isinstance(ai_model, AbstractAIModel):
@@ -27,13 +27,14 @@ class AIModelTrainerService:
         ai_model_file_name = self.save_model(ai_model_class, trained_model)
 
         return ai_model_file_name, performance_metrics
-        
 
     def save_model(self, ai_model_class, trained_model):
-        """ Model dosyası pickle ile kaydediliyor """
+        """ Save model file with pickle """
 
-        ai_model_file_name = self.file_path + "\\" + ai_model_class + "_" + str(datetime.now().timestamp()) + ".pickle"
-        pickle.dump(trained_model, open(ai_model_file_name, 'wb'))
+        ai_model_file_name = self.file_path + "/" + ai_model_class + "_" + str(datetime.now().timestamp()) + ".h5" #.pickle
+        # pickle.dump(trained_model, open(ai_model_file_name, 'wb'))
+        import tensorflow as tf
+        tf.keras.models.save_model(trained_model, ai_model_file_name)
         print("ai_model_file_name:", ai_model_file_name)
         return ai_model_file_name
 

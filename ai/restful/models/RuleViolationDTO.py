@@ -3,7 +3,7 @@ from datetime import datetime
 from ai.enums.IntEnum import IntEnum
 from ai.enums.PriorityEnum import PriorityEnum
 from db import db
-from kvc.ruleengines.enums.TemperatureEnum import TemperatureEnum
+from dt.ruleengines.enums.TemperatureEnum import TemperatureEnum
 
 
 class RuleViolationDTO(db.Model):

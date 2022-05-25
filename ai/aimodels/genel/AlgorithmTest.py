@@ -12,7 +12,7 @@ import statsmodels.api as sm
 
 class AlgorithmTest(AbstractAIModel):
     def train(self, dataset_parameters, hyperparameters):
-        """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+        """ The method that trains the model based on dataset parameters and hyperparameters """
 
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
@@ -26,20 +26,19 @@ class AlgorithmTest(AbstractAIModel):
     @abstractmethod
     def get_dataset(self, dataset_parameters):
         """
-        Dataset parametlerine göre train ve test'te kullanılacak dataseti getiren metod
-        alt sınıflar tarafından implemente edilecektir
+        According to the dataset parameters, the method that brings the dataset to be used in train and test will be implemented by subclasses.
         """
         pass
 
     def split_dataset(self, df, test_ratio, n_steps):
-        """ Dataseti train ve test için bölen metod """
+        """ Method that divides dataset for train and test """
 
         X, y = self.split_sequences(df, n_steps)
 
         return train_test_split(X, y, test_size=test_ratio, shuffle=False, stratify=None)
 
     def split_sequences(self, df, n_steps):
-        """ split a multivariate sequence into samples metod"""
+        """ split a multivariate sequence into samples method"""
         """
         #n_steps_in = 3
         #n_steps_out = 1
@@ -60,7 +59,7 @@ class AlgorithmTest(AbstractAIModel):
         return X, y
 
     def train_mlp(self, X_train, y_train):
-        """ X_train ve y_train kullanarak mlp modeli oluşturan metod """
+        """ Method that creates mlp model using x_train and y_train """
 
         # flatten input
         n_input = X_train.shape[1] * X_train.shape[2]
@@ -79,15 +78,15 @@ class AlgorithmTest(AbstractAIModel):
         return model
 
     def test_mlp(self, mlp_model, X_test, y_test):
-        """ Oluşturulmuş mlp modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        """ Method that calculates score using X_test and y_test on the created mlp model """
 
         pass
 
         return 0, 1
 
     def rename_columns(self, df, identifier='Feat_'):
-        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
-        """ Df kolon isimlerini değiştiren metod """
+        """ TODO: General forecast will be written, especially the names of the columns """
+        """ Method to change df column names """
 
         col_count = len(df.columns)
         column_names = []

@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "37b0b473-155f-45cf-8540-c80b62fe81e7",
+		"name": "dtwearable.ai.prediction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/ai/prediction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"ai_model_class\": \"ai.aimodels.VitalSignsPredictionAIModel.VitalSignsPredictionAIModel\",\n\t\"reference_table\": \"vital_signs\",\n\t\"reference_id\": 1,\n\t\"prediction_input\":{\n            \"blood_pressure\": [\n                [120, 64]\n            ]\n        }\n}"
+				},
+				"url": {
+					"raw": "{{url}}/ai/prediction",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ai",
+						"prediction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ai/prediction/<id>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/ai/prediction/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ai",
+						"prediction",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

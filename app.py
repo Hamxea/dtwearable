@@ -1,5 +1,6 @@
 import logging
 import os
+import random
 
 from flask import Flask, jsonify, request, render_template
 from flask_jwt_extended import JWTManager
@@ -24,26 +25,15 @@ from ai.restful.resources.security.UserRegisterResource import UserRegisterResou
 from ai.restful.resources.security.UserResource import UserResource
 from ai.security.blacklist import BLACKLIST
 from db import db
-from kvc.restful.resources.HemsireGozlemRegisterResource import HemsireGozlemRegisterResource
-from kvc.restful.resources.HemsireGozlemResource import HemsireGozlemResource
-from kvc.restful.resources.IslemOperasyonRegisterResource import IslemOperasyonRegisterResource
-from kvc.restful.resources.IslemOperasyonResource import IslemOperasyonResource
-from kvc.restful.resources.IslemRegisterResource import IslemRegisterResource
-from kvc.restful.resources.IslemResource import IslemResource
-from kvc.restful.resources.IslemTaniRegisterResource import IslemTaniRegisterResource
-from kvc.restful.resources.IslemTaniResource import IslemTaniResource
-from kvc.restful.resources.LabSonucBatchRegisterResource import LabSonucBatchRegisterResource
-from kvc.restful.resources.LabSonucRegisterResource import LabSonucRegisterResource
-from kvc.restful.resources.LabSonucResource import LabSonucResource
-from kvc.restful.resources.SiviAlimiRegisterResource import SiviAlimiRegisterResource
-from kvc.restful.resources.SiviAlimiResource import SiviAlimiResource
+
+from utils_test import blood_pressure_test
 
 app = Flask(__name__)
 api = Api(app)
 CORS(app, supports_credentials=True)
 socketio = SocketIO(app, cors_allowed_origins='*', cors_credentials=True)
 
-""" Gunicor ve app logging ayarları """
+""" Gunicorn and app logging settings """
 gunicorn_logger = logging.getLogger('gunicorn.debug')
 app.logger.handlers = gunicorn_logger.handlers
 app.logger.setLevel(gunicorn_logger.level)
@@ -58,18 +48,18 @@ app.logger.error("this is an ERROR message for test")
 app.logger.critical("this is a CRITICAL message for test")
 
 """
-SqlAlchemy ayarları
+SqlAlchemy settings
 """
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL',
-                                                       'postgresql://arge05:arge05@10.0.0.59:5432/keymind')
+                                                       'postgresql://postgres:postgres@localhost:5432/dtwearable')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 db.init_app(app)
 
 # JWT configuration start
 """
-JWT ayarları
+JWT configuration
 """
 app.config[
     'JWT_SECRET_KEY'] = 'k@ym1nd'  # we can also use app.secret like before, Flask-JWT-Extended can recognize both
@@ -80,9 +70,24 @@ jwt = JWTManager(app)
 socket_clients = []
 
 
+@app.route('/', methods=['GET', 'POST'])
+def page():
+    return "<h1 style='color: red;'>DT Wearable!</h1>"
+
+
 @app.route('/home', methods=['GET', 'POST'])
-def test():
-    return "<h1 style='color: red;'>KVC!</h1>"
+def home():
+    return "<h1 style='color: red;'>DT Wearable!</h1>"
+
+
+@app.route('/ai/prediction/test', methods=['GET', 'POST'])
+def prediction_test():
+
+    result = random.choice(blood_pressure_test)
+    return jsonify(result,
+                   {'systolic_pressure': result[0],
+                    'diastolic_pressure': result[1]}
+                   )
 
 
 @socketio.on('connect')
@@ -100,11 +105,11 @@ def test_disconnect():
     # socket_clients.remove(request.sid)
 
 
-@jwt.user_claims_loader
+@jwt._user_claims_callback
 def add_claims_to_jwt(identity):
     """
-    JWT için identity olarak belirlenmiş User.id degerine gore kullanıcının
-    admin bilgisini donen metod. Her istek öncesi bu metod çağırılır.
+    According to the User.id value determined as identity for JWT, the user
+     The method that returns the admin information. This method is called before every request.
     """
 
     if identity == 1:  # TODO static id yerine veritabanından admin bilgisi alınmalı
@@ -112,16 +117,16 @@ def add_claims_to_jwt(identity):
     return {'is_admin': False}
 
 
-@jwt.token_in_blacklist_loader
+@jwt.token_in_blocklist_loader # token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
-    """ JWT için blackList özelliği aktif olduğun da token'ın blacklist'de bulunup bulunmadığı kontrol edilir """
+    """ When the blackList feature for JWT is active, it is checked whether the token is in the blacklist. """
 
     return decrypted_token['jti'] in BLACKLIST
 
 
 @jwt.expired_token_loader
 def expired_token_callback():
-    """ JWT için token süresi dolduğun da geri dönülecek mesajı üreten metod """
+    """ Method that generates the message to be returned when the token expires for JWT """
 
     return jsonify({
         'message': 'The token has expired.',
@@ -131,7 +136,7 @@ def expired_token_callback():
 
 @jwt.invalid_token_loader
 def invalid_token_callback(error):
-    """ JWT için geçersiz token bulunması durumunda geri dönülecek mesajı üreten metod """
+    """ Method that generates message to return if invalid token is found for JWT """
 
     return jsonify({
         'message': 'Signature verification failed.',
@@ -141,7 +146,7 @@ def invalid_token_callback(error):
 
 @jwt.unauthorized_loader
 def missing_token_callback(error):
-    """ JWT için yetkisiz işlem yapılması durumunda geri dönülecek mesajı üreten metod """
+    """ The method that generates the message to be returned in case of unauthorized operation for the JWT """
 
     return jsonify({
         "description": "Request does not contain an access token.",
@@ -151,7 +156,7 @@ def missing_token_callback(error):
 
 @jwt.needs_fresh_token_loader
 def token_not_fresh_callback():
-    """ JWT için token yenilemesi gerekmesi durumunda geri dönülecek mesajı üreten metod """
+    """ Method that generates the message to return if JWT requires token renewal """
 
     return jsonify({
         "description": "The token is not fresh.",
@@ -161,7 +166,7 @@ def token_not_fresh_callback():
 
 @jwt.revoked_token_loader
 def revoked_token_callback():
-    """ JWT için iptal edilmiş token tespit edilmesi durumunda geri dönecek mesajı üreten metod """
+    """ Method that generates the message to return if revoked token is detected for JWT """
 
     return jsonify({
         "description": "The token has been revoked.",
@@ -173,7 +178,7 @@ def revoked_token_callback():
 
 @app.before_first_request
 def create_tables():
-    """ Uygulamaya ilk istek geldiğinde tetiklenen ve gerekli veritabanı nesnelerini yaratan metod """
+    """ The method that is triggered when the application receives the first request and creates the required database objects """
 
     db.create_all()
 
@@ -186,8 +191,8 @@ def handleMessage(msg):
     send(msg, broadcast=True)
 
 
-# Uygulamaya restful endpoint olarak tanımlanacak tüm sınıflar aşağıda belirtilir
-# Keymind
+# All classes that will be defined as restful endpoints to the application are specified below
+# dtwearable
 # Security resources
 api.add_resource(UserRegisterResource, '/ai/security/register')
 api.add_resource(UserLoginResource, '/ai/security/login')
@@ -212,27 +217,10 @@ api.add_resource(NotificationListResource, '/ai/notification/list')
 api.add_resource(StatisticsResource, '/ai/statistics')
 
 # KVC resources
-api.add_resource(IslemResource, '/kvc/islem/<int:islem_no>')
-api.add_resource(IslemRegisterResource, '/kvc/islem')
 
-api.add_resource(SiviAlimiResource, '/kvc/sivialimi/<int:sivi_alimi_id>')
-api.add_resource(SiviAlimiRegisterResource, '/kvc/sivialimi')
-
-api.add_resource(HemsireGozlemResource, '/kvc/hemsiregozlem/<int:hemsire_gozlem_id>')
-api.add_resource(HemsireGozlemRegisterResource, '/kvc/hemsiregozlem')
-
-api.add_resource(LabSonucResource, '/kvc/labsonuc/<int:lab_sonuc_id>')
-api.add_resource(LabSonucRegisterResource, '/kvc/labsonuc')
-api.add_resource(LabSonucBatchRegisterResource, '/kvc/labsonuc/batch')
-
-api.add_resource(IslemTaniResource, '/kvc/islemtani/<int:id>')
-api.add_resource(IslemTaniRegisterResource, '/kvc/islemtani')
-
-api.add_resource(IslemOperasyonResource, '/kvc/islemoperasyon/<int:islem_operasyon_id>')
-api.add_resource(IslemOperasyonRegisterResource, '/kvc/islemoperasyon')
 
 db.init_app(app)
 
 if __name__ == '__main__':
     # app.run(port=5000, debug=True, host='0.0.0.0')
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5005, debug=True)

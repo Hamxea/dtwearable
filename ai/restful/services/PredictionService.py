@@ -8,7 +8,7 @@ from ai.restful.models.PredictionDTO import PredictionDTO
 
 
 class PredictionService():
-    """ Predict sınıfını kullanarak üretilen tahminlerin veri tabanına kaydının yapıldığı sınıf """
+    """ class in which the predictions produced using the Predict class are recorded in the database """
 
     ai_model_dao = AIModelDAO()
     prediction_dao = PredictionDAO()
@@ -18,15 +18,16 @@ class PredictionService():
             return o.__str__()
 
     def make_prediction(self, ai_model_class, reference_table, reference_id, prediction_input):
-        """ Yapay zeka modeli, ilgili referans tablosu, referans id'si ve tahmin girdisini kullanarak tahmin üreten metod
-            Tahmin sonrası prediction_dto veri tabanına kayıt edilir
-            prediction_dto objesi return edilir
+        """ Method that generates predictions using the artificial intelligence model, related reference table, reference id, and prediction input.
+             After the prediction, it is recorded in the prediction_dto database.
+             The prediction_dto object is returned
         """
 
         ai_model_dto = self.ai_model_dao.find_last_enabled_version_by_name(ai_model_class)
         model = self.load_model(ai_model_dto.model_url)
 
-        prediction_input = [value[1:] for value in prediction_input]
+        # prediction_input = [value[1:] for value in prediction_input]
+        prediction_input = prediction_input.get('blood_pressure')
         prediction_dto = PredictionDTO(id=None, reference_table=reference_table, reference_id=reference_id,
                                        prediction_input=json.dumps(prediction_input),
                                        prediction_value=None,
@@ -34,19 +35,20 @@ class PredictionService():
                                        ai_model_id=ai_model_dto.id)
 
         try:
-            if ai_model_class == "ai.aimodels.GenelTestPredict.GenelTestPredict":
-                """Genel agoritma ile genel tahminin"""
-                # do something
-                new_prediction = self._predict_genel(model, prediction_input)
+            if ai_model_class == "ai.aimodels.VitalSignsPredictionAIModel.VitalSignsPredictionAIModel":
+                """General algorithm prediction """
+                # new_prediction = self._predict_genel(model, prediction_input)
+                import numpy as np
+                new_prediction = self._predict_tek(model, np.array([prediction_input]))
                 new_prediction_dto_kural = new_prediction
 
-                for pred_range in range(len(new_prediction.tolist()[0])):
-                    prediction_dto.prediction_value = new_prediction.tolist()[0][pred_range]
-                    self.prediction_dao.save_to_db(prediction_dto)
-                prediction_dto.prediction_value = new_prediction_dto_kural
+                prediction_dto.prediction_value = str(new_prediction.tolist())
+                self.prediction_dao.save_to_db(prediction_dto)
+
+                prediction_dto.prediction_value = new_prediction_dto_kural.tolist()
                 return prediction_dto
             else:
-                """ tek özellik tahmini için"""
+                """ single feature prediction """
                 from sklearn.preprocessing import MinMaxScaler
                 import numpy as np
 
@@ -70,18 +72,18 @@ class PredictionService():
 
     def _predict(self, model, prediction_input):
         """
-        Modeli kullanarak tahmin yapan metod
+        Method that makes predictions using the model
         """
 
         """
-        Örnek input formatı
+        Example input format
         {
-         "ates": [35, 36],
-         "nabız": [100, 120]
+         "temperature": [35, 36],
+         "blood_pressure": [100, 120]
         }
         veya
         {
-            "ates": [35, 36]
+            "temperature": [35, 36]
         }
         """
 
@@ -92,12 +94,14 @@ class PredictionService():
         return model._predict(input)
 
     def _predict_tek(self, model, prediction_input):
-        return model.predict(prediction_input)
+        return model.predict(prediction_input, verbose=0)
 
     def _predict_genel(self, model, prediction_input):
         return model.forecast(prediction_input, steps=1)
 
     def load_model(self, model_url):
-        """ Modeli dosya sisteminden yükleyen metod """
+        """ Method that loads the model from the file system """
 
-        return pickle.load(open(model_url, 'rb'))
+        # return pickle.load(open(model_url, 'rb'))
+        from keras.models import load_model
+        return load_model(model_url)

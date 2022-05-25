@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "1bd1441e-d19b-43ba-8759-a40c1a59cfeb",
+		"name": "dtwearable.ai.VitalSignsPredictionAIModelTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/ai/trainmodel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"class_name\": \"ai.aimodels.VitalSignsPredictionAIModel.VitalSignsPredictionAIModel\",\r\n\t\"dataset_parameters\" : {\r\n\t\t\"dataset_start_time\": \"01.01.2019\",\r\n\t\t\"dataset_end_time\": \"01.12.2019\",\r\n\t\t\"window_size\": 1,\r\n\t\t\"test_ratio\": 0.2\r\n\t},\r\n\t\"hyperparameters\" : {\r\n\t\t\"n_steps_in\": 1,\r\n\t\t\"n_steps\": 1,\r\n\t\t\"n_steps_out\": 1,\r\n\t\t\"train_split_value\": 0.01\r\n\t\t  \r\n\t} \r\n} \r\n"
+				},
+				"url": {
+					"raw": "{{url}}/ai/trainmodel",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ai",
+						"trainmodel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ai/activatemodel",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"class_name\": \"ai.aimodels.VitalSignsPredictionAIModel.VitalSignsPredictionAIModel\",\n\t\"version\": 2\n}"
+				},
+				"url": {
+					"raw": "{{url}}/ai/activatemodel",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ai",
+						"activatemodel"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

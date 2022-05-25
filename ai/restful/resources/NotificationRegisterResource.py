@@ -12,11 +12,11 @@ from ai.restful.services.RuleViolationService import RuleViolationService
 
 class NotificationRegisterResource(Resource):
     """
-    NotificationDTO nesnesi için parametre almayan metodları barındıran Resource sınıfı
-    Restful istek tiplerine karşılık metodlar oluşturulur
+    Resource class that hosts methods that do not take parameters for the NotificationDTO object
+     Methods are created to respond to Restful request types
     """
 
-    """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
+    """ It is created to define Restful requests, error returns in case of incompatibility. """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('id', type=int, required=False)
     # post_parser.add_argument('rule_violation_id', type=int, required=True)
@@ -31,7 +31,7 @@ class NotificationRegisterResource(Resource):
     rule_violation_service = RuleViolationService()
 
     def post(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore NotificationDTO nesnesini olusturan ve veritabanına yazan metod """
+        """ The method that creates the NotificationDTO object according to the data in the body of the Restful request and writes it to the database """
 
         data = self.post_parser.parse_args()
 
@@ -51,7 +51,7 @@ class NotificationRegisterResource(Resource):
         return notification_dto.serialize, 201
 
     def put(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore NotificationDTO nesnesini olusturan veya guncelleyen metod """
+        """ The method that creates or updates the NotificationDTO object according to the data contained in the body of the Restful request """
 
         data = self.post_parser.parse_args()
 

@@ -2,7 +2,7 @@ from db import db
 
 class UserDTO(db.Model):
     """
-    User tablosu için veritabı eşleştirmelerinin yapıldığı model sınıfı
+    Model class with database mappings for the User table
     """
 
     __tablename__ = 'user'
@@ -18,7 +18,7 @@ class UserDTO(db.Model):
         self.role = role
 
     def json(self):
-        """ Nesneyi json'a çeviren metod """
+        """ Method that converts object to json """
 
         return {
             'id': self.id,

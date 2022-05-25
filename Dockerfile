@@ -1,6 +1,6 @@
 FROM tensorflow/tensorflow:latest-py3
 
-    #Install postgressql developer package
+#Install postgressql developer package
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >/etc/apt/sources.list.d/pgdg.list
 RUN apt-get install wget
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
@@ -23,6 +23,6 @@ ENV FLASK_APP app.py
 CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
 #CMD flask run --host=0.0.0.0
 
-#docker build -t umtkrdmn/keymind .
-#docker run -p 5000:5000 -v D:/source/keydata/keymind/:/app umtkrdmn/keymind
+#docker build -t hamzaharunamohammed/dtwearable .
+#docker run -p 5000:5000 -v D:/source/keydata/dtwearable/:/app hamzaharunamohammed/dtwearable
 #docker ps | docker stop d0fcfd68f1ac

@@ -7,34 +7,34 @@ from ai.restful.models.AIModelDTO import AIModelDTO
 
 class AIModelDAO(AbstractDAO):
     """
-    AIModel nesnesi için veritabanı işlemlerinin yapıldığı metodları içerir
+    Contains methods by which database operations are performed for the AIModel object
     """
 
     def __init__(self):
         super().__init__(AIModelDTO)
 
     def get_enabled_models(self):
-        """ AI_model tablosundaki enabled=true olan tüm kayıtları getiren metot"""
+        """ Method to retrieve all records with enabled=true in AI_model table"""
 
         return AIModelDTO.query.filter_by(enabled=True).all()
 
     def find_last_enabled_version_by_name(self, class_name: str) -> AIModelDTO:
-        """ AIModel tablosundan name  ve enabled = True olan en buyuk version sahibi  kaydı dönen metod """
+        """ Method that returns the largest version owner record with name and enabled = True from the AIModel table """
 
         return AIModelDTO.query.filter_by(class_name=class_name, enabled=True).order_by(AIModelDTO.version.desc()).first()
 
     def find_by_name_and_enable(self, class_name: str) -> AIModelDTO:
-        """ AIModel tablosundan name  ve enabled = True olan kayıtların ilkini dönen metod """
+        """ Method that returns the first of the records with name and enabled = True from the AIModel table """
 
         return AIModelDTO.query.filter_by(class_name=class_name, enabled=True).first()
 
     def find_by_name_and_version(self, class_name: str, version: int) -> AIModelDTO:
-        """ AIModel tablosundan name  ve version değerlerine göre eşleşen kayıtların ilkini dönen metod """
+        """ The method that returns the first of the matching records from the AIModel table by name and version values ​​"""
 
         return AIModelDTO.query.filter_by(class_name=class_name, version=version).first()
 
     def activate_by_name_and_version(self, class_name: str, version: int):
-        """ AIModel tablosundan name'e ait kayıtlardan versiyon numarası dışındakileri pasif eden metod """
+        """ Method that disables records of name from AIModel table except version number """
 
         if version >= 0:
             active_model = self.find_by_name_and_version(class_name, version)

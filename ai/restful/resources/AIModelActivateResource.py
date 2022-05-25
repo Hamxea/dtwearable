@@ -5,7 +5,7 @@ from ai.restful.daos.AIModelDAO import AIModelDAO
 
 class AIModelActivateResource(Resource):
     """
-    AI Modellerinin eğitilmesi için restful servisleri bulunduran metod
+    Method with restful services for training AI Models
     """
 
     parser = reqparse.RequestParser()
@@ -15,7 +15,7 @@ class AIModelActivateResource(Resource):
     ai_model_dao = AIModelDAO()
 
     def put(self):
-        """ name ve versiyon değerleri verilen ai_model nesnesini aktif edip diğer versiyonlarını pasif eder """
+        """ Activates the ai_model object with its name and version values and disables other versions """
 
         data = self.parser.parse_args()
         try:

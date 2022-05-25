@@ -1,11 +1,11 @@
 import enum
 
-from kvc.restful.models.enums.AbstractIntEnum import AbstractIntEnum
+from dt.restful.models.enums.AbstractIntEnum import AbstractIntEnum
 
 
 @enum.unique
 class PriorityEnum(AbstractIntEnum):
-    """ Öncelik tipleri için enum sınıfı """
+    """ Enum class for priority types """
 
     LOW = 0
     MEDIUM = 1

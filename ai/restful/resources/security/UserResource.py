@@ -3,14 +3,14 @@ from ai.restful.resources.security.AbstractUserResource import AbstractUserResou
 
 
 class UserResource(AbstractUserResource):
-    """ Kullanıcı bilgi servislerini sağlayan restful sınıfı """
+    """ restful class that provides user information services """
 
-    # TODO Buy metodlara admin yetkisi verilmesi gerekiyor
+    # TODO Buy methods need to be given admin privileges
 
     userDAO = UserDAO()
 
     def get(self, user_id: int):
-        """ user_id değerine göre kullanıcı bilgilerini dönen metod """
+        """ Method that returns user information based on user_id value """
 
         user = self.userDAO.find_by_id(user_id)
         if not user:
@@ -18,7 +18,7 @@ class UserResource(AbstractUserResource):
         return user.serialize(), 200
 
     def delete(self, user_id: int):
-        """ user__id değerine göre kullanıcıyı silen metod """
+        """ Method that deletes user based on user_id value """
         
         user = self.userDAO.find_by_id(user_id)
         if not user:

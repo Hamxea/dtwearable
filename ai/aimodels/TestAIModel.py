@@ -7,10 +7,10 @@ from db import db
 
 
 class TestAIModel(AbstractAIModel):
-    """ Hastanın genel durumu için tahmin yapan yapay zeka modeli """
+    """Artificial intelligence model that predicts the general condition of the patient """
 
     def train(self, dataset_parameters, hyperparameters):
-        """ Test amaçlı boşcevap dönen metod """
+        """ Method that returns blank for testing purposes """
 
         print("train()")
         print("dataset_parameters", dataset_parameters)
@@ -19,7 +19,7 @@ class TestAIModel(AbstractAIModel):
         return {"key": "value"}
 
     def get_statistics(self, start_date: datetime, end_date: datetime):
-        """ Kategorik tahmin yapan yapay zeka modelleri için örnek istatistik sonucu """
+        """ Sample statistics result for artificial intelligence models that make categorical predictions """
 
         return {
             "total_prediction_count": 34,

@@ -13,7 +13,7 @@ class VectorAutoRegression_2(AbstractAIModel):
     """ Vector Auto Regression (VAR) with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
-        """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+        """ The method that trains the model based on dataset parameters and hyperparameters """
 
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
@@ -26,13 +26,12 @@ class VectorAutoRegression_2(AbstractAIModel):
     @abstractmethod
     def get_dataset(self, dataset_parameters):
         """
-        Dataset parametlerine göre train ve test'te kullanılacak dataseti getiren metod
-        alt sınıflar tarafından implemente edilecektir
+        According to the dataset parameters, the method that brings the dataset to be used in train and test will be implemented by subclasses.
         """
         pass
 
     def split_dataset(self, df, test_ratio, n_Steps):
-        """ Dataseti train ve test için bölen metod """
+        """ Method that divides dataset for train and test """
 
         train_data = df[:int((1 - test_ratio) * len(df))]
         test_data = df[int((1 - test_ratio) * len(df)):]
@@ -40,14 +39,14 @@ class VectorAutoRegression_2(AbstractAIModel):
         return train_data, test_data
 
     def train_var(self, train_data, n_steps):
-        """ X_train ve y_train kullanarak var modeli oluşturan metod """
+        """ Method that creates the var model using x_train and y_train """
 
         model = VAR(endog=train_data)
         model_fit = model.fit()
         return model_fit
 
     def test_var(self, var_model, test_data):
-        """ Oluşturulmuş var modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        """ Method that calculates score using X_test and y_test on the created var model """
 
         # make prediction of test validation data with 1 step_out
         # var_model.y
@@ -57,8 +56,8 @@ class VectorAutoRegression_2(AbstractAIModel):
         return 1, 0
 
     def rename_columns(self, df, identifier='Feat_'):
-        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
-        """ Df kolon isimlerini değiştiren metod """
+        """ TODO: General forecast will be written, especially the names of the columns """
+        """ Method to change df column names """
 
         col_count = len(df.columns)
         column_names = []

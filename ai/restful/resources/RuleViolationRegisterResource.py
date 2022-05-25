@@ -9,11 +9,11 @@ from ai.restful.models.RuleViolationDTO import RuleViolationDTO
 
 class RuleViolationRegisterResource(Resource):
     """
-    RuleViolationDTO nesnesi için parametre almayan metodları barındıran Resource sınıfı
-    Restful istek tiplerine karşılık metodlar oluşturulur
+    Resource class that hosts methods that do not take parameters for the RuleViolationDTO object
+     Methods are created to respond to Restful request types
     """
 
-    """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
+    """ Created to define Restful requests, error returns in case of incompatibility. """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('id', type=int, required=False)
     post_parser.add_argument('reference_table', type=str, required=True)
@@ -30,7 +30,7 @@ class RuleViolationRegisterResource(Resource):
     rule_violation_dao = RuleViolationDAO()
 
     def post(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore RuleViolationDTO nesnesini olusturan ve veritabanına yazan metod """
+        """ Method that creates the RuleViolationDTO object according to the data in the body of the Restful request and writes it to the database """
 
         data = self.post_parser.parse_args()
 
@@ -46,7 +46,7 @@ class RuleViolationRegisterResource(Resource):
         return rule_violation_dto.serialize, 201
 
     def put(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore RuleViolationDTO nesnesini olusturan veya guncelleyen metod """
+        """ Method that creates or updates the RuleViolationDTO object according to the data contained in the body of the Restful request """
 
         data = self.post_parser.parse_args()
 

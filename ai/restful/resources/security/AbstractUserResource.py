@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 
 
 class AbstractUserResource(Resource):
-    """ User Resource sınıfları için ortak kodları içeren Abstract sınıf"""
+    """ Abstract class containing common codes for User Resource classes """
 
     _user_parser = reqparse.RequestParser()
     _user_parser.add_argument('username',

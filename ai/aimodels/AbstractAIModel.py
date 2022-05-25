@@ -3,16 +3,16 @@ from datetime import datetime
 
 
 class AbstractAIModel(ABC):
-    """ AI Model sınıflarının üst sınıfı olarak kullanılan Abstract sınıf """
+    """ Abstract class used as superclass of AI Model classes """
 
     @abstractmethod
     def train(self, dataset_parameters, hyperparameters):
-        """ Model'in eğitim için kullandığı train metodu, dataset ve hyper parametre detayları alır """
+        """ Gets the train method, dataset and hyper parameter details that the model uses for training """
 
         pass
 
     @abstractmethod
     def get_statistics(self, start_date: datetime, end_date: datetime):
-        """ Modelin belirli tarih aralığındaki istatistiklerini getirmek için kullanılan abstract metot """
+        """ Abstract method used to fetch the model's statistics for a specific date range """
 
         pass

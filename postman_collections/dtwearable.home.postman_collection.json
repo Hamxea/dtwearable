@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "d0d23acb-a56a-4d24-8168-49c4e177a433",
+		"name": "dtwearable.home",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/home",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/home",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"home"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

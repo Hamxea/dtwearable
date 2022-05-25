@@ -9,12 +9,12 @@ from ai.aimodels.AbstractAIModel import AbstractAIModel
 
 
 class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
-    """ Tek değişkenli modeller için SVR kullanarak zaman serisi oluşturma modeli """
+    """ Time series generation model using SVR for univariate models """
 
     window_size = None
 
     def train(self, dataset_parameters, hyperparameters):
-        """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+        """ The method that trains the model based on dataset parameters and hyperparameters """
 
         df = self.get_dataset(dataset_parameters)
 
@@ -29,13 +29,12 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
     @abstractmethod
     def get_dataset(self, dataset_parameters):
         """
-        Dataset parametlerine göre train ve test'te kullanılacak dataseti getiren metod
-        alt sınıflar tarafından implemente edilecektir
+        According to the dataset parameters, the method that brings the dataset to be used in train and test will be implemented by subclasses.
         """
         pass
 
     def create_synthetic_dataset(self):
-        """ İhtiyaca göre sentetik olarak dataset oluşturan metod """
+        """ Method that creates a dataset synthetically according to the need """
 
         df_size = 100
         low = 35
@@ -54,7 +53,7 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
     #     return df
 
     def split_dataset(self, df, test_ratio):
-        """ Dataseti train ve test için bölen metot. Test_ratio kadarı teste ayrılır. Ratio formatı 0.2 gibidir """
+        """ A method that divides the dataset for train and test. As much as test_ratio is reserved for testing. Ratio format is like 0.2 """
 
         # label_index = df.columns.get_loc("Label")
         label_index = df.shape[1]-1 # Son kolon her zaman label'dır. O yüzden yukarıdaki koda gerek kalmadı. Shape-1 son kolon indeksini verir
@@ -65,8 +64,8 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
         return train_test_split(X, y, test_size = test_ratio, shuffle=False, stratify=None)
 
     def train_svr(self, X_train, y_train, kernel='rbf'):
-        """ X_train ve y_train kullanarak SVR modeli oluşturan metod
-            SVR scale insensitive olmadığı için veriyi scale etmek gerekmektedir
+        """ Method that creates SVR model using x_train and y_train
+            Since the SVR scale is not insensitive, it is necessary to scale the data.
         """
 
         from sklearn.svm import SVR
@@ -83,7 +82,7 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
         return model
 
     def test_svr(self, svr_model, X_test, y_test):
-        """ Oluşturulmuş SVR modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        """ Method that calculates score using X_test and y_test on the created SVR model """
         from sklearn.preprocessing import MinMaxScaler
 
         scaler = MinMaxScaler(feature_range=(0, 1))
@@ -100,7 +99,7 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
         return score
 
     def series_to_supervised(self, dataset, n_in=3, n_out=1):
-        """ Dataset formatını supervised öğrenme formatına çeviren metod """
+        """ Method to convert dataset format to supervised learning format """
 
         cols = list()
         # input sequence (t-n, ... t-1)
@@ -117,7 +116,7 @@ class AbstractUnivariateTimeSeriesSvr(AbstractAIModel):
 
 
     def rename_columns(self, df, identifier='Feat_'):
-        """ Df kolon isimlerini değiştiren metod """
+        """ Method to change df column names """
 
         col_count = len(df.columns)
         column_names = []

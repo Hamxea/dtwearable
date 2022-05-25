@@ -5,14 +5,14 @@ from ai.restful.daos.PredictionDAO import PredictionDAO
 
 class PredictionResource(Resource):
     """
-    Prediction nesnesi için int tipinde id parametre alan metodları barındıran Resource sınıfı
-    Restful istek tiplerine karşılık metodlar oluşturulur
+    Resource class that contains methods that take int type id parameter for Prediction object
+     Methods are created to respond to Restful request types
     """
 
     predictionAlimiDAO = PredictionDAO()
 
     def get(self, prediction_id: int):
-        """ prediction_id parametresine karsılık Prediction bilgisi donen metod """
+        """ Method that returns Prediction information corresponding to prediction id parameter """
 
         prediction = self.predictionAlimiDAO.find_by_id(prediction_id)
         if not prediction:
@@ -20,9 +20,9 @@ class PredictionResource(Resource):
         return prediction.serialize, 200
 
     def delete(self, prediction_id: int):
-        """ prediction_id parametresine karsılık gelen Prediction nesnesini veri tabanından silen metod. """
+        """ Method that deletes the Prediction object corresponding to the prediction id parameter from the database """
 
-        # TODO Bu işlem admin yetkisi gerektirir
+        # TODO This operation requires admin privileges
 
         prediction = self.predictionAlimiDAO.find_by_id(prediction_id)
         if not prediction:

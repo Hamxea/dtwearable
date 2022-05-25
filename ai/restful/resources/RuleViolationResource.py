@@ -5,14 +5,14 @@ from ai.restful.daos.RuleViolationDAO import RuleViolationDAO
 
 class RuleViolationResource(Resource):
     """
-    RuleViolationResource nesnesi için int tipinde id parametre alan metodları barındıran Resource sınıfı
-    Restful istek tiplerine karşılık metodlar oluşturulur
+    Resource class that has methods that take int type id parameter for RuleViolationResource object
+     Methods are created to respond to Restful request types
     """
 
     dao = RuleViolationDAO()
 
     def get(self, rule_violation_id: int):
-        """ rule_violation_id parametresine karsılık gelen RuleViolationDTO bilgisi donen metod """
+        """ Method that returns the RuleViolationDTO information corresponding to the rule_violation_id parameter """
 
         rule_violation_dto = self.dao.find_by_id(rule_violation_id)
         if not rule_violation_dto:
@@ -20,7 +20,7 @@ class RuleViolationResource(Resource):
         return rule_violation_dto.serialize, 200
 
     def delete(self, rule_violation_id: int):
-        """ rule_violation_id parametresine karsılık gelen NotificationDTO nesnesini silen metod """
+        """ Method that deletes the Notification TO object corresponding to the rule_violation_id parameter """
 
         rule_violation_dto = self.dao.find_by_id(rule_violation_id)
         if not rule_violation_dto:

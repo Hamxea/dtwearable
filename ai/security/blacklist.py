@@ -1,6 +1,6 @@
 """
-Bu sınıf karalistede bulununa token'ları barındırır.
-Kullanıcının logout olması durumunda token bu listeye eklenir.
+This class contains blacklisted tokens.
+If the user logs out, the token is added to this list.
 """
 
 BLACKLIST = set()

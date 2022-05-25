@@ -5,7 +5,7 @@ from ai.enums.PriorityEnum import PriorityEnum
 
 
 class NotificationDTO(db.Model):
-    """ Notification tablosu için veritabanı eşleştirmelerinin yapıldığı model sınıfı """
+    """Model class where database mappings are made for the Notification table """
 
     __tablename__ = "notification"
 
@@ -29,7 +29,7 @@ class NotificationDTO(db.Model):
 
     @property
     def serialize(self):
-        """ Notification nesnesini json'a çeviren metod """
+        """ Method that converts Notification object to json """
 
         return {
             'id': self.id,

@@ -2,8 +2,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 
 """
-SqlAlchemy örneğini oluşturan ve tüm DAO sınıflarının kullandığı sınıf
+The class that instantiates SqlAlchemy and is used by all DAO classes
 """
 db = SQLAlchemy()
-engine = create_engine('postgresql://arge05:arge05@10.0.0.59:5432/keymind')
+engine = create_engine('postgresql://postgres:postgres@localhost:5432/dtwearable')
 

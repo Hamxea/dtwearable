@@ -6,16 +6,16 @@ from ai.restful.services.StatisticsService import StatisticsService
 
 
 class StatisticsResource(Resource):
-    """ İstatistik hesaplamaları için kullanılacak resource """
+    """ Resource to be used for statistical calculations """
 
-    """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
+    """ Created to define Restful requests, error returns in case of incompatibility. """
     post_parser = reqparse.RequestParser()
     post_parser.add_argument('start_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y").date(), required=True)
     post_parser.add_argument('end_date', type=lambda x: datetime.strptime(x, "%d.%m.%Y").date(), required=True)
 
     def post(self):
-        """ Restful isteğinin body kısmında bulunan tarih aralığına göre tahmin sayısı ve doğru tahmin sayısını return
-            eden get_statistics metodunu çağıran metot
+        """ Return the number of guesses and the number of correct guesses according to the date range found in the body of the Restful request
+             The method that calls the get_statistics method
         """
 
         data = self.post_parser.parse_args()

@@ -7,12 +7,12 @@ from ai.restful.services.PredictionService import PredictionService
 
 class PredictionRegisterResource(Resource):
     """
-    Prediction nesnesi için parametre almayan metodları barındıran Register Resource sınıfı
-    Restful istek tiplerine karşılık metodlar oluşturulur
+    Register Resource class that hosts methods that do not take parameters for the Prediction object
+     Methods are created to respond to Restful request types
     """
 
     prediction_post_parser = reqparse.RequestParser()
-    """ Restful isteklerini tanımlamak icin olusturulur, uyumsuzluk halinde hata donmesi saglanır """
+    """ It is created to define Restful requests, error returns in case of incompatibility. """
 
     prediction_post_parser.add_argument('ai_model_class',
                                         type=str,
@@ -34,7 +34,7 @@ class PredictionRegisterResource(Resource):
     predictionService = PredictionService()
 
     def post(self):
-        """ Restful isteğinin body kısmında bulunan veriye gore Prediction nesnesini olusturan ve veritabanına yazan metod """
+        """ The method that creates the Prediction object according to the data in the body of the Restful request and writes it to the database """
 
         data = self.prediction_post_parser.parse_args()
 

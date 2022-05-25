@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "fd4805f2-d6cd-4855-a570-c500dad11986",
+		"name": "dtwearable.ai.train",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/ai/trainmodel",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"class_name\": \"ai.aimodels.BloodPressurePredictionAIModel.BloodPressurePredictionAIModel\",\n\t\"dataset_parameters\" : {\n\t\t\"dataset_start_time\": \"01.01.2018\",\n\t\t\"dataset_end_time\": \"01.01.2021\",\n\t\t\"test_ratio\": 0.2,\n\t\t\"window_size\": 1\n\t},\n\t\"hyperparameters\" : {\n\t\t\"kernel\" : \"rbf\"\n\t} \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/ai/trainmodel",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ai",
+						"trainmodel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ai/activatemodel",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"class_name\": \"ai.aimodels.TemperaturePredictionAIModel.TemperaturePredictionAIModel\",\n\t\"version\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/ai/activatemodel",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"ai",
+						"activatemodel"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

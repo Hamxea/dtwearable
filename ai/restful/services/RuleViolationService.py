@@ -5,8 +5,8 @@ from ai.restful.daos.NotificationDAO import NotificationDAO
 from ai.restful.daos.RuleViolationDAO import RuleViolationDAO
 from ai.restful.models.NotificationDTO import NotificationDTO
 from ai.restful.models.RuleViolationDTO import RuleViolationDTO
-from kvc.restful.services.HbysNotificationIntegrationService import HbysNotificationIntegrationService
-from kvc.ruleengines.RuleViolationException import RuleViolationException
+from dt.restful.services.HbysNotificationIntegrationService import HbysNotificationIntegrationService
+from dt.ruleengines.RuleViolationException import RuleViolationException
 
 
 class RuleViolationService():

@@ -10,7 +10,7 @@ from ai.restful.services.AIModelTrainerService import AIModelTrainerService
 
 class AIModelTrainerResource(Resource):
     """
-    AI Modellerinin eğitilmesi için restful servisleri bulunduran metod
+    Method with restful services for training AI Models
     """
 
     parser = reqparse.RequestParser()
@@ -23,16 +23,16 @@ class AIModelTrainerResource(Resource):
 
     def post(self):
         """
-        Sınıf adı gönderilen ai model nesnesinden model üreten
-        Diske yazan
-        Veritabanı kaydını yemni versiyon numarası ile oluşturan restful servisi
+         Generating model from ai model object whose class name is sent
+         writes to disc
+         Restful service that creates database record with new version number
         """
 
         data = self.parser.parse_args()
         last_model = self.ai_model_dao.find_last_enabled_version_by_name(data['class_name'])
 
         ai_model_file_name, performance_metrics = self.ai_model_trainer_service.train(data['class_name'], data['dataset_parameters'], data['hyperparameters'])
-        # TODO exception oluşması durumuna karşı önlem alınmalı
+        # TODO add exception
 
         ai_model = AIModelDTO(id=None,
                               class_name=data['class_name'],

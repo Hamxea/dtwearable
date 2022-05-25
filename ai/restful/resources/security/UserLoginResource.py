@@ -6,12 +6,12 @@ from ai.restful.resources.security.AbstractUserResource import AbstractUserResou
 
 
 class UserLoginResource(AbstractUserResource):
-    """ Kullanıcının login olmasını sağlayan ve daha sonra kullanılmak üzere Token üreten Rest servis sınıfı """
+    """ Rest service class that allows the user to login and generates Tokens for later use """
 
     userDAO = UserDAO()
 
     def post(self):
-        """ Kullanıcı login sınıfı, geriye Token değerini döner """
+        """ User login class returns Token value """
 
         data = self._user_parser.parse_args()
 

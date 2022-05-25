@@ -14,7 +14,7 @@ class VectorAutoregressionMovingAverage(AbstractAIModel):
     """ Vector Autoregression Moving-Average (VARMA) with 1-Step Output """
 
     def train(self, dataset_parameters, hyperparameters):
-        """ dataset parametreleri ve hiperparametrelere göre modeli eğiten metod """
+        """ The method that trains the model based on dataset parameters and hyperparameters """
 
         df = self.get_dataset(dataset_parameters)
         # df = self.windowing(df)
@@ -27,13 +27,12 @@ class VectorAutoregressionMovingAverage(AbstractAIModel):
     @abstractmethod
     def get_dataset(self, dataset_parameters):
         """
-        Dataset parametlerine göre train ve test'te kullanılacak dataseti getiren metod
-        alt sınıflar tarafından implemente edilecektir
+        According to the dataset parameters, the method that brings the dataset to be used in train and test will be implemented by subclasses.
         """
         pass
 
     def split_dataset(self, df, test_ratio, n_Steps):
-        """ Dataseti train ve test için bölen metod """
+        """ Method that divides dataset for train and test """
 
         train_data = df[:int((1-test_ratio)*len(df))]
         test_data = df[int((1-test_ratio)*len(df)):]
@@ -43,7 +42,7 @@ class VectorAutoregressionMovingAverage(AbstractAIModel):
         return train_data, test_data
 
     def train_varma(self, train_data, n_steps):
-        """ X_train ve y_train kullanarak varma modeli oluşturan metod """
+        """ Method that creates an arrival pattern using x_train and y_train """
         print(type(train_data))
         train_data = train_data.head(6)
         train_data = train_data.values.tolist()
@@ -59,7 +58,7 @@ class VectorAutoregressionMovingAverage(AbstractAIModel):
         return model_fit
 
     def test_varma(self, varma_model, test_data):
-        """ Oluşturulmuş varma modeli üzerinde X_test ve y_test kullanarak score hesaplayan metod """
+        """ Method that calculates score using X_test and y_test on the created arrival model """
 
         #make prediction of test validation data
         prediction = varma_model.forecast()
@@ -68,8 +67,8 @@ class VectorAutoregressionMovingAverage(AbstractAIModel):
         return 0, 1
 
     def rename_columns(self, df, identifier='Feat_'):
-        """ TODO: Genel tahmin özeliklek kolumlar isimi yazilacak """
-        """ Df kolon isimlerini değiştiren metod """
+        """ TODO: General forecast will be written, especially the names of the columns """
+        """ Method to change df column names """
 
         col_count = len(df.columns)
         column_names = []
