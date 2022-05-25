@@ -5,20 +5,19 @@ from ai.restful.daos.NotificationDAO import NotificationDAO
 from ai.restful.daos.RuleViolationDAO import RuleViolationDAO
 from ai.restful.models.NotificationDTO import NotificationDTO
 from ai.restful.models.RuleViolationDTO import RuleViolationDTO
-from dt.restful.services.HbysNotificationIntegrationService import HbysNotificationIntegrationService
+
 from dt.ruleengines.RuleViolationException import RuleViolationException
 
 
 class RuleViolationService():
-    """ Kural motorundan çıkan kural ihlallerinin veri tabanına kaydının yapıldığı sınıf """
+    """ class in which rule violations from the rule engine are saved in the database """
 
     rule_violation_dao = RuleViolationDAO()
     notification_dao = NotificationDAO()
-    hbys_notification_integration_service = HbysNotificationIntegrationService()
 
     def save_rule_violation_and_notifications(self, rule_violation_list):
-        """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına
-                                                            kaydını ve bildirim gönderme sağlayan metot """
+        """ results from the rule engine are sent to the database in case of violation.
+                                                         method that allows registration and sending notifications"""
 
         for i in range(0, 3):
             # range 0 dan 2'ye kadar, LOW priority (0), MEDIUM priority (1), ve HIGH priority (2)
@@ -38,20 +37,10 @@ class RuleViolationService():
 
     def save_notification(self, new_violation_list):
         global violation
-        hasta_adi = "{HASTA_ADI} isimli hasta için uyarı oluştu.\n"
-        birim = "Birim no = {BIRIM_ADI}\n"
-        yatak = "Yatak no = {YATAK_NO}\n"
-        notication_message = ""
 
-        for violation in new_violation_list:
-            notication_message += "* " + violation.message + "\n"
         try:
-            notification_dto = self.save_notfication_to_db(staff_id=None, priority=violation.priority,
-                                                           message=hasta_adi + notication_message,
-                                                           notification_date=datetime.now(),
-                                                           error_message=hasta_adi + notication_message + birim + yatak,
-                                                           islem_no=violation.islem_no)
-            return notification_dto
+            #TODO save notification to db
+            return
         except Exception as e:
             logging.exception(e, exc_info=True)
 
@@ -70,7 +59,7 @@ class RuleViolationService():
 
     def save_rule_violation_to_db(self, reference_table, reference_id, prediction_id, rule, value_source, value,
                                   violation_date, notification_id, priority):
-        """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına kaydını sağlayan metot """
+        """ method that records the results from the rule engine to the database in case of violation """
         rule_violation_dto = RuleViolationDTO(id=None,
                                               reference_table=reference_table,
                                               reference_id=reference_id,
@@ -94,7 +83,7 @@ class RuleViolationService():
         """ """
 
     def save_notfication_to_db(self, staff_id, priority, message, notification_date, error_message, islem_no):
-        """ Kural motorundan çıkan sonuçların, ihlal olması durumunda veri tabanına kaydını sağlayan metot """
+        """ method that records the results from the rule engine to the database in case of violation """
 
         notification_dto = NotificationDTO(id=None,
                                            staff_id=staff_id,
@@ -107,19 +96,10 @@ class RuleViolationService():
             # emit('message', notification_dto.serialize, broadcast=True, namespace='/')
             # self.hbys_notification_integration_service.send_notification_via_socket(notification_message=notification_dto.serialize)
 
-            # TODO  # Bildirim parametresini report_dto olarak değiştirin (actionNo ekle).
-            #  Ve ayrıca, send_notification_to_hbys işlevini NotificationRegisterResource sınıfına ekleyin
-            #  {
-            #   'islemNO:.....
-            # 	"staff_id": 77,
-            # 	"priority": "LOW",
-            # 	"message": " cfdfsa Test message {HASTA_ADI} {BIRIM_ADI} {YATAK_NO}",
-            # 	"notification_date": "18.01.2020 00:00:00",
-            # 	"error_message": "ghvgc notification error."
-            # }
-            test_notification = {"islemNo": 3004160431, "message": "Hata Oluştu...."}
-            notification_message = {"islemNo": islem_no, "message": notification_dto.message}
-            self.hbys_notification_integration_service.send_notification_to_hbys(notification_dict=notification_message)
+            # TODO  # Change the notification parameter to report_dto (add actionNo).
+            #              # And also add the send_notification_to_hbys function to NotificationRegisterResource class
+
+
             return notification_dto
 
         except Exception as e:

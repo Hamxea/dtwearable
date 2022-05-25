@@ -52,7 +52,7 @@ SqlAlchemy settings
 """
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL',
-                                                       'postgresql://postgres:postgres@localhost:5432/dtwearable')
+                                                       'postgresql://postgres:postgres@localhost:5432/dt')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 db.init_app(app)
@@ -216,7 +216,7 @@ api.add_resource(NotificationListResource, '/ai/notification/list')
 
 api.add_resource(StatisticsResource, '/ai/statistics')
 
-# KVC resources
+# DT resources
 
 
 db.init_app(app)

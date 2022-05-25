@@ -1,6 +1,6 @@
 import enum
 
-from dt.restful.models.enums.AbstractIntEnum import AbstractIntEnum
+from dt.ruleengines.enums.AbstractIntEnum import AbstractIntEnum
 
 
 @enum.unique

@@ -5,5 +5,5 @@ from sqlalchemy import create_engine
 The class that instantiates SqlAlchemy and is used by all DAO classes
 """
 db = SQLAlchemy()
-engine = create_engine('postgresql://postgres:postgres@localhost:5432/dtwearable')
+engine = create_engine('postgresql://postgres:postgres@localhost:5432/dt')
 

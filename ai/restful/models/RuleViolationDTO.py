@@ -3,7 +3,6 @@ from datetime import datetime
 from ai.enums.IntEnum import IntEnum
 from ai.enums.PriorityEnum import PriorityEnum
 from db import db
-from dt.ruleengines.enums.TemperatureEnum import TemperatureEnum
 
 
 class RuleViolationDTO(db.Model):
@@ -15,7 +14,7 @@ class RuleViolationDTO(db.Model):
     reference_table = db.Column(db.String)
     reference_id = db.Column(db.BigInteger)
     prediction_id = db.Column(db.BigInteger)
-    rule = db.Column(db.Enum(TemperatureEnum))
+    rule = db.Column(db.Enum(PriorityEnum))
     value_source = db.Column(db.String)
     value = db.Column(db.Float)
     violation_date = db.Column(db.DateTime)

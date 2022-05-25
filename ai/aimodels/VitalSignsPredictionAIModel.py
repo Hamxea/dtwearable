@@ -7,18 +7,15 @@ import pandas as pd
 
 from ai.aimodels.genel.LongShortTermMemory_2 import LongShortTermMemory_2
 
-from dt.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
-
 
 class VitalSignsPredictionAIModel(LongShortTermMemory_2):
-    """ Genel Tahmin üretin TEST sınıfı..hangi ozellik belli olmadı için, hemşire gozlem veri testlendir.
+    """ Generate General Prediction TEST class..w.
      TODO....PatientStatusPredictionAIModel sınıfından üretilir """
 
-    hemsire_gozlem_dao = HemsireGozlemDAO()
     window_size = 3
 
     def get_dataset(self, dataset_parameters):
-        """ dataset parametrelerine göre uygun dataseti getiren metod """
+        """ Method that returns the appropriate dataset according to the dataset parameters """
 
         dataset_start_time = dataset_parameters['dataset_start_time']
         dataset_end_time = dataset_parameters['dataset_end_time']
@@ -33,8 +30,8 @@ class VitalSignsPredictionAIModel(LongShortTermMemory_2):
         return df_data
 
     def get_statistics(self, start_date: datetime, end_date: datetime):
-        """ Modelin belirli tarih aralığındaki istatistiklerini getirmek için kullanılan metot
-            Bu model için şu aşamada istatistik üretilmediği için boş json dönüyor
+        """ The method used to fetch the statistics of the model for a certain date range
+             Empty json is returned because statistics are not produced for this model at this stage.
         """
 
         return {}
