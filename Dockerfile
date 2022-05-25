@@ -24,5 +24,5 @@ CMD gunicorn --bind 0.0.0.0:5000 wsgi:app
 #CMD flask run --host=0.0.0.0
 
 #docker build -t hamzaharunamohammed/dtwearable .
-#docker run -p 5000:5000 -v D:/source/keydata/dtwearable/:/app hamzaharunamohammed/dtwearable
+#docker run -p 5000:5000 -v D:/source/desktop/dtwearable/:/app hamzaharunamohammed/dtwearable
 #docker ps | docker stop d0fcfd68f1ac
