@@ -52,7 +52,7 @@ SqlAlchemy settings
 """
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL',
-                                                       'postgresql://postgres:postgres@localhost:5432/dt')
+                                                       'postgresql://postgres:postgres@localhost:5432/dtwearable')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 db.init_app(app)
