@@ -31,7 +31,7 @@ class AIModelTrainerService:
     def save_model(self, ai_model_class, trained_model):
         """ Save model file with pickle """
 
-        ai_model_file_name = self.file_path + "/" + ai_model_class + "_" + str(datetime.now().timestamp()) + ".h5" #.pickle
+        ai_model_file_name = self.file_path + "/" + ai_model_class + "_" + str(datetime.now().timestamp()) + ".pickle" #.pickle
         # pickle.dump(trained_model, open(ai_model_file_name, 'wb'))
         import tensorflow as tf
         tf.keras.models.save_model(trained_model, ai_model_file_name)

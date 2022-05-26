@@ -5,15 +5,10 @@ from ai.aimodels.AbstractBloodPressureTimeSeriesSvr import AbstractBloodPressure
 from ai.aimodels.AbstractUnivariateTimeSeriesSvr import AbstractUnivariateTimeSeriesSvr
 from dt.preprocessing.UnivariateTimeSeriesPreprocessor import UnivariateTimeSeriesPreprocessor
 from dt.preprocessing.UnivariateVitalSignsTimeSeriesPreprocessor import UnivariateVitalSignsTimeSeriesPreprocessor
-from dt.restful.daos.HemsireGozlemDAO import HemsireGozlemDAO
 
 
 class BloodPressurePredictionAIModel(AbstractBloodPressureTimeSeriesSvr):
     """ Class that generates predictions based on fire values. Generated from AbstractUnivariateTimeSeriesSvr """
-
-    hemsire_gozlem_dao = HemsireGozlemDAO()
-
-
 
     def get_dataset(self, dataset_parameters):
         """ method that returns the appropriate dataset according to the dataset parameters """
