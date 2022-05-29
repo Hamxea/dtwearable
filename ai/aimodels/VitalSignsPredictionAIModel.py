@@ -10,7 +10,7 @@ from ai.aimodels.genel.LongShortTermMemory_2 import LongShortTermMemory_2
 
 class VitalSignsPredictionAIModel(LongShortTermMemory_2):
     """ Generate General Prediction TEST class..w.
-     TODO....PatientStatusPredictionAIModel sınıfından üretilir """
+     TODO....PatientStatusPredictionAIModel and RuleEngines """
 
     window_size = 3
 
